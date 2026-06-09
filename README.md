@@ -9,6 +9,8 @@ Live at **https://al4an444.github.io**
 - [Astro 5](https://astro.build) — static site, zero unnecessary JavaScript
 - [Tailwind CSS 4](https://tailwindcss.com) — styling
 - [MDX](https://mdxjs.com) — technical writeups
+- CSS scroll-driven animations (+ IntersectionObserver fallback) — Apple-style scrollytelling
+- PWA — installable, offline-capable (`manifest.webmanifest` + `sw.js`; icons regenerate with `node scripts/generate-icons.mjs`; bump `VERSION` in `sw.js` when changing cached content)
 - GitHub Pages + GitHub Actions — automatic deploy on every push to `main`
 
 ## Development
