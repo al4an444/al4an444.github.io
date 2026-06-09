@@ -1,0 +1,247 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import FindingCard from '../components/FindingCard.astro';
+import { findings, additionalReports } from '../data/findings';
+
+const skills = [
+  {
+    category: 'Security',
+    items:
+      'Vulnerability research · source-code review (Go & Python) · authentication/authorization bypass analysis · supply-chain & build integrity · denial-of-service analysis · responsible disclosure · CVSS v3.1 scoring · PoC development',
+  },
+  {
+    category: 'Programming',
+    items: 'Go · Python · Bash · frontend & backend web',
+  },
+  {
+    category: 'Systems & Networking',
+    items: 'Linux & Windows administration · network configuration · virtualization',
+  },
+  {
+    category: 'Languages',
+    items: 'Spanish (native) · English (professional working proficiency)',
+  },
+];
+
+const education = [
+  {
+    title: 'Higher Vocational Degree (HND) — Network Systems Administration (ASIR)',
+    place: 'IES Jovellanos / ILERNA Online',
+    period: '2025 – 2027 (in progress)',
+  },
+  {
+    title: 'Vocational Diploma — Microcomputer Systems & Networks (SMR)',
+    place: '',
+    period: '2023 – 2025',
+  },
+];
+
+const experience = [
+  {
+    title: 'Technical Support',
+    place: 'MOMPALAO — IT company, Malta',
+    period: 'Mar – May 2025',
+  },
+  {
+    title: 'Ride Operator',
+    place: 'Slagharen Theme Park, Netherlands',
+    period: 'Jul – Aug 2025',
+  },
+  {
+    title: 'Retail Associate',
+    place: 'El Corte Inglés, Spain',
+    period: 'Nov 2024 – Jan 2025',
+  },
+];
+---
+
+<Base
+  title="Alan Ortega — Security Researcher"
+  description="Security researcher finding and responsibly disclosing vulnerabilities in open-source software. 12 reports through Google's Open Source VRP, including a CVSS 7.5 authentication bypass in grpc-go fixed by Google."
+>
+  <Nav />
+  <main class="mx-auto max-w-4xl px-6">
+    <!-- Hero -->
+    <section class="pt-32 pb-16 sm:pt-40 sm:pb-20">
+      <p class="mb-5 font-mono text-sm text-amber-400">$ whoami</p>
+      <h1 class="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">Alan Ortega</h1>
+      <p class="mt-4 text-lg text-zinc-300 sm:text-xl">
+        Security Researcher · finding &amp; responsibly disclosing vulnerabilities in open-source
+        software
+      </p>
+      <p class="mt-5 max-w-2xl leading-relaxed text-zinc-400">
+        I review source code (mostly Go) for authentication/authorization bypasses, supply-chain
+        weaknesses and other security flaws — and report them through Google's Open Source
+        Vulnerability Reward Program.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="#research"
+          class="rounded bg-amber-400 px-4 py-2 text-sm font-semibold text-zinc-950 transition-colors hover:bg-amber-300"
+        >
+          View research
+        </a>
+        <a
+          href="https://github.com/al4an444"
+          class="rounded border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-zinc-500"
+        >
+          GitHub
+        </a>
+        <a
+          href="/cv.pdf"
+          class="rounded border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-zinc-500"
+        >
+          Download CV
+        </a>
+        <a
+          href="#contact"
+          class="rounded border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition-colors hover:border-zinc-500"
+        >
+          Contact
+        </a>
+      </div>
+      <p class="mt-10 font-mono text-xs text-zinc-500">
+        <span class="text-zinc-300">{additionalReports.total}</span> vulnerability reports submitted
+        to Google's OSS VRP · <span class="text-emerald-400">grpc-go CVSS 7.5 fixed by Google</span>
+      </p>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="border-t border-zinc-900 py-16">
+      <h2 class="mb-6 font-mono text-sm text-amber-400"># About</h2>
+      <p class="max-w-2xl leading-relaxed text-zinc-300">
+        I'm a 20-year-old security researcher based in Madrid, Spain, relocating to the
+        Netherlands. I focus on source-code review of widely-used open-source projects, looking for
+        authentication and authorization bypasses, supply-chain integrity issues, and
+        denial-of-service bugs. My work has been reported through Google's Open Source
+        Vulnerability Reward Program, including a vulnerability in grpc-go that Google fixed. I'm
+        currently completing a Higher Vocational Degree in Network Systems Administration (ASIR).
+      </p>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="border-t border-zinc-900 py-16">
+      <h2 class="mb-2 font-mono text-sm text-amber-400"># Security Research</h2>
+      <p class="mb-8 text-sm text-zinc-500">
+        Selected findings, reported responsibly through Google's Open Source VRP / Bug Hunters.
+      </p>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {findings.map((finding) => <FindingCard finding={finding} />)}
+      </div>
+      <div class="mt-4 rounded-lg border border-zinc-800 bg-zinc-900/40 p-5">
+        <h3 class="font-mono text-xs text-zinc-400">+ Additional reports</h3>
+        <p class="mt-2 text-sm leading-relaxed text-zinc-400">
+          Across {additionalReports.projects.map((p, i) => (
+            <span><span class="font-mono text-zinc-300">{p}</span>{i < additionalReports.projects.length - 1 ? ', ' : ''}</span>
+          ))} — covering {additionalReports.topics}.
+        </p>
+        <p class="mt-3 font-mono text-xs text-zinc-500">
+          Total: {additionalReports.total} vulnerability reports submitted to Google's Open Source
+          VRP.
+        </p>
+      </div>
+      <p class="mt-6 text-xs leading-relaxed text-zinc-600">
+        Detailed technical writeups are published only for findings that are already public.
+        Non-public reports are listed at a high level — project, vulnerability class and status —
+        with no exploitable details, in line with responsible disclosure.
+      </p>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="border-t border-zinc-900 py-16">
+      <h2 class="mb-8 font-mono text-sm text-amber-400"># Skills</h2>
+      <dl class="grid gap-6 sm:grid-cols-2">
+        {
+          skills.map((group) => (
+            <div class="rounded-lg border border-zinc-800 bg-zinc-900/40 p-5">
+              <dt class="font-mono text-xs font-medium text-zinc-100">{group.category}</dt>
+              <dd class="mt-2 text-sm leading-relaxed text-zinc-400">{group.items}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <!-- Experience & Education -->
+    <section id="experience" class="border-t border-zinc-900 py-16">
+      <h2 class="mb-8 font-mono text-sm text-amber-400"># Experience &amp; Education</h2>
+      <div class="grid gap-10 sm:grid-cols-2">
+        <div>
+          <h3 class="mb-4 font-mono text-xs tracking-wide text-zinc-500 uppercase">Education</h3>
+          <ol class="space-y-5 border-l border-zinc-800 pl-5">
+            {
+              education.map((item) => (
+                <li>
+                  <p class="text-sm font-medium text-zinc-200">{item.title}</p>
+                  {item.place && <p class="mt-0.5 text-sm text-zinc-500">{item.place}</p>}
+                  <p class="mt-0.5 font-mono text-xs text-zinc-600">{item.period}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+        <div>
+          <h3 class="mb-4 font-mono text-xs tracking-wide text-zinc-500 uppercase">Experience</h3>
+          <ol class="space-y-5 border-l border-zinc-800 pl-5">
+            {
+              experience.map((item) => (
+                <li>
+                  <p class="text-sm font-medium text-zinc-200">{item.title}</p>
+                  <p class="mt-0.5 text-sm text-zinc-500">{item.place}</p>
+                  <p class="mt-0.5 font-mono text-xs text-zinc-600">{item.period}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="border-t border-zinc-900 py-16">
+      <h2 class="mb-6 font-mono text-sm text-amber-400"># Contact</h2>
+      <p class="max-w-2xl leading-relaxed text-zinc-300">
+        Open to junior roles in application security, vulnerability research or security
+        engineering — Netherlands or remote.
+      </p>
+      <ul class="mt-6 space-y-2 font-mono text-sm">
+        <li>
+          <span class="text-zinc-500">email:</span>
+          <a
+            href="mailto:alanortega7312@gmail.com"
+            class="text-amber-400 transition-colors hover:text-amber-300"
+          >
+            alanortega7312@gmail.com
+          </a>
+        </li>
+        <li>
+          <span class="text-zinc-500">github:</span>
+          <a
+            href="https://github.com/al4an444"
+            class="text-amber-400 transition-colors hover:text-amber-300"
+          >
+            github.com/al4an444
+          </a>
+        </li>
+        <li>
+          <span class="text-zinc-500">linkedin:</span>
+          <a
+            href="https://www.linkedin.com/in/alan-o-b70724290"
+            class="text-amber-400 transition-colors hover:text-amber-300"
+          >
+            linkedin.com/in/alan-o-b70724290
+          </a>
+        </li>
+        <li>
+          <span class="text-zinc-500">cv:</span>
+          <a href="/cv.pdf" class="text-amber-400 transition-colors hover:text-amber-300">
+            /cv.pdf
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</Base>

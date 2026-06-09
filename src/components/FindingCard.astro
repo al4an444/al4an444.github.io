@@ -1,0 +1,50 @@
+---
+import type { Finding } from '../data/findings';
+
+interface Props {
+  finding: Finding;
+}
+
+const { finding } = Astro.props;
+
+const statusStyles: Record<Finding['statusKind'], string> = {
+  fixed: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400',
+  accepted: 'border-sky-500/40 bg-sky-500/10 text-sky-400',
+  reported: 'border-zinc-600 bg-zinc-800/60 text-zinc-400',
+};
+---
+
+<article
+  class:list={[
+    'rounded-lg border bg-zinc-900/40 p-5 transition-colors',
+    finding.featured
+      ? 'border-amber-400/40 hover:border-amber-400/70'
+      : 'border-zinc-800 hover:border-zinc-600',
+  ]}
+>
+  <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+    <span class="font-medium text-zinc-100">{finding.project}</span>
+    {
+      finding.severity && (
+        <span class="rounded border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-amber-400">
+          {finding.severity}
+        </span>
+      )
+    }
+    <span class:list={['rounded border px-2 py-0.5', statusStyles[finding.statusKind]]}>
+      {finding.status}
+    </span>
+  </div>
+  <h3 class="mt-3 font-semibold text-zinc-100">{finding.title}</h3>
+  <p class="mt-2 text-sm leading-relaxed text-zinc-400">{finding.summary}</p>
+  {
+    finding.link && (
+      <a
+        href={finding.link.href}
+        class="mt-3 inline-block font-mono text-xs text-amber-400 transition-colors hover:text-amber-300"
+      >
+        {finding.link.label} &rarr;
+      </a>
+    )
+  }
+</article>

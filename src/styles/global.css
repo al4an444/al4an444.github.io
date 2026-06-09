@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+  --color-accent: #fbbf24;
+}
+
+::selection {
+  background-color: #fbbf24;
+  color: #09090b;
+}
+
+html {
+  scrollbar-color: #3f3f46 #09090b;
+}
