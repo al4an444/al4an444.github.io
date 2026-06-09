@@ -1,0 +1,34 @@
+---
+const links = [
+  { href: '/#research', label: 'Research' },
+  { href: '/#skills', label: 'Skills' },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-zinc-900 bg-zinc-950/90 backdrop-blur">
+  <nav class="mx-auto flex h-14 max-w-4xl items-center justify-between px-6">
+    <a href="/" class="font-mono text-sm font-medium text-zinc-100 transition-colors hover:text-amber-400">
+      alan@ortega<span class="text-amber-400">:~$</span>
+    </a>
+    <div class="flex items-center gap-5 text-sm">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="hidden text-zinc-400 transition-colors hover:text-zinc-100 sm:block"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="/cv.pdf"
+        class="rounded border border-zinc-700 px-3 py-1 font-mono text-xs text-zinc-300 transition-colors hover:border-amber-400 hover:text-amber-400"
+      >
+        CV
+      </a>
+    </div>
+  </nav>
+</header>

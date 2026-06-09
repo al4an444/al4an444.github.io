@@ -1,0 +1,16 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-zinc-900">
+  <div
+    class="mx-auto flex max-w-4xl flex-col items-center justify-between gap-3 px-6 py-8 text-sm text-zinc-500 sm:flex-row"
+  >
+    <p>© {year} Alan Ortega Álamo</p>
+    <div class="flex items-center gap-4 font-mono text-xs">
+      <a href="/.well-known/security.txt" class="transition-colors hover:text-amber-400">security.txt</a>
+      <a href="https://github.com/al4an444" class="transition-colors hover:text-amber-400">GitHub</a>
+      <span class="text-zinc-700">built with Astro · zero unnecessary JS</span>
+    </div>
+  </div>
+</footer>

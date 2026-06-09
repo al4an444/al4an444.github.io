@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import FindingCard from '../../components/FindingCard.astro';
+import { findings, additionalReports } from '../../data/findings';
+
+const writeups = (await getCollection('research', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base
+  title="Security Research — Alan Ortega"
+  description="Vulnerability findings and technical writeups by Alan Ortega: authentication/authorization bypasses, supply-chain integrity and denial-of-service issues in widely-used open-source software."
+>
+  <Nav />
+  <main class="mx-auto max-w-4xl px-6 pt-32 pb-16">
+    <h1 class="text-3xl font-bold tracking-tight text-zinc-100">Security Research</h1>
+    <p class="mt-3 max-w-2xl text-zinc-400">
+      Findings reported responsibly through Google's Open Source VRP / Bug Hunters. Detailed
+      writeups are published only once a finding is public.
+    </p>
+
+    <h2 class="mt-12 mb-6 font-mono text-sm text-amber-400"># Selected findings</h2>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {findings.map((finding) => <FindingCard finding={finding} />)}
+    </div>
+    <div class="mt-4 rounded-lg border border-zinc-800 bg-zinc-900/40 p-5">
+      <h3 class="font-mono text-xs text-zinc-400">+ Additional reports</h3>
+      <p class="mt-2 text-sm leading-relaxed text-zinc-400">
+        Across {additionalReports.projects.map((p, i) => (
+          <span><span class="font-mono text-zinc-300">{p}</span>{i < additionalReports.projects.length - 1 ? ', ' : ''}</span>
+        ))} — covering {additionalReports.topics}.
+      </p>
+      <p class="mt-3 font-mono text-xs text-zinc-500">
+        Total: {additionalReports.total} vulnerability reports submitted to Google's Open Source
+        VRP.
+      </p>
+    </div>
+
+    <h2 class="mt-14 mb-6 font-mono text-sm text-amber-400"># Writeups</h2>
+    {
+      writeups.length === 0 ? (
+        <p class="text-sm text-zinc-500">
+          First writeup coming soon — the grpc-go xDS RBAC authentication bypass, once the report
+          is public on Google Bug Hunters.
+        </p>
+      ) : (
+        <ul class="space-y-4">
+          {writeups.map((post) => (
+            <li class="rounded-lg border border-zinc-800 bg-zinc-900/40 p-5 transition-colors hover:border-zinc-600">
+              <a href={`/research/${post.id}/`}>
+                <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                  <span class="font-medium text-zinc-100">{post.data.project}</span>
+                  {post.data.severity && (
+                    <span class="rounded border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-amber-400">
+                      {post.data.severity}
+                    </span>
+                  )}
+                  <span class="text-zinc-500">
+                    {post.data.date.toISOString().slice(0, 10)}
+                  </span>
+                </div>
+                <h3 class="mt-2 font-semibold text-zinc-100">{post.data.title}</h3>
+                <p class="mt-1 text-sm text-zinc-400">{post.data.summary}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </main>
+  <Footer />
+</Base>
