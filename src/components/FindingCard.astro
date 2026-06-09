@@ -16,10 +16,10 @@ const statusStyles: Record<Finding['statusKind'], string> = {
 
 <article
   class:list={[
-    'rounded-lg border bg-zinc-900/40 p-5 transition-colors',
+    'reveal rounded-xl border bg-zinc-900/40 p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1',
     finding.featured
-      ? 'border-amber-400/40 hover:border-amber-400/70'
-      : 'border-zinc-800 hover:border-zinc-600',
+      ? 'border-amber-400/40 hover:border-amber-400/70 hover:shadow-[0_8px_40px_-12px_rgb(251_191_36/0.25)]'
+      : 'border-zinc-800 hover:border-zinc-600 hover:shadow-[0_8px_40px_-12px_rgb(0_0_0/0.6)]',
   ]}
 >
   <div class="flex flex-wrap items-center gap-2 font-mono text-xs">

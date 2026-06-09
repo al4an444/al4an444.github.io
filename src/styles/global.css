@@ -15,3 +15,100 @@
 html {
   scrollbar-color: #3f3f46 #09090b;
 }
+
+/* Smooth cross-document page transitions (Chrome, Safari 26+) */
+@view-transition {
+  navigation: auto;
+}
+
+/* ---------------------------------------------------------------------------
+ * Scroll progress bar — pure CSS scroll-driven animation where supported
+ * ------------------------------------------------------------------------- */
+.scroll-progress {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress {
+      animation: grow-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes grow-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Reveal-on-scroll. Elements start hidden ONLY when JS is available
+ * (html.js) and motion is allowed; IntersectionObserver adds .is-visible.
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Hero exit — content gently scales/fades away as you scroll past it
+ * (compositor-driven, no JS)
+ * ------------------------------------------------------------------------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-exit {
+      animation: hero-exit linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 90%;
+    }
+  }
+}
+
+@keyframes hero-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-48px) scale(0.97);
+  }
+}
+
+/* Scroll hint chevron — finite so the page settles (and screenshots/CI don't
+   wait on an endless animation) */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-hint {
+    animation: scroll-hint 2.2s ease-in-out 5;
+  }
+}
+
+@keyframes scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+/* Soft amber glow used behind hero / featured sections */
+.glow {
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgb(251 191 36 / 0.08), transparent 70%);
+}

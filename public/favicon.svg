@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#09090b"/>
-  <text x="10" y="42" font-family="JetBrains Mono, Menlo, monospace" font-size="28" font-weight="700" fill="#fbbf24">&gt;_</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#09090b"/>
+  <polyline points="150,170 240,256 150,342" fill="none" stroke="#fbbf24" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="272" y="324" width="110" height="30" rx="15" fill="#fbbf24"/>
 </svg>
