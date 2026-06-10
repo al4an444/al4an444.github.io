@@ -4,11 +4,11 @@
 @theme {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
-  --color-accent: #fbbf24;
+  --color-accent: #34d399;
 }
 
 ::selection {
-  background-color: #fbbf24;
+  background-color: #34d399;
   color: #09090b;
 }
 
@@ -108,9 +108,9 @@ html {
   }
 }
 
-/* Soft amber glow used behind hero / featured sections */
+/* Soft accent glow used behind hero / featured sections */
 .glow {
-  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgb(251 191 36 / 0.08), transparent 70%);
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgb(52 211 153 / 0.08), transparent 70%);
 }
 
 /* ---------------------------------------------------------------------------
@@ -136,7 +136,8 @@ html {
   will-change: transform;
 }
 
-/* Fade the image into the zinc background at the top and bottom edges. */
+/* Fade the image into the zinc background at the top and bottom edges, while
+   keeping the middle band light enough that the photo is clearly visible. */
 .section-photo::after {
   content: '';
   position: absolute;
@@ -144,8 +145,8 @@ html {
   background: linear-gradient(
     180deg,
     #09090b 0%,
-    rgb(9 9 11 / 0.6) 40%,
-    rgb(9 9 11 / 0.6) 60%,
+    rgb(9 9 11 / 0.28) 35%,
+    rgb(9 9 11 / 0.28) 65%,
     #09090b 100%
   );
 }

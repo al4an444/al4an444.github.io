@@ -10,9 +10,9 @@ const featured = findings.find((f) => f.featured)!;
 const rest = findings.filter((f) => !f.featured);
 
 const stats = [
-  { value: '12', label: "reports submitted · Google's OSS VRP" },
-  { value: '9', label: 'Google open-source projects reviewed' },
-  { value: '7.5', label: 'CVSS of the grpc-go bug Google fixed' },
+  { value: '12', label: 'vulnerability reports submitted' },
+  { value: '10.0', label: 'highest-severity finding (Critical)' },
+  { value: '7.5', label: 'grpc-go bug fixed upstream (CVSS, High)' },
   { value: '4', label: 'bug-bounty platforms active on' },
 ];
 
@@ -71,7 +71,7 @@ const experience = [
 const glance = [
   { label: 'Role', value: 'Security Researcher' },
   { label: 'Focus', value: 'Source-code review & vuln research' },
-  { label: 'Track record', value: '12 reports · Google OSS VRP' },
+  { label: 'Track record', value: '12 reports · 4 platforms' },
   { label: 'Highlight', value: 'grpc-go CVSS 7.5 — fixed by Google' },
   { label: 'Education', value: 'ASIR (HND), 2025–2027' },
   { label: 'Languages', value: 'Spanish · English' },
@@ -88,9 +88,9 @@ const glance = [
   <main>
     <!-- ============================== Hero ============================== -->
     <section class="glow relative isolate flex min-h-[100svh] flex-col justify-center">
-      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.16} />
+      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.34} />
       <div class="hero-exit mx-auto w-full max-w-5xl px-6 pt-14">
-        <p class="reveal mb-6 font-mono text-sm text-amber-400">$ whoami</p>
+        <p class="reveal mb-6 font-mono text-sm text-emerald-400">$ whoami</p>
         <h1
           class="reveal text-5xl font-bold tracking-tighter text-zinc-100 sm:text-7xl lg:text-8xl"
           style="--reveal-delay: 80ms"
@@ -101,8 +101,9 @@ const glance = [
           class="reveal mt-6 max-w-3xl text-xl leading-snug font-medium text-zinc-300 sm:text-2xl"
           style="--reveal-delay: 160ms"
         >
-          I find vulnerabilities in software the world runs on —
-          <span class="text-amber-400">and report them responsibly.</span>
+          Finding and responsibly disclosing
+          <span class="text-emerald-400">critical security vulnerabilities</span>
+          in the software the world depends on.
         </p>
         <p class="reveal mt-5 max-w-2xl leading-relaxed text-zinc-400" style="--reveal-delay: 240ms">
           Self-taught security researcher reviewing source code across Go, C/C++, Python and web
@@ -112,7 +113,7 @@ const glance = [
         <div class="reveal mt-9 flex flex-wrap gap-3" style="--reveal-delay: 320ms">
           <a
             href="#research"
-            class="rounded-full bg-amber-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-amber-300"
+            class="rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-300"
           >
             View research
           </a>
@@ -147,9 +148,9 @@ const glance = [
 
     <!-- ============================ Numbers ============================= -->
     <section id="stats" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/servers-blue.webp" opacity={0.2} />
+      <SectionPhoto src="/img/servers-blue.webp" opacity={0.4} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># In numbers</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># In numbers</p>
         <h2 class="reveal mt-4 max-w-2xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Real findings. Verifiable impact.
         </h2>
@@ -157,7 +158,7 @@ const glance = [
           {
             stats.map((stat, i) => (
               <div class="reveal" style={`--reveal-delay: ${i * 100}ms`}>
-                <dd class="font-mono text-5xl font-bold tracking-tight text-amber-400 sm:text-6xl">
+                <dd class="font-mono text-5xl font-bold tracking-tight text-emerald-400 sm:text-6xl">
                   {stat.value}
                 </dd>
                 <dt class="mt-3 text-sm leading-snug text-zinc-400">{stat.label}</dt>
@@ -170,9 +171,9 @@ const glance = [
 
     <!-- ============================= About ============================== -->
     <section id="about" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/network.webp" opacity={0.12} />
+      <SectionPhoto src="/img/network.webp" opacity={0.26} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># About</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># About</p>
         <p class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-400 sm:text-3xl">
           I'm a <span class="text-zinc-100">20-year-old, entirely self-taught security
           researcher</span> based in Madrid, relocating to the Netherlands. I review widely-used
@@ -184,16 +185,16 @@ const glance = [
           I learn fast and dig deep — turning curiosity about how systems break into
           <span class="text-zinc-100">verifiable results</span>. My work goes through Google's Open
           Source VRP — including a vulnerability in grpc-go that
-          <span class="text-amber-400">Google fixed</span> — and public bug-bounty platforms.
+          <span class="text-emerald-400">Google fixed</span> — and public bug-bounty platforms.
         </p>
       </div>
     </section>
 
     <!-- ======================== Featured finding ======================== -->
     <section class="glow relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/circuit-green.webp" opacity={0.14} />
+      <SectionPhoto src="/img/circuit-green.webp" opacity={0.3} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># Featured finding</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># Featured finding</p>
         <h2 class="reveal mt-4 max-w-3xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Breaking authentication<br />in gRPC's RBAC engine.
         </h2>
@@ -207,7 +208,7 @@ const glance = [
             </p>
             <p class="reveal leading-relaxed text-zinc-400" style="--reveal-delay: 100ms">
               The result: an <span class="text-zinc-200">authentication bypass</span> in the
-              authorization layer, scored <span class="text-amber-400">CVSS 7.5 (High)</span>.
+              authorization layer, scored <span class="text-emerald-400">CVSS 7.5 (High)</span>.
               Reported through Google's Open Source VRP —
               <span class="text-emerald-400">and fixed by Google</span>.
             </p>
@@ -219,20 +220,20 @@ const glance = [
             <div class="reveal flex flex-wrap gap-3" style="--reveal-delay: 280ms">
               <a
                 href="https://github.com/grpc/grpc-go/pull/9111"
-                class="rounded-full border border-zinc-700 px-4 py-2 font-mono text-xs text-zinc-200 transition-colors hover:border-amber-400 hover:text-amber-400"
+                class="rounded-full border border-zinc-700 px-4 py-2 font-mono text-xs text-zinc-200 transition-colors hover:border-emerald-400 hover:text-emerald-400"
               >
                 Fix PR #9111 &rarr;
               </a>
               <a
                 href="https://newreleases.io/project/github/grpc/grpc-go/release/v1.81.1"
-                class="rounded-full border border-zinc-700 px-4 py-2 font-mono text-xs text-zinc-200 transition-colors hover:border-amber-400 hover:text-amber-400"
+                class="rounded-full border border-zinc-700 px-4 py-2 font-mono text-xs text-zinc-200 transition-colors hover:border-emerald-400 hover:text-emerald-400"
               >
                 Release notes &rarr;
               </a>
             </div>
           </div>
           <div class="reveal" style="--reveal-delay: 150ms">
-            <div class="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/60 shadow-[0_20px_80px_-20px_rgb(251_191_36/0.15)]">
+            <div class="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/60 shadow-[0_20px_80px_-20px_rgb(52_211_153/0.15)]">
               <div class="flex items-center gap-1.5 border-b border-zinc-800 px-4 py-3">
                 <span class="size-3 rounded-full bg-zinc-700"></span>
                 <span class="size-3 rounded-full bg-zinc-700"></span>
@@ -244,7 +245,7 @@ const glance = [
                 <p><span class="text-zinc-500">project    </span><span class="text-zinc-200">grpc-go (Google)</span></p>
                 <p><span class="text-zinc-500">class      </span><span class="text-zinc-200">authentication bypass</span></p>
                 <p><span class="text-zinc-500">component  </span><span class="text-zinc-200">xDS RBAC · authenticatedMatcher</span></p>
-                <p><span class="text-zinc-500">severity   </span><span class="text-amber-400">CVSS 7.5 — HIGH</span></p>
+                <p><span class="text-zinc-500">severity   </span><span class="text-emerald-400">CVSS 7.5 — HIGH</span></p>
                 <p><span class="text-zinc-500">program    </span><span class="text-zinc-200">Google Open Source VRP</span></p>
                 <p><span class="text-zinc-500">fix        </span><span class="text-zinc-200">PR #9111 · v1.81.1</span></p>
                 <p><span class="text-zinc-500">status     </span><span class="text-emerald-400">FIXED BY GOOGLE ✓</span></p>
@@ -257,9 +258,9 @@ const glance = [
 
     <!-- =========================== Research ============================= -->
     <section id="research" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/server-corridor.webp" opacity={0.16} />
+      <SectionPhoto src="/img/server-corridor.webp" opacity={0.34} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># Security research</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># Security research</p>
         <h2 class="reveal mt-4 max-w-2xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           More findings.
         </h2>
@@ -295,14 +296,14 @@ const glance = [
           with no exploitable details, in line with responsible disclosure.
         </p>
 
-        <h3 class="reveal mt-16 font-mono text-sm text-amber-400"># Case study</h3>
+        <h3 class="reveal mt-16 font-mono text-sm text-emerald-400"># Case study</h3>
         <a
           href="/research/ies-jovellanos-zerologon/"
-          class="reveal group mt-6 block rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-amber-400/50 hover:shadow-[0_8px_40px_-12px_rgb(251_191_36/0.2)]"
+          class="reveal group mt-6 block rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_8px_40px_-12px_rgb(52_211_153/0.2)]"
         >
           <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
             <span class="font-medium text-zinc-100">IES Jovellanos</span>
-            <span class="rounded border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-amber-400">
+            <span class="rounded border border-red-500/50 bg-red-500/10 px-2 py-0.5 text-red-400">
               CVSS 10.0 (Critical)
             </span>
             <span class="rounded border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-400">
@@ -317,7 +318,7 @@ const glance = [
             impact responsibly, reported it immediately, and worked with the center to remediate and
             harden the infrastructure.
           </p>
-          <span class="mt-3 inline-block font-mono text-xs text-amber-400 group-hover:text-amber-300">
+          <span class="mt-3 inline-block font-mono text-xs text-emerald-400 group-hover:text-emerald-300">
             Read the case study &rarr;
           </span>
         </a>
@@ -326,9 +327,9 @@ const glance = [
 
     <!-- ============================ Skills ============================== -->
     <section id="skills" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/servers-blue.webp" opacity={0.12} />
+      <SectionPhoto src="/img/servers-blue.webp" opacity={0.26} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># Skills</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># Skills</p>
         <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           What I work with.
         </h2>
@@ -339,7 +340,7 @@ const glance = [
                 class="reveal rounded-xl border border-zinc-800 bg-zinc-900/40 p-6"
                 style={`--reveal-delay: ${i * 80}ms`}
               >
-                <dt class="font-mono text-xs font-medium text-amber-400">{group.category}</dt>
+                <dt class="font-mono text-xs font-medium text-emerald-400">{group.category}</dt>
                 <dd class="mt-3 text-sm leading-relaxed text-zinc-400">{group.items}</dd>
               </div>
             ))
@@ -350,9 +351,9 @@ const glance = [
 
     <!-- ===================== Experience & Education ===================== -->
     <section id="experience" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.1} />
+      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.24} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># Experience &amp; education</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># Experience &amp; education</p>
         <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           The timeline.
         </h2>
@@ -391,9 +392,9 @@ const glance = [
 
     <!-- =========================== Projects ============================= -->
     <section id="projects" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/circuit-green.webp" opacity={0.1} />
+      <SectionPhoto src="/img/circuit-green.webp" opacity={0.24} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># Projects</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># Projects</p>
         <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Things I build.
         </h2>
@@ -408,7 +409,7 @@ const glance = [
                 <div class="flex items-center justify-between">
                   <h3 class="font-mono font-medium text-zinc-100">{project.name}</h3>
                   <svg
-                    class="size-4 text-zinc-500 transition-colors group-hover:text-amber-400"
+                    class="size-4 text-zinc-500 transition-colors group-hover:text-emerald-400"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
@@ -433,9 +434,9 @@ const glance = [
 
     <!-- ========================= Certifications ========================= -->
     <section id="certifications" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
-      <SectionPhoto src="/img/network.webp" opacity={0.1} />
+      <SectionPhoto src="/img/network.webp" opacity={0.24} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># Certifications</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># Certifications</p>
         <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Always learning.
         </h2>
@@ -451,7 +452,7 @@ const glance = [
                 style={`--reveal-delay: ${i * 80}ms`}
               >
                 <svg
-                  class="mt-0.5 size-5 shrink-0 text-amber-400"
+                  class="mt-0.5 size-5 shrink-0 text-emerald-400"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -479,7 +480,7 @@ const glance = [
     <!-- ========================== At a glance =========================== -->
     <section id="glance" class="border-t border-zinc-900 py-28 sm:py-36">
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-amber-400"># At a glance</p>
+        <p class="reveal font-mono text-sm text-emerald-400"># At a glance</p>
         <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Everything, in 10 seconds.
         </h2>
@@ -496,7 +497,7 @@ const glance = [
         <div class="reveal mt-8 flex flex-wrap gap-3">
           <a
             href="/cv.pdf"
-            class="rounded-full bg-amber-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-amber-300"
+            class="rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-300"
           >
             Download CV
           </a>
@@ -512,10 +513,10 @@ const glance = [
 
     <!-- ============================ Contact ============================= -->
     <section id="contact" class="glow relative isolate border-t border-zinc-900 py-32 sm:py-44">
-      <SectionPhoto src="/img/server-corridor.webp" opacity={0.14} />
+      <SectionPhoto src="/img/server-corridor.webp" opacity={0.3} />
       <div class="mx-auto max-w-5xl px-6 text-center">
         <h2 class="reveal text-4xl font-bold tracking-tighter text-zinc-100 sm:text-6xl">
-          Let's find the next bug<span class="text-amber-400">.</span>
+          Let's find the next bug<span class="text-emerald-400">.</span>
         </h2>
         <p class="reveal mx-auto mt-6 max-w-xl text-zinc-400" style="--reveal-delay: 100ms">
           Open to junior roles in application security, vulnerability research or security
@@ -524,24 +525,24 @@ const glance = [
         <div class="reveal mt-10" style="--reveal-delay: 200ms">
           <a
             href="mailto:alanortega7312@gmail.com"
-            class="inline-block rounded-full bg-amber-400 px-7 py-3 font-semibold text-zinc-950 transition-colors hover:bg-amber-300"
+            class="inline-block rounded-full bg-emerald-400 px-7 py-3 font-semibold text-zinc-950 transition-colors hover:bg-emerald-300"
           >
             alanortega7312@gmail.com
           </a>
         </div>
         <ul class="reveal mt-10 flex flex-wrap justify-center gap-6 font-mono text-sm" style="--reveal-delay: 300ms">
           <li>
-            <a href="https://github.com/al4an444" class="text-zinc-400 transition-colors hover:text-amber-400">
+            <a href="https://github.com/al4an444" class="text-zinc-400 transition-colors hover:text-emerald-400">
               github.com/al4an444
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/in/alan-o-b70724290" class="text-zinc-400 transition-colors hover:text-amber-400">
+            <a href="https://www.linkedin.com/in/alan-o-b70724290" class="text-zinc-400 transition-colors hover:text-emerald-400">
               linkedin
             </a>
           </li>
           <li>
-            <a href="/cv.pdf" class="text-zinc-400 transition-colors hover:text-amber-400">cv.pdf</a>
+            <a href="/cv.pdf" class="text-zinc-400 transition-colors hover:text-emerald-400">cv.pdf</a>
           </li>
         </ul>
       </div>

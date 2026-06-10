@@ -10,8 +10,8 @@ const icon = (rx, inset = 0) => {
   return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="512" height="512" rx="${rx}" fill="#09090b"/>
   <g transform="translate(${512 * inset} ${512 * inset}) scale(${s})">
-    <polyline points="150,170 240,256 150,342" fill="none" stroke="#fbbf24" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
-    <rect x="272" y="324" width="110" height="30" rx="15" fill="#fbbf24"/>
+    <polyline points="150,170 240,256 150,342" fill="none" stroke="#34d399" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="272" y="324" width="110" height="30" rx="15" fill="#34d399"/>
   </g>
 </svg>`);
 };

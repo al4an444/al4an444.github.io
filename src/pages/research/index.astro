@@ -24,7 +24,7 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
       once a finding is public.
     </p>
 
-    <h2 class="mt-12 mb-6 font-mono text-sm text-amber-400"># Selected findings</h2>
+    <h2 class="mt-12 mb-6 font-mono text-sm text-emerald-400"># Selected findings</h2>
     <div class="grid gap-4 sm:grid-cols-2">
       {findings.map((finding) => <FindingCard finding={finding} />)}
     </div>
@@ -41,12 +41,12 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
       </p>
     </div>
 
-    <h2 class="mt-14 mb-6 font-mono text-sm text-amber-400"># Writeups</h2>
+    <h2 class="mt-14 mb-6 font-mono text-sm text-emerald-400"># Writeups</h2>
     {
       writeups.length === 0 ? (
         <p class="text-sm text-zinc-500">
           First writeup in progress — the grpc-go xDS RBAC authentication bypass, now public in
-          <a href="https://github.com/grpc/grpc-go/pull/9111" class="text-amber-400 hover:text-amber-300">
+          <a href="https://github.com/grpc/grpc-go/pull/9111" class="text-emerald-400 hover:text-emerald-300">
             {' '}PR #9111
           </a>{' '}and shipped in v1.81.1.
         </p>
@@ -58,7 +58,14 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
                 <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
                   <span class="font-medium text-zinc-100">{post.data.project}</span>
                   {post.data.severity && (
-                    <span class="rounded border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-amber-400">
+                    <span
+                      class:list={[
+                        'rounded border px-2 py-0.5',
+                        post.data.severity.toLowerCase().includes('critical')
+                          ? 'border-red-500/50 bg-red-500/10 text-red-400'
+                          : 'border-emerald-400/40 bg-emerald-400/10 text-emerald-400',
+                      ]}
+                    >
                       {post.data.severity}
                     </span>
                   )}
