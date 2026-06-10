@@ -1,0 +1,76 @@
+---
+title: 'Domain compromise via ZeroLogon — and helping fix it'
+project: 'IES Jovellanos'
+date: 2026-03-03
+severity: 'CVSS 10.0 (Critical)'
+status: 'Disclosed & remediated'
+summary: 'I found my educational center’s domain controller exposed to ZeroLogon (CVE-2020-1472), demonstrated impact responsibly, reported it immediately, and worked with the center to remediate and harden the infrastructure.'
+---
+
+## TL;DR
+
+The Windows domain controller of my educational center, **IES Jovellanos**, was running
+without the August 2020 security updates, leaving it exposed to **ZeroLogon
+(CVE-2020-1472)** — a cryptographic flaw in the Netlogon protocol that allows full Active
+Directory compromise. I demonstrated the impact, **stopped at the proof stage without
+exfiltrating or keeping any real data**, reported it immediately and voluntarily to the
+center's administration, and then collaborated with them to remediate and harden the
+environment.
+
+This page is a high-level case study. It deliberately leaves out exploitation specifics and
+any captured data — the point is the **finding, the responsible handling, and the fix**.
+
+## The vulnerability
+
+ZeroLogon abuses a flaw in the AES-CFB8 implementation of the Netlogon authentication
+protocol. When a domain controller accepts insecure RPC for Netlogon, an unauthenticated
+attacker on the network can repeatedly attempt authentication with an all-zero initialization
+vector and, with high probability, eventually succeed — then reset the domain controller's
+machine-account password to an empty value.
+
+From there, the standard escalation is a **DCSync**: impersonating a domain controller to
+request directory replication and obtain credential material for the domain. The end state is
+**total control of the Active Directory** — administrative authority over every account and
+machine joined to it. That is why ZeroLogon is scored **CVSS 10.0**.
+
+## Why it mattered here
+
+This was not a lab. It was the live infrastructure of a school: staff, students and
+administration accounts, shared drives, exam systems and managed devices all depend on that
+single directory. A real attacker reaching this state could have deployed ransomware across
+the network, tampered with records, or quietly persisted. The gap was simply an
+**unpatched, five-year-old vulnerability** that enforcement of secure RPC would have closed.
+
+## Handling it responsibly
+
+I treated this as a responsible-disclosure exercise from the first step:
+
+- **Stopped at proof.** I halted at the point where impact was demonstrated. No offline
+  cracking was performed.
+- **No data kept.** No real user data was exfiltrated or retained; any artifact produced
+  during the demonstration was securely destroyed immediately.
+- **Reported immediately and voluntarily** to the center's administration, including the
+  critical operational warning that the DC's secure channel needed resyncing.
+
+## Remediation
+
+The fix is well-understood and I shared it directly with the administration:
+
+```text
+# Restore the DC secure channel after the machine account was reset
+Reset-ComputerMachinePassword
+Test-ComputerSecureChannel -Verify
+```
+
+- **Patch:** install the Windows Server updates from August 2020 onward, which correct the
+  Netlogon cryptography.
+- **Enforce secure RPC:** via Group Policy, ensure "Domain controller: Allow vulnerable
+  Netlogon secure channel connections" is disabled, so spoofed/zeroed connections are
+  rejected.
+
+## Outcome
+
+The vulnerability was remediated, and I **collaborated with the center to harden the
+infrastructure** afterwards. I was thanked for reporting it. A single missing patch was the
+difference between a healthy network and a full takeover — which is exactly why timely
+patching and secure-by-default configuration matter.
