@@ -1,10 +1,10 @@
 ---
 const links = [
-  { href: '/#research', label: 'Research' },
-  { href: '/#projects', label: 'Projects' },
-  { href: '/#skills', label: 'Skills' },
-  { href: '/#certifications', label: 'Certs' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/#research', label: 'Research', key: 'nav.research' },
+  { href: '/#projects', label: 'Projects', key: 'nav.projects' },
+  { href: '/#skills', label: 'Skills', key: 'nav.skills' },
+  { href: '/#certifications', label: 'Certs', key: 'nav.certs' },
+  { href: '/#contact', label: 'Contact', key: 'nav.contact' },
 ];
 ---
 
@@ -13,17 +13,26 @@ const links = [
     <a href="/" class="font-mono text-sm font-medium text-zinc-100 transition-colors hover:text-emerald-400">
       alan@ortega<span class="text-emerald-400">:~$</span>
     </a>
-    <div class="flex items-center gap-5 text-sm">
+    <div class="flex items-center gap-4 text-sm sm:gap-5">
       {
         links.map((link) => (
           <a
             href={link.href}
+            data-i18n={link.key}
             class="hidden text-zinc-400 transition-colors hover:text-zinc-100 sm:block"
           >
             {link.label}
           </a>
         ))
       }
+      <button
+        type="button"
+        data-lang-toggle
+        aria-label="Switch to Spanish"
+        class="rounded border border-zinc-700 px-2.5 py-1 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400 hover:text-emerald-400"
+      >
+        Español
+      </button>
       <a
         href="/cv.pdf"
         class="rounded border border-zinc-700 px-3 py-1 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400 hover:text-emerald-400"

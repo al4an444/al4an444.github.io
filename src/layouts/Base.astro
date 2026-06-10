@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '@fontsource-variable/inter';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
+import LangScript from '../components/LangScript.astro';
 
 interface Props {
   title: string;
@@ -62,5 +63,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         navigator.serviceWorker.register('/sw.js');
       }
     </script>
+    <LangScript />
   </body>
 </html>
