@@ -19,8 +19,9 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
   <main class="mx-auto max-w-4xl px-6 pt-32 pb-16">
     <h1 class="text-3xl font-bold tracking-tight text-zinc-100">Security Research</h1>
     <p class="mt-3 max-w-2xl text-zinc-400">
-      Findings reported responsibly through Google's Open Source VRP / Bug Hunters. Detailed
-      writeups are published only once a finding is public.
+      Findings reported responsibly through Google's Open Source VRP / Bug Hunters and public
+      bug-bounty platforms (YesWeHack, HackerOne, Bugcrowd). Detailed writeups are published only
+      once a finding is public.
     </p>
 
     <h2 class="mt-12 mb-6 font-mono text-sm text-amber-400"># Selected findings</h2>
@@ -44,8 +45,10 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
     {
       writeups.length === 0 ? (
         <p class="text-sm text-zinc-500">
-          First writeup coming soon — the grpc-go xDS RBAC authentication bypass, once the report
-          is public on Google Bug Hunters.
+          First writeup in progress — the grpc-go xDS RBAC authentication bypass, now public in
+          <a href="https://github.com/grpc/grpc-go/pull/9111" class="text-amber-400 hover:text-amber-300">
+            {' '}PR #9111
+          </a>{' '}and shipped in v1.81.1.
         </p>
       ) : (
         <ul class="space-y-4">

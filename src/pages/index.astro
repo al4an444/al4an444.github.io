@@ -3,23 +3,23 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import FindingCard from '../components/FindingCard.astro';
-import { findings, additionalReports } from '../data/findings';
+import { findings, additionalReports, platforms } from '../data/findings';
 
 const featured = findings.find((f) => f.featured)!;
 const rest = findings.filter((f) => !f.featured);
 
 const stats = [
-  { value: '12', label: 'vulnerability reports submitted' },
-  { value: '9', label: 'Google open-source projects' },
-  { value: '7.5', label: 'highest CVSS severity (High)' },
-  { value: '1', label: 'fixed by Google' },
+  { value: '12', label: "reports submitted · Google's OSS VRP" },
+  { value: '9', label: 'Google open-source projects reviewed' },
+  { value: '7.5', label: 'CVSS of the grpc-go bug Google fixed' },
+  { value: '4', label: 'bug-bounty platforms active on' },
 ];
 
 const skills = [
   {
     category: 'Security',
     items:
-      'Vulnerability research · source-code review (Go & Python) · authentication/authorization bypass analysis · supply-chain & build integrity · denial-of-service analysis · responsible disclosure · CVSS v3.1 scoring · PoC development',
+      'Vulnerability research · source-code review (Go & Python) · authentication/authorization bypass analysis · supply-chain & build integrity · denial-of-service analysis · Active Directory exploitation (ZeroLogon, DCSync, Pass-the-Hash) · responsible disclosure · CVSS v3.1 scoring · PoC development',
   },
   {
     category: 'Programming',
@@ -204,9 +204,25 @@ const glance = [
               Reported through Google's Open Source VRP —
               <span class="text-emerald-400">and fixed by Google</span>.
             </p>
-            <p class="reveal font-mono text-xs text-zinc-600" style="--reveal-delay: 200ms">
-              Full technical writeup coming once the report is public on bughunters.google.com.
+            <p class="reveal leading-relaxed text-zinc-400" style="--reveal-delay: 200ms">
+              Now public: merged in <span class="font-mono text-zinc-200">PR #9111</span> and shipped
+              in <span class="font-mono text-zinc-200">grpc-go v1.81.1</span>, whose release notes
+              credit me by name.
             </p>
+            <div class="reveal flex flex-wrap gap-3" style="--reveal-delay: 280ms">
+              <a
+                href="https://github.com/grpc/grpc-go/pull/9111"
+                class="rounded-full border border-zinc-700 px-4 py-2 font-mono text-xs text-zinc-200 transition-colors hover:border-amber-400 hover:text-amber-400"
+              >
+                Fix PR #9111 &rarr;
+              </a>
+              <a
+                href="https://newreleases.io/project/github/grpc/grpc-go/release/v1.81.1"
+                class="rounded-full border border-zinc-700 px-4 py-2 font-mono text-xs text-zinc-200 transition-colors hover:border-amber-400 hover:text-amber-400"
+              >
+                Release notes &rarr;
+              </a>
+            </div>
           </div>
           <div class="reveal" style="--reveal-delay: 150ms">
             <div class="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/60 shadow-[0_20px_80px_-20px_rgb(251_191_36/0.15)]">
@@ -223,6 +239,7 @@ const glance = [
                 <p><span class="text-zinc-500">component  </span><span class="text-zinc-200">xDS RBAC · authenticatedMatcher</span></p>
                 <p><span class="text-zinc-500">severity   </span><span class="text-amber-400">CVSS 7.5 — HIGH</span></p>
                 <p><span class="text-zinc-500">program    </span><span class="text-zinc-200">Google Open Source VRP</span></p>
+                <p><span class="text-zinc-500">fix        </span><span class="text-zinc-200">PR #9111 · v1.81.1</span></p>
                 <p><span class="text-zinc-500">status     </span><span class="text-emerald-400">FIXED BY GOOGLE ✓</span></p>
               </div>
             </div>
@@ -239,8 +256,16 @@ const glance = [
           More findings.
         </h2>
         <p class="reveal mt-4 max-w-2xl text-zinc-400">
-          Reported responsibly through Google's Open Source VRP / Bug Hunters.
+          Reported responsibly through Google's Open Source VRP / Bug Hunters and public
+          bug-bounty platforms.
         </p>
+        <ul class="reveal mt-6 flex flex-wrap gap-2 font-mono text-xs">
+          {
+            platforms.map((p) => (
+              <li class="rounded-full border border-zinc-700 px-3 py-1 text-zinc-300">{p}</li>
+            ))
+          }
+        </ul>
         <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {rest.map((finding, i) => <FindingCard finding={finding} />)}
         </div>
