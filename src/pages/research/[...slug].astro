@@ -19,7 +19,7 @@ const { Content } = await render(post);
 <Base title={`${post.data.title} — Alan Ortega`} description={post.data.summary}>
   <Nav />
   <main class="mx-auto max-w-3xl px-6 pt-32 pb-16">
-    <a href="/research/" class="font-mono text-xs text-zinc-500 transition-colors hover:text-amber-400">
+    <a href="/research/" class="font-mono text-xs text-zinc-500 transition-colors hover:text-emerald-400">
       &larr; back to research
     </a>
     <header class="mt-6 mb-10 border-b border-zinc-900 pb-8">
@@ -27,7 +27,14 @@ const { Content } = await render(post);
         <span class="font-medium text-zinc-100">{post.data.project}</span>
         {
           post.data.severity && (
-            <span class="rounded border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-amber-400">
+            <span
+              class:list={[
+                'rounded border px-2 py-0.5',
+                post.data.severity.toLowerCase().includes('critical')
+                  ? 'border-red-500/50 bg-red-500/10 text-red-400'
+                  : 'border-emerald-400/40 bg-emerald-400/10 text-emerald-400',
+              ]}
+            >
               {post.data.severity}
             </span>
           )
@@ -41,7 +48,7 @@ const { Content } = await render(post);
       <p class="mt-3 text-zinc-400">{post.data.summary}</p>
     </header>
     <article
-      class="prose prose-invert max-w-none prose-headings:tracking-tight prose-a:text-amber-400 prose-code:text-amber-300"
+      class="prose prose-invert max-w-none prose-headings:tracking-tight prose-a:text-emerald-400 prose-code:text-emerald-300"
     >
       <Content />
     </article>
