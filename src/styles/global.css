@@ -112,3 +112,60 @@ html {
 .glow {
   background: radial-gradient(ellipse 60% 50% at 50% 0%, rgb(251 191 36 / 0.08), transparent 70%);
 }
+
+/* ---------------------------------------------------------------------------
+ * Section background photos — subtle, darkened, with a top/bottom fade so
+ * overlaid text stays legible. Sits behind content via isolation + z-index.
+ * ------------------------------------------------------------------------- */
+.section-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.section-photo::before {
+  content: '';
+  position: absolute;
+  inset: -12% 0;
+  background-image: var(--photo);
+  background-size: cover;
+  background-position: center;
+  opacity: var(--photo-opacity, 0.22);
+  will-change: transform;
+}
+
+/* Fade the image into the zinc background at the top and bottom edges. */
+.section-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #09090b 0%,
+    rgb(9 9 11 / 0.6) 40%,
+    rgb(9 9 11 / 0.6) 60%,
+    #09090b 100%
+  );
+}
+
+/* Gentle parallax drift as the section scrolls through the viewport. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section-photo::before {
+      animation: photo-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes photo-parallax {
+  from {
+    transform: translateY(-5%) scale(1.06);
+  }
+  to {
+    transform: translateY(5%) scale(1.06);
+  }
+}
