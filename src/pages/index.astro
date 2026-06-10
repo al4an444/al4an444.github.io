@@ -98,6 +98,7 @@ const glance = [
           Alan Ortega
         </h1>
         <p
+          data-i18n="hero.tagline"
           class="reveal mt-6 max-w-3xl text-xl leading-snug font-medium text-zinc-300 sm:text-2xl"
           style="--reveal-delay: 160ms"
         >
@@ -105,7 +106,7 @@ const glance = [
           <span class="text-emerald-400">critical security vulnerabilities</span>
           in the software the world depends on.
         </p>
-        <p class="reveal mt-5 max-w-2xl leading-relaxed text-zinc-400" style="--reveal-delay: 240ms">
+        <p data-i18n="hero.intro" class="reveal mt-5 max-w-2xl leading-relaxed text-zinc-400" style="--reveal-delay: 240ms">
           Self-taught security researcher reviewing source code across Go, C/C++, Python and web
           stacks for authentication/authorization bypasses, supply-chain weaknesses and other flaws
           — reported through Google's Open Source VRP and public bug-bounty platforms.
@@ -113,6 +114,7 @@ const glance = [
         <div class="reveal mt-9 flex flex-wrap gap-3" style="--reveal-delay: 320ms">
           <a
             href="#research"
+            data-i18n="hero.btn.research"
             class="rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-300"
           >
             View research
@@ -125,12 +127,14 @@ const glance = [
           </a>
           <a
             href="/cv.pdf"
+            data-i18n="hero.btn.cv"
             class="rounded-full border border-zinc-700 px-5 py-2.5 text-sm text-zinc-200 transition-colors hover:border-zinc-500"
           >
             Download CV
           </a>
           <a
             href="#contact"
+            data-i18n="hero.btn.contact"
             class="rounded-full border border-zinc-700 px-5 py-2.5 text-sm text-zinc-200 transition-colors hover:border-zinc-500"
           >
             Contact
@@ -150,8 +154,8 @@ const glance = [
     <section id="stats" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/servers-blue.webp" opacity={0.4} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># In numbers</p>
-        <h2 class="reveal mt-4 max-w-2xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="stats.eyebrow" class="reveal font-mono text-sm text-emerald-400"># In numbers</p>
+        <h2 data-i18n="stats.title" class="reveal mt-4 max-w-2xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Real findings. Verifiable impact.
         </h2>
         <dl class="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-4">
@@ -161,7 +165,9 @@ const glance = [
                 <dd class="font-mono text-5xl font-bold tracking-tight text-emerald-400 sm:text-6xl">
                   {stat.value}
                 </dd>
-                <dt class="mt-3 text-sm leading-snug text-zinc-400">{stat.label}</dt>
+                <dt class="mt-3 text-sm leading-snug text-zinc-400" data-i18n={`stats.l${i}`}>
+                  {stat.label}
+                </dt>
               </div>
             ))
           }
@@ -173,15 +179,15 @@ const glance = [
     <section id="about" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/network.webp" opacity={0.26} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># About</p>
-        <p class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-400 sm:text-3xl">
+        <p data-i18n="about.eyebrow" class="reveal font-mono text-sm text-emerald-400"># About</p>
+        <p data-i18n="about.p1" class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-400 sm:text-3xl">
           I'm a <span class="text-zinc-100">20-year-old, entirely self-taught security
           researcher</span> based in Madrid, relocating to the Netherlands. I review widely-used
           projects for <span class="text-zinc-100">authentication & authorization bypasses</span>,
           <span class="text-zinc-100">supply-chain integrity issues</span> and
           <span class="text-zinc-100">denial-of-service bugs</span>.
         </p>
-        <p class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-400 sm:text-3xl" style="--reveal-delay: 120ms">
+        <p data-i18n="about.p2" class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-400 sm:text-3xl" style="--reveal-delay: 120ms">
           I learn fast and dig deep — turning curiosity about how systems break into
           <span class="text-zinc-100">verifiable results</span>. My work goes through Google's Open
           Source VRP — including a vulnerability in grpc-go that
@@ -194,25 +200,25 @@ const glance = [
     <section class="glow relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/circuit-green.webp" opacity={0.3} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># Featured finding</p>
-        <h2 class="reveal mt-4 max-w-3xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="featured.eyebrow" class="reveal font-mono text-sm text-emerald-400"># Featured finding</p>
+        <h2 data-i18n="featured.title" class="reveal mt-4 max-w-3xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Breaking authentication<br />in gRPC's RBAC engine.
         </h2>
         <div class="mt-14 grid items-start gap-10 lg:grid-cols-2">
           <div class="space-y-5 lg:sticky lg:top-28">
-            <p class="reveal leading-relaxed text-zinc-400">
+            <p data-i18n="featured.p1" class="reveal leading-relaxed text-zinc-400">
               In <span class="font-mono text-zinc-200">grpc-go</span> — the Go implementation of
               gRPC, used across cloud infrastructure worldwide — the xDS RBAC
               <span class="font-mono text-zinc-200">authenticatedMatcher</span> fell through from
               the URI/DNS SAN to the certificate's Subject DN.
             </p>
-            <p class="reveal leading-relaxed text-zinc-400" style="--reveal-delay: 100ms">
+            <p data-i18n="featured.p2" class="reveal leading-relaxed text-zinc-400" style="--reveal-delay: 100ms">
               The result: an <span class="text-zinc-200">authentication bypass</span> in the
               authorization layer, scored <span class="text-emerald-400">CVSS 7.5 (High)</span>.
               Reported through Google's Open Source VRP —
               <span class="text-emerald-400">and fixed by Google</span>.
             </p>
-            <p class="reveal leading-relaxed text-zinc-400" style="--reveal-delay: 200ms">
+            <p data-i18n="featured.p3" class="reveal leading-relaxed text-zinc-400" style="--reveal-delay: 200ms">
               Now public: merged in <span class="font-mono text-zinc-200">PR #9111</span> and shipped
               in <span class="font-mono text-zinc-200">grpc-go v1.81.1</span>, whose release notes
               credit me by name.
@@ -260,11 +266,11 @@ const glance = [
     <section id="research" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/server-corridor.webp" opacity={0.34} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># Security research</p>
-        <h2 class="reveal mt-4 max-w-2xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="research.eyebrow" class="reveal font-mono text-sm text-emerald-400"># Security research</p>
+        <h2 data-i18n="research.title" class="reveal mt-4 max-w-2xl text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           More findings.
         </h2>
-        <p class="reveal mt-4 max-w-2xl text-zinc-400">
+        <p data-i18n="research.desc" class="reveal mt-4 max-w-2xl text-zinc-400">
           Reported responsibly through Google's Open Source VRP / Bug Hunters and public
           bug-bounty platforms.
         </p>
@@ -279,24 +285,24 @@ const glance = [
           {rest.map((finding, i) => <FindingCard finding={finding} />)}
         </div>
         <div class="reveal mt-4 rounded-xl border border-zinc-800 bg-zinc-900/40 p-6">
-          <h3 class="font-mono text-xs text-zinc-400">+ Additional reports</h3>
+          <h3 data-i18n="research.addEyebrow" class="font-mono text-xs text-zinc-400">+ Additional reports</h3>
           <p class="mt-2 text-sm leading-relaxed text-zinc-400">
             Across {additionalReports.projects.map((p, i) => (
               <span><span class="font-mono text-zinc-300">{p}</span>{i < additionalReports.projects.length - 1 ? ', ' : ''}</span>
             ))} — covering {additionalReports.topics}.
           </p>
-          <p class="mt-3 font-mono text-xs text-zinc-500">
+          <p data-i18n="research.addTotal" class="mt-3 font-mono text-xs text-zinc-500">
             Total: {additionalReports.total} vulnerability reports submitted to Google's Open
             Source VRP.
           </p>
         </div>
-        <p class="reveal mt-6 text-xs leading-relaxed text-zinc-600">
+        <p data-i18n="research.disclosure" class="reveal mt-6 text-xs leading-relaxed text-zinc-600">
           Detailed technical writeups are published only for findings that are already public.
           Non-public reports are listed at a high level — project, vulnerability class and status —
           with no exploitable details, in line with responsible disclosure.
         </p>
 
-        <h3 class="reveal mt-16 font-mono text-sm text-emerald-400"># Case study</h3>
+        <h3 data-i18n="research.caseEyebrow" class="reveal mt-16 font-mono text-sm text-emerald-400"># Case study</h3>
         <a
           href="/research/ies-jovellanos-zerologon/"
           class="reveal group mt-6 block rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_8px_40px_-12px_rgb(52_211_153/0.2)]"
@@ -306,19 +312,19 @@ const glance = [
             <span class="rounded border border-red-500/50 bg-red-500/10 px-2 py-0.5 text-red-400">
               CVSS 10.0 (Critical)
             </span>
-            <span class="rounded border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-400">
+            <span data-i18n="research.caseStatus" class="rounded border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-400">
               Disclosed & remediated
             </span>
           </div>
-          <h4 class="mt-3 font-semibold text-zinc-100">
+          <h4 data-i18n="research.caseTitle" class="mt-3 font-semibold text-zinc-100">
             Domain compromise via ZeroLogon (CVE-2020-1472) — and the fix
           </h4>
-          <p class="mt-2 text-sm leading-relaxed text-zinc-400">
+          <p data-i18n="research.caseDesc" class="mt-2 text-sm leading-relaxed text-zinc-400">
             I found my educational center's domain controller exposed to ZeroLogon, demonstrated
             impact responsibly, reported it immediately, and worked with the center to remediate and
             harden the infrastructure.
           </p>
-          <span class="mt-3 inline-block font-mono text-xs text-emerald-400 group-hover:text-emerald-300">
+          <span data-i18n="research.caseLink" class="mt-3 inline-block font-mono text-xs text-emerald-400 group-hover:text-emerald-300">
             Read the case study &rarr;
           </span>
         </a>
@@ -329,8 +335,8 @@ const glance = [
     <section id="skills" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/servers-blue.webp" opacity={0.26} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># Skills</p>
-        <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="skills.eyebrow" class="reveal font-mono text-sm text-emerald-400"># Skills</p>
+        <h2 data-i18n="skills.title" class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           What I work with.
         </h2>
         <dl class="mt-12 grid gap-4 sm:grid-cols-2">
@@ -340,7 +346,9 @@ const glance = [
                 class="reveal rounded-xl border border-zinc-800 bg-zinc-900/40 p-6"
                 style={`--reveal-delay: ${i * 80}ms`}
               >
-                <dt class="font-mono text-xs font-medium text-emerald-400">{group.category}</dt>
+                <dt class="font-mono text-xs font-medium text-emerald-400" data-i18n={`skills.cat${i}`}>
+                  {group.category}
+                </dt>
                 <dd class="mt-3 text-sm leading-relaxed text-zinc-400">{group.items}</dd>
               </div>
             ))
@@ -353,13 +361,13 @@ const glance = [
     <section id="experience" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/circuit-dark.webp" opacity={0.24} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># Experience &amp; education</p>
-        <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="exp.eyebrow" class="reveal font-mono text-sm text-emerald-400"># Experience &amp; education</p>
+        <h2 data-i18n="exp.title" class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           The timeline.
         </h2>
         <div class="mt-12 grid gap-12 sm:grid-cols-2">
           <div class="reveal">
-            <h3 class="mb-5 font-mono text-xs tracking-wide text-zinc-500 uppercase">Education</h3>
+            <h3 data-i18n="exp.edu" class="mb-5 font-mono text-xs tracking-wide text-zinc-500 uppercase">Education</h3>
             <ol class="space-y-6 border-l border-zinc-800 pl-5">
               {
                 education.map((item) => (
@@ -373,7 +381,7 @@ const glance = [
             </ol>
           </div>
           <div class="reveal" style="--reveal-delay: 120ms">
-            <h3 class="mb-5 font-mono text-xs tracking-wide text-zinc-500 uppercase">Experience</h3>
+            <h3 data-i18n="exp.exp" class="mb-5 font-mono text-xs tracking-wide text-zinc-500 uppercase">Experience</h3>
             <ol class="space-y-6 border-l border-zinc-800 pl-5">
               {
                 experience.map((item) => (
@@ -394,8 +402,8 @@ const glance = [
     <section id="projects" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/circuit-green.webp" opacity={0.24} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># Projects</p>
-        <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="projects.eyebrow" class="reveal font-mono text-sm text-emerald-400"># Projects</p>
+        <h2 data-i18n="projects.title" class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Things I build.
         </h2>
         <div class="mt-12 grid gap-4 sm:grid-cols-2">
@@ -436,11 +444,11 @@ const glance = [
     <section id="certifications" class="relative isolate border-t border-zinc-900 py-28 sm:py-36">
       <SectionPhoto src="/img/network.webp" opacity={0.24} />
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># Certifications</p>
-        <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="certs.eyebrow" class="reveal font-mono text-sm text-emerald-400"># Certifications</p>
+        <h2 data-i18n="certs.title" class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Always learning.
         </h2>
-        <p class="reveal mt-4 max-w-2xl text-zinc-400">
+        <p data-i18n="certs.blurb" class="reveal mt-4 max-w-2xl text-zinc-400">
           Self-directed, on top of the formal ASIR degree — because in security the field moves
           faster than any classroom.
         </p>
@@ -480,16 +488,18 @@ const glance = [
     <!-- ========================== At a glance =========================== -->
     <section id="glance" class="border-t border-zinc-900 py-28 sm:py-36">
       <div class="mx-auto max-w-5xl px-6">
-        <p class="reveal font-mono text-sm text-emerald-400"># At a glance</p>
-        <h2 class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
+        <p data-i18n="glance.eyebrow" class="reveal font-mono text-sm text-emerald-400"># At a glance</p>
+        <h2 data-i18n="glance.title" class="reveal mt-4 text-3xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
           Everything, in 10 seconds.
         </h2>
         <dl class="mt-12 grid gap-px overflow-hidden rounded-xl border border-zinc-800 bg-zinc-800 sm:grid-cols-2 lg:grid-cols-4">
           {
             glance.map((item, i) => (
               <div class="reveal bg-zinc-950 p-6" style={`--reveal-delay: ${i * 60}ms`}>
-                <dt class="font-mono text-xs text-zinc-500">{item.label}</dt>
-                <dd class="mt-2 text-sm font-medium text-zinc-200">{item.value}</dd>
+                <dt class="font-mono text-xs text-zinc-500" data-i18n={`glance.l${i}`}>{item.label}</dt>
+                <dd class="mt-2 text-sm font-medium text-zinc-200" data-i18n={`glance.v${i}`}>
+                  {item.value}
+                </dd>
               </div>
             ))
           }
@@ -497,12 +507,14 @@ const glance = [
         <div class="reveal mt-8 flex flex-wrap gap-3">
           <a
             href="/cv.pdf"
+            data-i18n="glance.btnCV"
             class="rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-300"
           >
             Download CV
           </a>
           <a
             href="/research/"
+            data-i18n="glance.btnList"
             class="rounded-full border border-zinc-700 px-5 py-2.5 text-sm text-zinc-200 transition-colors hover:border-zinc-500"
           >
             Full research list
@@ -515,10 +527,10 @@ const glance = [
     <section id="contact" class="glow relative isolate border-t border-zinc-900 py-32 sm:py-44">
       <SectionPhoto src="/img/server-corridor.webp" opacity={0.3} />
       <div class="mx-auto max-w-5xl px-6 text-center">
-        <h2 class="reveal text-4xl font-bold tracking-tighter text-zinc-100 sm:text-6xl">
+        <h2 data-i18n="contact.title" class="reveal text-4xl font-bold tracking-tighter text-zinc-100 sm:text-6xl">
           Let's find the next bug<span class="text-emerald-400">.</span>
         </h2>
-        <p class="reveal mx-auto mt-6 max-w-xl text-zinc-400" style="--reveal-delay: 100ms">
+        <p data-i18n="contact.desc" class="reveal mx-auto mt-6 max-w-xl text-zinc-400" style="--reveal-delay: 100ms">
           Open to junior roles in application security, vulnerability research or security
           engineering — Netherlands or remote.
         </p>
