@@ -14,18 +14,18 @@
   --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
 
-  /* Neutrals — cool slate, so grays read as calm & modern */
-  --color-zinc-50: #f6f8fa;
-  --color-zinc-100: #e9edf2;
-  --color-zinc-200: #d3dae2;
-  --color-zinc-300: #aab4c0;
-  --color-zinc-400: #838f9d;
-  --color-zinc-500: #626d7b;
-  --color-zinc-600: #444e5c;
-  --color-zinc-700: #2c3340;
-  --color-zinc-800: #1a2029;
-  --color-zinc-900: #11161d;
-  --color-zinc-950: #0a0d12;
+  /* Neutrals — cool slate, lifted for an airier, lighter dark theme */
+  --color-zinc-50: #f7f9fb;
+  --color-zinc-100: #ebeff3;
+  --color-zinc-200: #d7dde4;
+  --color-zinc-300: #b4bec9;
+  --color-zinc-400: #8f9aa8;
+  --color-zinc-500: #6b7684;
+  --color-zinc-600: #4d5866;
+  --color-zinc-700: #37424f;
+  --color-zinc-800: #26303e;
+  --color-zinc-900: #1b2431;
+  --color-zinc-950: #131a26;
 
   /* Accent scale (emerald → refined cool blue) — retrofits existing utilities */
   --color-emerald-300: #9dc0ff;
@@ -42,22 +42,22 @@
 }
 
 html {
-  scrollbar-color: #2c3340 #0a0d12;
+  scrollbar-color: #37424f #131a26;
 }
 
 ::-webkit-scrollbar {
   width: 11px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0d12;
+  background: #131a26;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2c3340;
-  border: 3px solid #0a0d12;
+  background: #37424f;
+  border: 3px solid #131a26;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #444e5c;
+  background: #4d5866;
 }
 
 :focus-visible {
@@ -79,8 +79,10 @@ html {
   z-index: -10;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 45% at 50% -8%, rgb(110 162 255 / 0.08), transparent 60%),
-    #0a0d12;
+    radial-gradient(ellipse 70% 45% at 50% -8%, rgb(110 162 255 / 0.17), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 88% 108%, rgb(110 162 255 / 0.1), transparent 62%),
+    radial-gradient(ellipse 45% 35% at 4% 60%, rgb(157 192 255 / 0.06), transparent 60%),
+    #131a26;
 }
 
 .site-bg::before {
@@ -88,10 +90,10 @@ html {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.025) 1px, transparent 1px);
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
   background-size: 88px 88px;
-  mask-image: radial-gradient(ellipse 85% 55% at 50% 0%, black 25%, transparent 72%);
+  mask-image: radial-gradient(ellipse 95% 65% at 50% 0%, black 30%, transparent 80%);
 }
 
 .site-bg::after {
@@ -267,11 +269,11 @@ html {
  * ------------------------------------------------------------------------- */
 .section-line {
   position: relative;
-  border-top: 1px solid rgb(255 255 255 / 0.06);
+  border-top: 1px solid rgb(255 255 255 / 0.1);
 }
 
 .glow {
-  background: radial-gradient(ellipse 55% 45% at 50% 0%, rgb(110 162 255 / 0.06), transparent 70%);
+  background: radial-gradient(ellipse 55% 45% at 50% 0%, rgb(110 162 255 / 0.12), transparent 70%);
 }
 
 /* ===========================================================================
@@ -280,8 +282,11 @@ html {
 .card {
   position: relative;
   border-radius: 0.9rem;
-  border: 1px solid rgb(255 255 255 / 0.07);
-  background: rgb(255 255 255 / 0.018);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.03));
+  backdrop-filter: blur(12px) saturate(1.35);
+  -webkit-backdrop-filter: blur(12px) saturate(1.35);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
   transition:
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.35s,
@@ -290,9 +295,11 @@ html {
 }
 
 .card:hover {
-  border-color: rgb(255 255 255 / 0.16);
-  background: rgb(255 255 255 / 0.03);
-  box-shadow: 0 18px 44px -24px rgb(0 0 0 / 0.8);
+  border-color: rgb(255 255 255 / 0.22);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.05));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.16),
+    0 18px 44px -24px rgb(0 0 0 / 0.6);
 }
 
 a.card:hover,
@@ -301,8 +308,8 @@ a.card:hover,
 }
 
 .card-featured {
-  border-color: rgb(110 162 255 / 0.28);
-  background: rgb(110 162 255 / 0.04);
+  border-color: rgb(110 162 255 / 0.38);
+  background: linear-gradient(180deg, rgb(110 162 255 / 0.1), rgb(110 162 255 / 0.05));
 }
 
 .card-featured:hover {
@@ -316,9 +323,9 @@ a.card:hover,
 .cert-lightbox {
   margin: auto;
   padding: 0;
-  border: 1px solid rgb(255 255 255 / 0.14);
+  border: 1px solid rgb(255 255 255 / 0.18);
   border-radius: 0.9rem;
-  background: #11161d;
+  background: #1b2431;
   max-width: min(92vw, 64rem);
   box-shadow: 0 40px 120px -32px rgb(0 0 0 / 0.9);
 }
@@ -331,7 +338,7 @@ a.card:hover,
 }
 
 .cert-lightbox::backdrop {
-  background: rgb(4 6 10 / 0.82);
+  background: rgb(10 15 23 / 0.72);
   backdrop-filter: blur(6px);
 }
 
@@ -385,9 +392,9 @@ a.card:hover,
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgb(10 13 18 / 0.45),
-    rgb(10 13 18 / 0.15) 45%,
-    rgb(10 13 18 / 0.45)
+    rgb(19 26 38 / 0.4),
+    rgb(19 26 38 / 0.12) 45%,
+    rgb(19 26 38 / 0.4)
   );
 }
 
@@ -411,37 +418,46 @@ a.card:hover,
   }
 }
 
-/* ---------------------------------------------------------------------------
- * Horizon band — ultra-wide personal photo floating in the dark. A single
- * elliptical mask fades every edge so it never feels boxed in.
- * ------------------------------------------------------------------------- */
-.horizon-band {
-  position: relative;
-  height: clamp(180px, 22vw, 340px);
-  pointer-events: none;
-}
-
-.horizon-band img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 62%;
-  opacity: 0.85;
-  filter: saturate(0.9);
-  mask-image: radial-gradient(ellipse 60% 78% at 50% 50%, black 38%, transparent 96%);
-}
-
-/* About portrait — hairline glass frame */
+/* Portrait — hairline glass frame (About, small screens) */
 .portrait-glass {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 1.1rem;
-  border: 1px solid rgb(255 255 255 / 0.12);
-  box-shadow: 0 24px 70px -28px rgb(0 0 0 / 0.85);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  box-shadow: 0 24px 70px -28px rgb(0 0 0 / 0.8);
   filter: saturate(0.92);
+}
+
+/* Hero portrait — anchored to the right edge on desktop, melted on its
+   left/top/bottom so the headline never fights a hard edge. */
+.hero-portrait {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(32vw, 500px);
+  pointer-events: none;
+}
+
+.hero-portrait img {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: min(74svh, 660px);
+  object-fit: cover;
+  object-position: center 22%;
+  opacity: 0.94;
+  filter: saturate(0.92);
+  mask-image: radial-gradient(ellipse 105% 72% at 100% 46%, black 46%, transparent 97%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-portrait img {
+    animation: hero-rise 1s cubic-bezier(0.22, 1, 0.36, 1) 450ms both;
+  }
 }
 
 /* ===========================================================================
@@ -533,31 +549,31 @@ a.card:hover,
     0 16px 40px -12px rgb(110 162 255 / 0.35);
 }
 
-/* Ghost — dark translucent glass */
+/* Ghost — translucent glass */
 .btn-ghost {
-  color: #d3dae2;
-  border: 1px solid rgb(255 255 255 / 0.14);
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0.02));
+  color: #d7dde4;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.05));
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.14),
-    inset 0 -1px 0 rgb(0 0 0 / 0.28),
-    0 8px 24px -14px rgb(0 0 0 / 0.55);
+    inset 0 1px 0 rgb(255 255 255 / 0.26),
+    inset 0 -1px 0 rgb(0 0 0 / 0.22),
+    0 8px 24px -14px rgb(0 0 0 / 0.5);
 }
 
 .btn-ghost:hover {
   transform: translateY(-2px);
-  border-color: rgb(110 162 255 / 0.6);
+  border-color: rgb(110 162 255 / 0.65);
   color: #9dc0ff;
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.04));
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.19), rgb(255 255 255 / 0.08));
 }
 
 /* Shared glass finish for small pill controls (nav toggle, CV, close) */
 .glass-pill {
-  backdrop-filter: blur(10px) saturate(1.4);
-  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.16),
-    inset 0 -1px 0 rgb(0 0 0 / 0.25);
+    inset 0 1px 0 rgb(255 255 255 / 0.26),
+    inset 0 -1px 0 rgb(0 0 0 / 0.28);
 }
 
 /* ===========================================================================
@@ -573,8 +589,8 @@ a.card:hover,
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: #aab4c0;
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.015));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.04));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18);
   transition:
     border-color 0.3s,
     color 0.3s;
@@ -655,9 +671,11 @@ a.card:hover,
   position: relative;
   overflow: hidden;
   border-radius: 0.9rem;
-  border: 1px solid rgb(255 255 255 / 0.1);
-  background: #0c1017;
-  box-shadow: 0 24px 70px -30px rgb(0 0 0 / 0.85);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  background: #151d2a;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 24px 70px -30px rgb(0 0 0 / 0.8);
 }
 
 .terminal-glow {
@@ -669,7 +687,7 @@ a.card:hover,
  * ========================================================================= */
 .timeline {
   position: relative;
-  border-left: 1px solid rgb(255 255 255 / 0.09);
+  border-left: 1px solid rgb(255 255 255 / 0.14);
 }
 
 .timeline > li {
@@ -685,7 +703,7 @@ a.card:hover,
   width: 10px;
   height: 10px;
   border-radius: 9999px;
-  background: #0a0d12;
+  background: #131a26;
   border: 2px solid #6ea2ff;
 }
 
@@ -695,16 +713,16 @@ a.card:hover,
 .nav-pill {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgb(255 255 255 / 0.1);
+  border: 1px solid rgb(255 255 255 / 0.18);
   background:
-    linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.015) 55%),
-    rgb(10 13 18 / 0.55);
+    linear-gradient(180deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.04) 55%),
+    rgb(19 26 38 / 0.5);
   backdrop-filter: blur(22px) saturate(1.6);
   -webkit-backdrop-filter: blur(22px) saturate(1.6);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.12),
-    inset 0 -1px 0 rgb(0 0 0 / 0.3),
-    0 12px 40px -16px rgb(0 0 0 / 0.7);
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 0 rgb(0 0 0 / 0.25),
+    0 12px 40px -16px rgb(0 0 0 / 0.55);
 }
 
 /* Liquid highlight that follows the cursor across the bar (JS sets --mx/--my) */
@@ -714,8 +732,8 @@ a.card:hover,
   inset: 0;
   pointer-events: none;
   background: radial-gradient(
-    130px circle at var(--mx, 50%) var(--my, 0%),
-    rgb(255 255 255 / 0.12),
+    150px circle at var(--mx, 50%) var(--my, 0%),
+    rgb(255 255 255 / 0.2),
     transparent 70%
   );
   opacity: 0;
@@ -736,9 +754,9 @@ a.card:hover,
 }
 
 .nav-link:hover {
-  color: #f6f8fa;
-  background: rgb(255 255 255 / 0.08);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+  color: #f7f9fb;
+  background: rgb(255 255 255 / 0.14);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2);
 }
 
 .nav-link.is-active {
