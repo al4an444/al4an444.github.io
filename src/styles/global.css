@@ -442,16 +442,15 @@ a.card:hover,
 
 .hero-portrait img {
   position: absolute;
-  top: 50%;
+  top: 0;
   right: 0;
-  transform: translateY(-50%);
   width: 100%;
-  height: min(74svh, 660px);
+  height: min(84svh, 760px);
   object-fit: cover;
   object-position: center 22%;
   opacity: 0.94;
   filter: saturate(0.92);
-  mask-image: radial-gradient(ellipse 105% 72% at 100% 46%, black 46%, transparent 97%);
+  mask-image: radial-gradient(ellipse 105% 72% at 100% 42%, black 46%, transparent 97%);
 }
 
 @media (prefers-reduced-motion: no-preference) {
