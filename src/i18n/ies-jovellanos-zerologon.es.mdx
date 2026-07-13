@@ -1,0 +1,68 @@
+## Resumen
+
+El controlador de dominio Windows de mi centro educativo, **IES Jovellanos**, estaba
+funcionando sin las actualizaciones de seguridad de agosto de 2020, lo que lo dejaba expuesto a
+**ZeroLogon (CVE-2020-1472)** — un fallo criptográfico en el protocolo Netlogon que permite el
+compromiso total de Active Directory. Demostré el impacto, **me detuve en la fase de prueba sin
+exfiltrar ni conservar ningún dato real**, lo reporté de inmediato y de forma voluntaria a la
+administración del centro, y después colaboré con ellos para remediar y reforzar el entorno.
+
+Esta página es un caso de estudio a alto nivel. Deja fuera deliberadamente los detalles de
+explotación y cualquier dato capturado — lo importante es el **hallazgo, el manejo responsable
+y la solución**.
+
+## La vulnerabilidad
+
+ZeroLogon abusa de un fallo en la implementación AES-CFB8 del protocolo de autenticación
+Netlogon. Cuando un controlador de dominio acepta RPC inseguro para Netlogon, un atacante no
+autenticado en la red puede intentar autenticarse repetidamente con un vector de inicialización
+todo a ceros y, con alta probabilidad, acabar consiguiéndolo — para después restablecer la
+contraseña de la cuenta de máquina del controlador de dominio a un valor vacío.
+
+A partir de ahí, la escalada estándar es un **DCSync**: suplantar a un controlador de dominio
+para solicitar la replicación del directorio y obtener el material de credenciales del dominio.
+El estado final es el **control total de Active Directory** — autoridad administrativa sobre
+todas las cuentas y máquinas unidas a él. Por eso ZeroLogon está puntuado como **CVSS 10.0**.
+
+## Por qué importaba aquí
+
+Esto no era un laboratorio. Era la infraestructura en producción de un instituto: cuentas de
+personal, alumnado y administración, unidades compartidas, sistemas de exámenes y dispositivos
+gestionados dependen todos de ese único directorio. Un atacante real que alcanzara este estado
+podría haber desplegado ransomware por toda la red, manipulado registros o persistido de forma
+silenciosa. La brecha era, simplemente, una **vulnerabilidad de cinco años sin parchear** que la
+aplicación de RPC seguro habría cerrado.
+
+## Manejo responsable
+
+Traté esto como un ejercicio de divulgación responsable desde el primer paso:
+
+- **Me detuve en la prueba.** Paré en el punto en que quedaba demostrado el impacto. No se
+  realizó ningún cracking offline.
+- **No conservé datos.** No se exfiltró ni retuvo ningún dato real de usuario; cualquier
+  artefacto producido durante la demostración se destruyó de forma segura de inmediato.
+- **Reportado de inmediato y de forma voluntaria** a la administración del centro, incluida la
+  advertencia operativa crítica de que el canal seguro del DC necesitaba resincronizarse.
+
+## Remediación
+
+La solución es bien conocida y la compartí directamente con la administración:
+
+```text
+# Restaurar el canal seguro del DC tras el reinicio de la cuenta de máquina
+Reset-ComputerMachinePassword
+Test-ComputerSecureChannel -Verify
+```
+
+- **Parchear:** instalar las actualizaciones de Windows Server de agosto de 2020 en adelante, que
+  corrigen la criptografía de Netlogon.
+- **Forzar RPC seguro:** mediante directiva de grupo (Group Policy), asegurarse de que
+  "Controlador de dominio: permitir conexiones vulnerables de canal seguro Netlogon" está
+  deshabilitado, de modo que las conexiones falseadas/a cero sean rechazadas.
+
+## Resultado
+
+La vulnerabilidad se remedió, y **colaboré con el centro para reforzar la infraestructura**
+después. Me agradecieron el reporte. Un único parche pendiente marcaba la diferencia entre una
+red sana y una toma de control completa — que es exactamente por lo que el parcheo a tiempo y la
+configuración segura por defecto importan.

@@ -8,18 +8,24 @@ const links = [
 ];
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md">
-  <nav class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-    <a href="/" class="font-mono text-sm font-medium text-zinc-100 transition-colors hover:text-emerald-400">
+<div class="scroll-progress fixed inset-x-0 top-0 z-[60] h-[2px] w-full"></div>
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+  <nav
+    class="nav-pill pointer-events-auto flex h-12 w-full max-w-4xl items-center justify-between rounded-full pr-2 pl-5"
+  >
+    <a
+      href="/"
+      class="font-mono text-sm font-medium text-zinc-100 transition-colors hover:text-emerald-400"
+    >
       alan@ortega<span class="text-emerald-400">:~$</span>
     </a>
-    <div class="flex items-center gap-4 text-sm sm:gap-5">
+    <div class="flex items-center gap-1 text-sm sm:gap-2">
       {
         links.map((link) => (
           <a
             href={link.href}
             data-i18n={link.key}
-            class="hidden text-zinc-400 transition-colors hover:text-zinc-100 sm:block"
+            class="nav-link hidden rounded-full px-2.5 py-1.5 sm:block"
           >
             {link.label}
           </a>
@@ -29,17 +35,16 @@ const links = [
         type="button"
         data-lang-toggle
         aria-label="Switch to Spanish"
-        class="rounded border border-zinc-700 px-2.5 py-1 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400 hover:text-emerald-400"
+        class="ml-1 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
       >
         Español
       </button>
       <a
         href="/cv.pdf"
-        class="rounded border border-zinc-700 px-3 py-1 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400 hover:text-emerald-400"
+        class="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3.5 py-1.5 font-mono text-xs font-medium text-emerald-300 transition-all hover:border-emerald-400/80 hover:bg-emerald-400/20 hover:shadow-[0_0_20px_-4px_rgb(52_211_153/0.5)]"
       >
         CV
       </a>
     </div>
   </nav>
-  <div class="scroll-progress h-px w-full bg-emerald-400"></div>
 </header>

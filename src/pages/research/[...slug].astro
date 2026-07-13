@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
+import EsZeroLogon from '../../i18n/ies-jovellanos-zerologon.es.mdx';
 
 export async function getStaticPaths() {
   const posts = await getCollection('research', ({ data }) => !data.draft);
@@ -14,43 +15,86 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+// Spanish translations for individual writeups, shown/hidden by the site's
+// EN/ES toggle (LangScript swaps [data-lang-content] blocks). Writeups without
+// an entry here simply stay English-only.
+const translations: Record<
+  string,
+  { Content: any; title: string; summary: string; severity?: string; status: string }
+> = {
+  'ies-jovellanos-zerologon': {
+    Content: EsZeroLogon,
+    title: 'Compromiso de dominio vía ZeroLogon — y ayudando a solucionarlo',
+    summary:
+      'Detecté que el controlador de dominio de mi centro educativo estaba expuesto a ZeroLogon (CVE-2020-1472), demostré el impacto de forma responsable, lo reporté de inmediato y colaboré con el centro para remediar y reforzar la infraestructura.',
+    severity: 'CVSS 10.0 (Crítico)',
+    status: 'Divulgado y remediado',
+  },
+};
+
+const t = translations[post.id];
+const EsContent = t?.Content;
 ---
 
 <Base title={`${post.data.title} — Alan Ortega`} description={post.data.summary}>
   <Nav />
-  <main class="mx-auto max-w-3xl px-6 pt-32 pb-16">
-    <a href="/research/" class="font-mono text-xs text-zinc-500 transition-colors hover:text-emerald-400">
-      &larr; back to research
+  <main id="top" class="mx-auto max-w-3xl px-6 pt-36 pb-20">
+    <a
+      href="/research/"
+      class="font-mono text-xs text-zinc-500 transition-colors hover:text-emerald-400"
+    >
+      <span data-lang-content="en">&larr; back to research</span>
+      {t && <span data-lang-content="es" hidden>&larr; volver a investigación</span>}
     </a>
-    <header class="mt-6 mb-10 border-b border-zinc-900 pb-8">
+    <header class="mt-6 mb-10 border-b border-white/[0.06] pb-9">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
         <span class="font-medium text-zinc-100">{post.data.project}</span>
         {
           post.data.severity && (
             <span
               class:list={[
-                'rounded border px-2 py-0.5',
+                'rounded-md border px-2 py-0.5',
                 post.data.severity.toLowerCase().includes('critical')
                   ? 'border-red-500/50 bg-red-500/10 text-red-400'
                   : 'border-emerald-400/40 bg-emerald-400/10 text-emerald-400',
               ]}
             >
-              {post.data.severity}
+              <span data-lang-content="en">{post.data.severity}</span>
+              {t?.severity && (
+                <span data-lang-content="es" hidden>
+                  {t.severity}
+                </span>
+              )}
             </span>
           )
         }
-        <span class="rounded border border-zinc-600 bg-zinc-800/60 px-2 py-0.5 text-zinc-400">
-          {post.data.status}
+        <span class="rounded-md border border-zinc-600 bg-zinc-800/60 px-2 py-0.5 text-zinc-400">
+          <span data-lang-content="en">{post.data.status}</span>
+          {t && <span data-lang-content="es" hidden>{t.status}</span>}
         </span>
         <span class="text-zinc-500">{post.data.date.toISOString().slice(0, 10)}</span>
       </div>
-      <h1 class="mt-4 text-3xl font-bold tracking-tight text-zinc-100">{post.data.title}</h1>
-      <p class="mt-3 text-zinc-400">{post.data.summary}</p>
+      <h1 class="heading mt-5 text-3xl font-bold sm:text-4xl">
+        <span data-lang-content="en">{post.data.title}</span>
+        {t && <span data-lang-content="es" hidden>{t.title}</span>}
+      </h1>
+      <p class="mt-4 text-zinc-400">
+        <span data-lang-content="en">{post.data.summary}</span>
+        {t && <span data-lang-content="es" hidden>{t.summary}</span>}
+      </p>
     </header>
     <article
-      class="prose prose-invert max-w-none prose-headings:tracking-tight prose-a:text-emerald-400 prose-code:text-emerald-300"
+      class="prose prose-invert max-w-none prose-headings:font-display prose-headings:tracking-tight prose-a:text-emerald-400 prose-code:text-emerald-300"
     >
-      <Content />
+      <div data-lang-content="en"><Content /></div>
+      {
+        EsContent && (
+          <div data-lang-content="es" hidden>
+            <EsContent />
+          </div>
+        )
+      }
     </article>
   </main>
   <Footer />

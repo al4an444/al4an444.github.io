@@ -5,3 +5,9 @@ dist/
 npm-debug.log*
 .env
 .env.*
+
+# Local notes and tool folders: never committed
+/[A-Z]*.md
+!/README.md
+/.*/
+!/.github/
