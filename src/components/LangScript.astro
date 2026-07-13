@@ -11,7 +11,6 @@
       'nav.research': 'Investigación',
       'nav.projects': 'Proyectos',
       'nav.skills': 'Habilidades',
-      'nav.certs': 'Certs',
       'nav.contact': 'Contacto',
       // Hero
       'hero.badge': 'Disponible para roles junior de seguridad — Países Bajos o remoto',
@@ -73,14 +72,11 @@
       'exp.title': 'La trayectoria.',
       'exp.edu': 'Formación',
       'exp.exp': 'Experiencia',
+      'exp.certs': 'Certificaciones — autoformación',
       // Projects
       'projects.eyebrow': '# Proyectos',
       'projects.title': 'Lo que construyo.',
       // Certifications
-      'certs.eyebrow': '# Certificaciones',
-      'certs.title': 'Siempre aprendiendo.',
-      'certs.blurb':
-        'Autoformación, además del grado superior ASIR — porque en seguridad el campo avanza más rápido que cualquier aula.',
       'certs.view': 'Ver título ↗',
       // At a glance
       'glance.eyebrow': '# De un vistazo',
@@ -109,6 +105,10 @@
         'Disponible para roles junior en seguridad de aplicaciones, investigación de vulnerabilidades o ingeniería de seguridad — Países Bajos o remoto.',
       // Footer
       'footer.built': 'hecho con Astro · cero JS innecesario',
+      // Homepage <title> / meta description
+      'meta.title': 'Alan Ortega — Investigador de Seguridad',
+      'meta.desc':
+        'Investigador de seguridad autodidacta que encuentra y divulga responsablemente vulnerabilidades en software ampliamente utilizado. 12 reportes a través del VRP de código abierto de Google, incluido un bypass de autenticación CVSS 7.5 en grpc-go corregido por Google.',
     };
 
     const originals = new Map();
@@ -125,6 +125,19 @@
         el.hidden = el.getAttribute('data-lang-content') !== lang;
       });
       document.documentElement.lang = lang;
+      // Homepage <title> + meta description (writeup pages keep their own).
+      if (location.pathname === '/') {
+        const desc = document.querySelector('meta[name="description"]');
+        if (!originals.has('meta')) {
+          originals.set('meta', {
+            title: document.title,
+            desc: desc ? desc.getAttribute('content') : '',
+          });
+        }
+        const saved = originals.get('meta');
+        document.title = lang === 'es' ? es['meta.title'] : saved.title;
+        if (desc) desc.setAttribute('content', lang === 'es' ? es['meta.desc'] : saved.desc);
+      }
       document.querySelectorAll('[data-lang-toggle]').forEach((btn) => {
         btn.textContent = lang === 'en' ? 'Español' : 'English';
         btn.setAttribute('aria-label', lang === 'en' ? 'Cambiar a español' : 'Switch to English');
