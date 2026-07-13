@@ -176,26 +176,41 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     <section id="about" class="section-line relative isolate py-28 sm:py-36">
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="about.eyebrow" class="eyebrow reveal"># About</p>
-        <p
-          data-i18n="about.p1"
-          class="reveal mt-9 max-w-3xl text-2xl leading-snug font-medium text-zinc-300 sm:text-3xl"
-        >
-          I'm a <span class="text-zinc-100">20-year-old, entirely self-taught security
-          researcher</span> based in Madrid, relocating to the Netherlands. I review widely-used
-          projects for <span class="text-zinc-100">authentication & authorization bypasses</span>,
-          <span class="text-zinc-100">supply-chain integrity issues</span> and
-          <span class="text-zinc-100">denial-of-service bugs</span>.
-        </p>
-        <p
-          data-i18n="about.p2"
-          class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-300 sm:text-3xl"
-          style="--reveal-delay: 120ms"
-        >
-          I learn fast and dig deep — turning curiosity about how systems break into
-          <span class="text-zinc-100">verifiable results</span>. My work goes through Google's Open
-          Source VRP — including a vulnerability in grpc-go that
-          <span class="text-emerald-400">Google fixed</span> — and public bug-bounty platforms.
-        </p>
+        <div class="mt-9 grid items-start gap-12 lg:grid-cols-[1fr_300px]">
+          <div>
+            <p
+              data-i18n="about.p1"
+              class="reveal max-w-3xl text-2xl leading-snug font-medium text-zinc-300 sm:text-3xl"
+            >
+              I'm a <span class="text-zinc-100">20-year-old, entirely self-taught security
+              researcher</span> based in Madrid, relocating to the Netherlands. I review widely-used
+              projects for <span class="text-zinc-100">authentication & authorization bypasses</span>,
+              <span class="text-zinc-100">supply-chain integrity issues</span> and
+              <span class="text-zinc-100">denial-of-service bugs</span>.
+            </p>
+            <p
+              data-i18n="about.p2"
+              class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-300 sm:text-3xl"
+              style="--reveal-delay: 120ms"
+            >
+              I learn fast and dig deep — turning curiosity about how systems break into
+              <span class="text-zinc-100">verifiable results</span>. My work goes through Google's Open
+              Source VRP — including a vulnerability in grpc-go that
+              <span class="text-emerald-400">Google fixed</span> — and public bug-bounty platforms.
+            </p>
+          </div>
+          <figure class="reveal mx-auto w-full max-w-[300px] lg:mx-0" style="--reveal-delay: 200ms">
+            <img
+              src="/img/alan-portrait.webp"
+              alt="Alan Ortega"
+              width="900"
+              height="1125"
+              loading="lazy"
+              decoding="async"
+              class="portrait-glass"
+            />
+          </figure>
+        </div>
       </div>
       <div class="horizon-band reveal mt-16 sm:mt-20" aria-hidden="true">
         <img src="/img/alan-sunset.webp" alt="" loading="lazy" decoding="async" />
@@ -523,7 +538,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
           type="button"
           id="cert-lightbox-close"
           aria-label="Cerrar / Close"
-          class="absolute top-3 right-3 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-zinc-950/80 text-lg text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
+          class="glass-pill absolute top-3 right-3 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-zinc-950/80 text-lg text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
         >
           &times;
         </button>

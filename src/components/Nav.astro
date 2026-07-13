@@ -34,16 +34,28 @@ const links = [
         type="button"
         data-lang-toggle
         aria-label="Switch to Spanish"
-        class="ml-1 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
+        class="glass-pill ml-1 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
       >
         Español
       </button>
       <a
         href="/cv.pdf"
-        class="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3.5 py-1.5 font-mono text-xs font-medium text-emerald-300 transition-all hover:border-emerald-400/80 hover:bg-emerald-400/20 hover:shadow-[0_0_20px_-4px_rgb(52_211_153/0.5)]"
+        class="glass-pill rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3.5 py-1.5 font-mono text-xs font-medium text-emerald-300 transition-all hover:border-emerald-400/80 hover:bg-emerald-400/20 hover:shadow-[0_0_20px_-4px_rgb(52_211_153/0.5)]"
       >
         CV
       </a>
     </div>
   </nav>
 </header>
+
+<script>
+  // Liquid-glass highlight tracking the cursor across the nav pill.
+  const pill = document.querySelector<HTMLElement>('.nav-pill');
+  if (pill && window.matchMedia('(hover: hover)').matches) {
+    pill.addEventListener('mousemove', (event) => {
+      const rect = pill.getBoundingClientRect();
+      pill.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+      pill.style.setProperty('--my', `${event.clientY - rect.top}px`);
+    });
+  }
+</script>
