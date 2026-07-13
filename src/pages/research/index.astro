@@ -16,21 +16,22 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
   description="Vulnerability findings and technical writeups by Alan Ortega: authentication/authorization bypasses, supply-chain integrity and denial-of-service issues in widely-used open-source software."
 >
   <Nav />
-  <main class="mx-auto max-w-4xl px-6 pt-32 pb-16">
-    <h1 class="text-3xl font-bold tracking-tight text-zinc-100">Security Research</h1>
-    <p class="mt-3 max-w-2xl text-zinc-400">
+  <main id="top" class="mx-auto max-w-4xl px-6 pt-36 pb-20">
+    <p class="eyebrow"># Research index</p>
+    <h1 class="heading mt-4 text-4xl font-bold sm:text-5xl">Security Research</h1>
+    <p class="mt-4 max-w-2xl text-zinc-400">
       Findings reported responsibly through Google's Open Source VRP / Bug Hunters and public
       bug-bounty platforms (YesWeHack, HackerOne, Bugcrowd). Detailed writeups are published only
       once a finding is public.
     </p>
 
-    <h2 class="mt-12 mb-6 font-mono text-sm text-emerald-400"># Selected findings</h2>
-    <div class="grid gap-4 sm:grid-cols-2">
+    <h2 class="eyebrow mt-14 mb-6"># Selected findings</h2>
+    <div class="grid gap-5 sm:grid-cols-2">
       {findings.map((finding) => <FindingCard finding={finding} />)}
     </div>
-    <div class="mt-4 rounded-lg border border-zinc-800 bg-zinc-900/40 p-5">
-      <h3 class="font-mono text-xs text-zinc-400">+ Additional reports</h3>
-      <p class="mt-2 text-sm leading-relaxed text-zinc-400">
+    <div class="card mt-5 p-6">
+      <h3 class="font-mono text-xs text-emerald-400/90">+ Additional reports</h3>
+      <p class="mt-2.5 text-sm leading-relaxed text-zinc-400">
         Across {additionalReports.projects.map((p, i) => (
           <span><span class="font-mono text-zinc-300">{p}</span>{i < additionalReports.projects.length - 1 ? ', ' : ''}</span>
         ))} — covering {additionalReports.topics}.
@@ -41,7 +42,7 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
       </p>
     </div>
 
-    <h2 class="mt-14 mb-6 font-mono text-sm text-emerald-400"># Writeups</h2>
+    <h2 class="eyebrow mt-16 mb-6"># Writeups</h2>
     {
       writeups.length === 0 ? (
         <p class="text-sm text-zinc-500">
@@ -51,16 +52,16 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
           </a>{' '}and shipped in v1.81.1.
         </p>
       ) : (
-        <ul class="space-y-4">
+        <ul class="space-y-5">
           {writeups.map((post) => (
-            <li class="rounded-lg border border-zinc-800 bg-zinc-900/40 p-5 transition-colors hover:border-zinc-600">
-              <a href={`/research/${post.id}/`}>
+            <li>
+              <a href={`/research/${post.id}/`} class="card block p-6">
                 <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
                   <span class="font-medium text-zinc-100">{post.data.project}</span>
                   {post.data.severity && (
                     <span
                       class:list={[
-                        'rounded border px-2 py-0.5',
+                        'rounded-md border px-2 py-0.5',
                         post.data.severity.toLowerCase().includes('critical')
                           ? 'border-red-500/50 bg-red-500/10 text-red-400'
                           : 'border-emerald-400/40 bg-emerald-400/10 text-emerald-400',
@@ -73,8 +74,10 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
                     {post.data.date.toISOString().slice(0, 10)}
                   </span>
                 </div>
-                <h3 class="mt-2 font-semibold text-zinc-100">{post.data.title}</h3>
-                <p class="mt-1 text-sm text-zinc-400">{post.data.summary}</p>
+                <h3 class="font-display mt-3 font-semibold tracking-tight text-zinc-100">
+                  {post.data.title}
+                </h3>
+                <p class="mt-1.5 text-sm text-zinc-400">{post.data.summary}</p>
               </a>
             </li>
           ))}

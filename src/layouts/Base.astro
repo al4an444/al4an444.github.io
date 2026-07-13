@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 import LangScript from '../components/LangScript.astro';
@@ -25,7 +26,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="theme-color" content="#0a0d12" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -38,9 +39,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="bg-zinc-950 font-sans text-zinc-300 antialiased">
+    <div class="site-bg" aria-hidden="true"></div>
     <slot />
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------------- Reveal on scroll ---------------- */
       const targets = document.querySelectorAll('.reveal');
       if (reduceMotion || !('IntersectionObserver' in window)) {
         targets.forEach((el) => el.classList.add('is-visible'));
@@ -57,6 +61,84 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
         );
         targets.forEach((el) => observer.observe(el));
+      }
+
+      /* ------------- Count-up stats on scroll ------------ */
+      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+      if (counters.length > 0 && !reduceMotion && 'IntersectionObserver' in window) {
+        const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+        const animate = (el: HTMLElement) => {
+          const raw = el.dataset.count ?? '0';
+          const target = parseFloat(raw);
+          const decimals = raw.includes('.') ? raw.split('.')[1].length : 0;
+          const duration = 1400;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const t = Math.min((now - start) / duration, 1);
+            el.textContent = (target * easeOut(t)).toFixed(decimals);
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+        const countObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                animate(entry.target as HTMLElement);
+                countObserver.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.4 }
+        );
+        counters.forEach((el) => {
+          const raw = el.dataset.count ?? '0';
+          const decimals = raw.includes('.') ? raw.split('.')[1].length : 0;
+          el.textContent = (0).toFixed(decimals);
+          countObserver.observe(el);
+        });
+      }
+
+      /* --------- Hero terminal typing effect -------------- */
+      const typer = document.querySelector<HTMLElement>('[data-typer]');
+      if (typer && !reduceMotion) {
+        const text = typer.textContent ?? '';
+        typer.textContent = '';
+        let i = 0;
+        const type = () => {
+          if (i <= text.length) {
+            typer.textContent = text.slice(0, i);
+            i++;
+            setTimeout(type, 75 + Math.random() * 70);
+          }
+        };
+        setTimeout(type, 450);
+      }
+
+      /* ----------------- Nav scrollspy -------------------- */
+      const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link[href*="#"]');
+      if (navLinks.length > 0 && 'IntersectionObserver' in window) {
+        const sections = [...navLinks]
+          .map((link) => document.getElementById(link.href.split('#')[1]))
+          .filter((s): s is HTMLElement => s !== null);
+        if (sections.length > 0) {
+          const spy = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  navLinks.forEach((link) =>
+                    link.classList.toggle(
+                      'is-active',
+                      link.href.split('#')[1] === entry.target.id
+                    )
+                  );
+                }
+              }
+            },
+            { rootMargin: '-40% 0px -55% 0px' }
+          );
+          sections.forEach((s) => spy.observe(s));
+        }
       }
 
       if (import.meta.env.PROD && 'serviceWorker' in navigator) {

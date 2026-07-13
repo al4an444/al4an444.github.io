@@ -14,6 +14,7 @@
       'nav.certs': 'Certs',
       'nav.contact': 'Contacto',
       // Hero
+      'hero.badge': 'Disponible para roles junior de seguridad — Países Bajos o remoto',
       'hero.tagline':
         'Encuentro y divulgo de forma responsable <span class="text-emerald-400">vulnerabilidades de seguridad críticas</span> en el software del que depende el mundo.',
       'hero.intro':
@@ -117,6 +118,10 @@
         if (!originals.has(el)) originals.set(el, el.innerHTML);
         if (lang === 'es' && es[key] != null) el.innerHTML = es[key];
         else el.innerHTML = originals.get(el);
+      });
+      // Swap whole content blocks by language (e.g. bilingual writeups).
+      document.querySelectorAll('[data-lang-content]').forEach((el) => {
+        el.hidden = el.getAttribute('data-lang-content') !== lang;
       });
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-lang-toggle]').forEach((btn) => {
