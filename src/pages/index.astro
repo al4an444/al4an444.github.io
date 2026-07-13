@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import FindingCard from '../components/FindingCard.astro';
+import SectionPhoto from '../components/SectionPhoto.astro';
 import { findings, additionalReports, platforms, projects, certifications } from '../data/findings';
 
 const featured = findings.find((f) => f.featured)!;
@@ -149,7 +150,8 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- ============================ Numbers ============================= -->
-    <section id="stats" class="section-line py-28 sm:py-36">
+    <section id="stats" class="section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/servers-blue.webp" opacity={0.26} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="stats.eyebrow" class="eyebrow reveal"># In numbers</p>
         <h2 data-i18n="stats.title" class="heading reveal mt-5 max-w-2xl text-3xl font-bold sm:text-5xl">
@@ -176,7 +178,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- ============================= About ============================== -->
-    <section id="about" class="section-line py-28 sm:py-36">
+    <section id="about" class="section-line relative isolate py-28 sm:py-36">
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="about.eyebrow" class="eyebrow reveal"># About</p>
         <p
@@ -200,10 +202,14 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
           <span class="text-emerald-400">Google fixed</span> — and public bug-bounty platforms.
         </p>
       </div>
+      <div class="horizon-band reveal mt-16 sm:mt-20" aria-hidden="true">
+        <img src="/img/alan-sunset.webp" alt="" loading="lazy" decoding="async" />
+      </div>
     </section>
 
     <!-- ======================== Featured finding ======================== -->
-    <section class="glow section-line py-28 sm:py-36">
+    <section class="glow section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.24} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="featured.eyebrow" class="eyebrow reveal"># Featured finding</p>
         <h2
@@ -412,7 +418,8 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- ===================== Experience & Education ===================== -->
-    <section id="experience" class="section-line py-28 sm:py-36">
+    <section id="experience" class="section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/network.webp" opacity={0.22} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="exp.eyebrow" class="eyebrow reveal"># Experience &amp; education</p>
         <h2 data-i18n="exp.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
@@ -520,32 +527,59 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
         <ul class="mt-14 grid gap-5 sm:grid-cols-2">
           {
             certifications.map((cert, i) => (
-              <li class="card reveal flex items-start gap-4 p-6" style={`--reveal-delay: ${i * 80}ms`}>
-                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl border border-emerald-400/25 bg-emerald-400/10">
-                  <svg
-                    class="size-5 text-emerald-400"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
-                    <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12" />
-                  </svg>
-                </span>
-                <div>
-                  <p class="font-display font-semibold tracking-tight text-zinc-100">{cert.name}</p>
-                  <p class="mt-1.5 font-mono text-xs text-zinc-500">
-                    {cert.issuer} · {cert.date}
-                  </p>
-                </div>
+              <li class="reveal" style={`--reveal-delay: ${i * 80}ms`}>
+                <button
+                  type="button"
+                  class="card card-lift group flex h-full w-full cursor-pointer items-start gap-4 p-6 text-left"
+                  data-cert-image={cert.image}
+                  data-cert-alt={`${cert.name} — ${cert.issuer}`}
+                  aria-haspopup="dialog"
+                >
+                  <span class="flex size-10 shrink-0 items-center justify-center rounded-xl border border-emerald-400/25 bg-emerald-400/10">
+                    <svg
+                      class="size-5 text-emerald-400"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
+                      <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12" />
+                    </svg>
+                  </span>
+                  <span class="min-w-0">
+                    <span class="font-display block font-semibold tracking-tight text-zinc-100">
+                      {cert.name}
+                    </span>
+                    <span class="mt-1.5 block font-mono text-xs text-zinc-500">
+                      {cert.issuer} · {cert.date}
+                    </span>
+                    <span
+                      data-i18n="certs.view"
+                      class="mt-3 block font-mono text-xs text-emerald-400/90 transition-colors group-hover:text-emerald-300"
+                    >
+                      View certificate ↗
+                    </span>
+                  </span>
+                </button>
               </li>
             ))
           }
         </ul>
+        <dialog id="cert-lightbox" class="cert-lightbox" aria-label="Certificate">
+          <button
+            type="button"
+            id="cert-lightbox-close"
+            aria-label="Cerrar / Close"
+            class="absolute top-3 right-3 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-zinc-950/80 text-lg text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
+          >
+            &times;
+          </button>
+          <img id="cert-lightbox-img" alt="" />
+        </dialog>
       </div>
     </section>
 
@@ -592,7 +626,8 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- ============================ Contact ============================= -->
-    <section id="contact" class="glow section-line py-32 sm:py-44">
+    <section id="contact" class="glow section-line relative isolate py-32 sm:py-44">
+      <SectionPhoto src="/img/server-corridor.webp" opacity={0.28} />
       <div class="mx-auto max-w-5xl px-6 text-center">
         <h2
           data-i18n="contact.title"
@@ -632,3 +667,26 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
   </main>
   <Footer />
 </Base>
+
+<script>
+  /* ------------- Certificate lightbox ------------- */
+  const lightbox = document.getElementById('cert-lightbox') as HTMLDialogElement | null;
+  const lightboxImg = document.getElementById('cert-lightbox-img') as HTMLImageElement | null;
+  if (lightbox && lightboxImg) {
+    const img = lightboxImg;
+    const box = lightbox;
+    document.querySelectorAll<HTMLButtonElement>('[data-cert-image]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        img.src = btn.dataset.certImage ?? '';
+        img.alt = btn.dataset.certAlt ?? '';
+        box.setAttribute('aria-label', img.alt || 'Certificate');
+        box.showModal();
+      });
+    });
+    document.getElementById('cert-lightbox-close')?.addEventListener('click', () => box.close());
+    // A click that lands on the dialog itself (not its children) is on the backdrop.
+    box.addEventListener('click', (event) => {
+      if (event.target === box) box.close();
+    });
+  }
+</script>

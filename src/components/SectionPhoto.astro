@@ -1,0 +1,19 @@
+---
+// Subtle darkened background photo for a section. Place as the first child of
+// a `relative isolate` section; content after it renders on top. The image is
+// desaturated and melted into the page background on its edges (see
+// `.section-photo` in global.css) so sections keep an open, airy feel.
+interface Props {
+  src: string;
+  opacity?: number;
+}
+
+const { src, opacity = 0.22 } = Astro.props;
+---
+
+<div
+  class="section-photo"
+  style={`--photo:url('${src}'); --photo-opacity:${opacity}`}
+  aria-hidden="true"
+>
+</div>
