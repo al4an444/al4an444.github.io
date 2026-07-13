@@ -417,7 +417,7 @@ a.card:hover,
  * ------------------------------------------------------------------------- */
 .horizon-band {
   position: relative;
-  height: clamp(220px, 30vw, 480px);
+  height: clamp(180px, 22vw, 340px);
   pointer-events: none;
 }
 
