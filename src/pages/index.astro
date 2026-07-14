@@ -86,7 +86,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
   <main id="top">
     <!-- ============================== Hero ============================== -->
     <section id="hero" class="glow relative isolate flex min-h-[100svh] flex-col justify-center">
-      <SectionPhoto src="/img/hero-cyber.webp" opacity={0.3} />
+      <SectionPhoto src="/img/hero-circuit.webp" opacity={0.3} />
       <div class="hero-in hero-exit mx-auto w-full max-w-5xl px-6 pt-24">
         <p
           class="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1.5 pr-4 pl-3 text-xs font-medium text-zinc-300"
@@ -170,6 +170,47 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
             ))
           }
         </dl>
+      </div>
+    </section>
+
+    <!-- ========================== Latest finding ======================== -->
+    <section id="latest" class="glow section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/nvidia-logo.webp" opacity={0.32} />
+      <div class="mx-auto max-w-5xl px-6">
+        <p data-i18n="latest.eyebrow" class="eyebrow reveal"># Latest finding</p>
+        <h2
+          data-i18n="latest.title"
+          class="heading reveal mt-5 max-w-3xl text-3xl font-bold sm:text-5xl"
+        >
+          Currently working with NVIDIA.
+        </h2>
+        <div class="card card-featured reveal mt-10 p-7 sm:p-9" style="--reveal-delay: 120ms">
+          <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+            <span class="font-medium text-zinc-100">NVIDIA — Public Bug Bounty / PSIRT</span>
+            <span class="rounded-md border border-amber-500/50 bg-amber-500/10 px-2 py-0.5 text-amber-400">
+              High severity
+            </span>
+            <span
+              data-i18n="latest.status"
+              class="rounded-md border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-400"
+            >
+              Reproduced &amp; under review
+            </span>
+          </div>
+          <p
+            data-i18n="latest.p1"
+            class="reveal mt-6 max-w-3xl text-xl leading-snug font-medium text-zinc-300 sm:text-2xl"
+          >
+            I'm currently working with <span class="text-zinc-100">NVIDIA</span> on a
+            high-severity vulnerability I reported through their bug-bounty program. NVIDIA's
+            security team has <span class="text-emerald-400">confirmed and reproduced</span> the
+            finding, which is now under active review.
+          </p>
+          <p data-i18n="latest.p2" class="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-500">
+            Details are withheld while the report is being handled — in line with responsible
+            disclosure, I'll only publish a technical writeup once the issue is resolved and public.
+          </p>
+        </div>
       </div>
     </section>
 
