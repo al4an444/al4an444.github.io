@@ -1,5 +1,6 @@
 ---
 const links = [
+  { href: '/#latest', label: 'Latest', key: 'nav.latest' },
   { href: '/#research', label: 'Research', key: 'nav.research' },
   { href: '/#projects', label: 'Projects', key: 'nav.projects' },
   { href: '/#skills', label: 'Skills', key: 'nav.skills' },
@@ -8,7 +9,7 @@ const links = [
 ---
 
 <div class="scroll-progress fixed inset-x-0 top-0 z-[60] h-[2px] w-full"></div>
-<header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex flex-col items-center px-4 pt-4">
   <nav
     class="nav-pill pointer-events-auto flex h-12 w-full max-w-4xl items-center justify-between rounded-full pr-2 pl-5"
   >
@@ -44,8 +45,49 @@ const links = [
       >
         CV
       </a>
+      <button
+        type="button"
+        id="menu-btn"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="glass-pill flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-200 transition-colors hover:border-emerald-400/60 hover:text-emerald-300 sm:hidden"
+      >
+        <svg
+          class="menu-icon size-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile dropdown — links are hidden from the pill on small screens -->
+  <div
+    id="mobile-menu"
+    hidden
+    class="nav-pill pointer-events-auto mt-2 flex w-full max-w-4xl flex-col gap-1 rounded-2xl p-2 sm:hidden"
+  >
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          data-i18n={link.key}
+          data-menu-link
+          class="nav-link rounded-xl px-4 py-2.5 text-sm"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
 </header>
 
 <script>
@@ -56,6 +98,28 @@ const links = [
       const rect = pill.getBoundingClientRect();
       pill.style.setProperty('--mx', `${event.clientX - rect.left}px`);
       pill.style.setProperty('--my', `${event.clientY - rect.top}px`);
+    });
+  }
+
+  // Mobile dropdown menu.
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    const setOpen = (open: boolean) => {
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    btn.addEventListener('click', () => setOpen(menu.hidden));
+    menu.querySelectorAll('[data-menu-link]').forEach((link) =>
+      link.addEventListener('click', () => setOpen(false))
+    );
+    document.addEventListener('click', (event) => {
+      const target = event.target as Node;
+      if (!menu.hidden && !menu.contains(target) && !btn.contains(target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menu.hidden) setOpen(false);
     });
   }
 </script>

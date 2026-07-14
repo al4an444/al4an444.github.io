@@ -220,10 +220,13 @@ html {
   color: #6ea2ff;
 }
 
-/* Section & hero headings — near-white with the faintest top-down depth */
+/* Section & hero headings — near-white with the faintest top-down depth.
+   `background-clip: text` only paints within the box, so a little bottom
+   padding keeps glyph descenders (g, p, y) from clipping under tight leading. */
 .heading {
   font-family: var(--font-display);
   letter-spacing: -0.03em;
+  padding-bottom: 0.12em;
   background: linear-gradient(180deg, #ffffff, #cdd5df);
   -webkit-background-clip: text;
   background-clip: text;
@@ -233,6 +236,7 @@ html {
 /* Reused by the hero name & stat numbers — kept as a clean near-white
    (name intentionally has no glow in this minimal system). */
 .text-glow-gradient {
+  padding-bottom: 0.08em;
   background: linear-gradient(180deg, #ffffff, #c2ccd8);
   -webkit-background-clip: text;
   background-clip: text;

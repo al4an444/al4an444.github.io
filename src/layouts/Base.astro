@@ -13,6 +13,29 @@ interface Props {
 
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Alan Ortega',
+  alternateName: 'al4an444',
+  jobTitle: 'Security Researcher',
+  description:
+    'Self-taught security researcher finding and responsibly disclosing vulnerabilities in widely-used software.',
+  url: Astro.site?.href,
+  email: 'mailto:alanortega7312@gmail.com',
+  knowsAbout: [
+    'Vulnerability research',
+    'Source-code review',
+    'Application security',
+    'Authentication and authorization bypasses',
+    'Responsible disclosure',
+  ],
+  sameAs: [
+    'https://github.com/al4an444',
+    'https://www.linkedin.com/in/alan-o-b70724290',
+  ],
+};
 ---
 
 <!doctype html>
@@ -40,6 +63,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL('/og.png', Astro.site)} />
     <meta name="generator" content={Astro.generator} />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} is:inline />
     <script is:inline>
       // Marks JS availability so reveal styles only hide content when the
       // IntersectionObserver below is actually going to run.

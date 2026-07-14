@@ -86,7 +86,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
   <main id="top">
     <!-- ============================== Hero ============================== -->
     <section id="hero" class="glow relative isolate flex min-h-[100svh] flex-col justify-center">
-      <SectionPhoto src="/img/hero-circuit.webp" opacity={0.3} />
+      <SectionPhoto src="/img/hero-circuit.webp" opacity={0.22} />
       <div class="hero-in hero-exit mx-auto w-full max-w-5xl px-6 pt-24">
         <p
           class="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1.5 pr-4 pl-3 text-xs font-medium text-zinc-300"
@@ -147,7 +147,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
 
     <!-- ============================ Numbers ============================= -->
     <section id="stats" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/servers-blue.webp" opacity={0.26} />
+      <SectionPhoto src="/img/servers-blue.webp" opacity={0.16} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="stats.eyebrow" class="eyebrow reveal"># In numbers</p>
         <h2 data-i18n="stats.title" class="heading reveal mt-5 max-w-2xl text-3xl font-bold sm:text-5xl">
@@ -175,7 +175,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
 
     <!-- ========================== Latest finding ======================== -->
     <section id="latest" class="glow section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/nvidia-logo.webp" opacity={0.32} />
+      <SectionPhoto src="/img/nvidia-logo.webp" opacity={0.2} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="latest.eyebrow" class="eyebrow reveal"># Latest finding</p>
         <h2
@@ -206,7 +206,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
             security team has <span class="text-emerald-400">confirmed and reproduced</span> the
             finding, which is now under active review.
           </p>
-          <p data-i18n="latest.p2" class="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-500">
+          <p data-i18n="latest.p2" class="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-400">
             Details are withheld while the report is being handled — in line with responsible
             disclosure, I'll only publish a technical writeup once the issue is resolved and public.
           </p>
@@ -216,6 +216,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
 
     <!-- ============================= About ============================== -->
     <section id="about" class="section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/sunset-field.webp" opacity={0.18} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="about.eyebrow" class="eyebrow reveal"># About</p>
         <div class="mt-9 grid items-start gap-12 lg:grid-cols-[1fr_320px]">
@@ -269,7 +270,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
 
     <!-- ======================== Featured finding ======================== -->
     <section class="glow section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.24} />
+      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.16} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="featured.eyebrow" class="eyebrow reveal"># Featured finding</p>
         <h2
@@ -371,7 +372,8 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- =========================== Research ============================= -->
-    <section id="research" class="section-line py-28 sm:py-36">
+    <section id="research" class="section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/code-review.webp" opacity={0.15} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="research.eyebrow" class="eyebrow reveal"># Security research</p>
         <h2
@@ -399,12 +401,12 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
               <span><span class="font-mono text-zinc-300">{p}</span>{i < additionalReports.projects.length - 1 ? ', ' : ''}</span>
             ))} — covering {additionalReports.topics}.
           </p>
-          <p data-i18n="research.addTotal" class="mt-3 font-mono text-xs text-zinc-500">
+          <p data-i18n="research.addTotal" class="mt-3 font-mono text-xs text-zinc-400">
             Total: {additionalReports.total} vulnerability reports submitted to Google's Open
             Source VRP.
           </p>
         </div>
-        <p data-i18n="research.disclosure" class="reveal mt-6 text-xs leading-relaxed text-zinc-600">
+        <p data-i18n="research.disclosure" class="reveal mt-6 text-xs leading-relaxed text-zinc-400">
           Detailed technical writeups are published only for findings that are already public.
           Non-public reports are listed at a high level — project, vulnerability class and status —
           with no exploitable details, in line with responsible disclosure.
@@ -449,7 +451,8 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- ============================ Skills ============================== -->
-    <section id="skills" class="section-line py-28 sm:py-36">
+    <section id="skills" class="section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/terminal-sudo.webp" opacity={0.15} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="skills.eyebrow" class="eyebrow reveal"># Skills</p>
         <h2 data-i18n="skills.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
@@ -479,7 +482,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
 
     <!-- ===================== Experience & Education ===================== -->
     <section id="experience" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/network.webp" opacity={0.22} />
+      <SectionPhoto src="/img/network.webp" opacity={0.15} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="exp.eyebrow" class="eyebrow reveal"># Experience &amp; education</p>
         <h2 data-i18n="exp.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
@@ -489,7 +492,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
           <div class="reveal">
             <h3
               data-i18n="exp.edu"
-              class="mb-6 font-mono text-xs tracking-widest text-zinc-500 uppercase"
+              class="mb-6 font-mono text-xs tracking-widest text-zinc-400 uppercase"
             >
               Education
             </h3>
@@ -510,7 +513,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
           <div class="reveal" style="--reveal-delay: 120ms">
             <h3
               data-i18n="exp.exp"
-              class="mb-6 font-mono text-xs tracking-widest text-zinc-500 uppercase"
+              class="mb-6 font-mono text-xs tracking-widest text-zinc-400 uppercase"
             >
               Experience
             </h3>
@@ -521,7 +524,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
                     <p class="font-display text-sm font-semibold tracking-tight text-zinc-100">
                       {item.title}
                     </p>
-                    <p class="mt-1 text-sm text-zinc-500">{item.place}</p>
+                    <p class="mt-1 text-sm text-zinc-400">{item.place}</p>
                     <p class="mt-1 font-mono text-xs text-emerald-400/80">{item.period}</p>
                   </li>
                 ))
@@ -532,7 +535,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
         <div class="reveal mt-14" style="--reveal-delay: 200ms">
           <h3
             data-i18n="exp.certs"
-            class="mb-6 font-mono text-xs tracking-widest text-zinc-500 uppercase"
+            class="mb-6 font-mono text-xs tracking-widest text-zinc-400 uppercase"
           >
             Certifications — self-directed
           </h3>
@@ -566,7 +569,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
                       <span class="font-display block font-semibold tracking-tight text-zinc-100">
                         {cert.name}
                       </span>
-                      <span class="mt-1.5 block font-mono text-xs text-zinc-500">
+                      <span class="mt-1.5 block font-mono text-xs text-zinc-400">
                         {cert.issuer} · {cert.date}
                       </span>
                       <span
@@ -597,7 +600,8 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- =========================== Projects ============================= -->
-    <section id="projects" class="section-line py-28 sm:py-36">
+    <section id="projects" class="section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/dev-desk.webp" opacity={0.15} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="projects.eyebrow" class="eyebrow reveal"># Projects</p>
         <h2 data-i18n="projects.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
@@ -638,7 +642,8 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
     </section>
 
     <!-- ========================== At a glance =========================== -->
-    <section id="glance" class="section-line py-28 sm:py-36">
+    <section id="glance" class="section-line relative isolate py-28 sm:py-36">
+      <SectionPhoto src="/img/earth-night.webp" opacity={0.16} />
       <div class="mx-auto max-w-5xl px-6">
         <p data-i18n="glance.eyebrow" class="eyebrow reveal"># At a glance</p>
         <h2 data-i18n="glance.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
@@ -655,7 +660,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
                 style={`--reveal-delay: ${i * 60}ms`}
               >
                 <dt
-                  class="font-mono text-[11px] tracking-widest text-zinc-500 uppercase"
+                  class="font-mono text-[11px] tracking-widest text-zinc-400 uppercase"
                   data-i18n={`glance.l${i}`}
                 >
                   {item.label}
@@ -681,7 +686,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
 
     <!-- ============================ Contact ============================= -->
     <section id="contact" class="glow section-line relative isolate py-32 sm:py-44">
-      <SectionPhoto src="/img/server-corridor.webp" opacity={0.28} />
+      <SectionPhoto src="/img/server-corridor.webp" opacity={0.18} />
       <div class="mx-auto max-w-5xl px-6 text-center">
         <h2
           data-i18n="contact.title"
