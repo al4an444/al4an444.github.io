@@ -8,116 +8,73 @@
   (() => {
     const es = {
       // Nav
-      'nav.latest': 'Novedad',
-      'nav.research': 'Investigación',
-      'nav.projects': 'Proyectos',
+      'nav.about': 'Sobre mí',
+      'nav.education': 'Formación',
+      'nav.work': 'Trabajo',
       'nav.skills': 'Habilidades',
+      'nav.projects': 'Proyectos',
       'nav.contact': 'Contacto',
-      // Hero
-      'hero.badge': 'Disponible para roles junior de seguridad — Países Bajos o remoto',
-      'hero.tagline':
-        'Encuentro y divulgo de forma responsable <span class="text-emerald-400">vulnerabilidades de seguridad críticas</span> en el software del que depende el mundo.',
-      'hero.intro':
-        'Investigador de seguridad autodidacta. Reviso código fuente en Go, C/C++, Python y stacks web en busca de bypasses de autenticación/autorización, debilidades de cadena de suministro y otros fallos — reportados a través del VRP de código abierto de Google y plataformas públicas de bug bounty.',
-      'hero.btn.research': 'Ver investigación',
+      // Intro
+      'hero.kicker': 'Roles junior de seguridad en Países Bajos o remoto',
+      'hero.lead': 'Investigador de seguridad autodidacta.',
+      'hero.btn.work': 'Ver el trabajo',
+      'hero.btn.contact': 'Hablemos',
       'hero.btn.cv': 'Descargar CV',
-      'hero.btn.contact': 'Contacto',
-      // Stats
-      'stats.eyebrow': '# En números',
-      'stats.title': 'Hallazgos reales. Impacto verificable.',
-      'stats.l0': 'reportes de vulnerabilidad enviados',
-      'stats.l1': 'hallazgo de mayor severidad (Crítico)',
-      'stats.l2': 'bug de grpc-go corregido upstream (CVSS, Alto)',
-      'stats.l3': 'plataformas de bug bounty activas',
-      // About
-      'about.eyebrow': '# Sobre mí',
+      // 01 · About
+      'about.eyebrow': 'Quién soy',
+      'about.title': 'Veinte años.<br />Totalmente autodidacta.',
       'about.p1':
-        'Soy un <span class="text-zinc-100">investigador de seguridad de 20 años, totalmente autodidacta</span>, afincado en Madrid y mudándome a los Países Bajos. Reviso proyectos muy utilizados en busca de <span class="text-zinc-100">bypasses de autenticación y autorización</span>, <span class="text-zinc-100">problemas de integridad de la cadena de suministro</span> y <span class="text-zinc-100">bugs de denegación de servicio</span>.',
+        'Vivo en Madrid y me mudo a los Países Bajos. Reviso software muy utilizado en busca de <span class="text-zinc-100">bypasses de autenticación y autorización</span>, <span class="text-zinc-100">problemas de integridad en la cadena de suministro</span> y <span class="text-zinc-100">bugs de denegación de servicio</span>.',
       'about.p2':
-        'Aprendo rápido y profundizo — convirtiendo la curiosidad por cómo se rompen los sistemas en <span class="text-zinc-100">resultados verificables</span>. Mi trabajo pasa por el VRP de código abierto de Google — incluida una vulnerabilidad en grpc-go que <span class="text-emerald-400">Google corrigió</span> — y por plataformas públicas de bug bounty.',
-      // Latest finding
-      'latest.eyebrow': '# Último hallazgo',
-      'latest.title': 'Actualmente colaborando con NVIDIA.',
-      'latest.status': 'Reproducido y en revisión',
-      'latest.p1':
-        'Actualmente estoy colaborando con <span class="text-zinc-100">NVIDIA</span> en una vulnerabilidad de severidad alta que reporté a través de su programa de bug bounty. El equipo de seguridad de NVIDIA ha <span class="text-emerald-400">confirmado y reproducido</span> el hallazgo, que ahora está en revisión activa.',
-      'latest.p2':
-        'Los detalles se mantienen reservados mientras se gestiona el reporte — conforme a la divulgación responsable, solo publicaré un writeup técnico cuando el problema esté resuelto y sea público.',
-      // Featured
-      'featured.eyebrow': '# Hallazgo destacado',
-      'featured.title': 'Rompiendo la autenticación<br />en el motor RBAC de gRPC.',
-      'featured.p1':
-        'En <span class="font-mono text-zinc-200">grpc-go</span> — la implementación en Go de gRPC, usada en infraestructura cloud de todo el mundo — el <span class="font-mono text-zinc-200">authenticatedMatcher</span> de xDS RBAC caía desde el SAN URI/DNS hasta el Subject DN del certificado.',
-      'featured.p2':
-        'El resultado: un <span class="text-zinc-200">bypass de autenticación</span> en la capa de autorización, puntuado <span class="text-emerald-400">CVSS 7.5 (Alto)</span>. Reportado a través del VRP de código abierto de Google — <span class="text-emerald-400">y corregido por Google</span>.',
-      'featured.p3':
-        'Ya es público: integrado en el <span class="font-mono text-zinc-200">PR #9111</span> y publicado en <span class="font-mono text-zinc-200">grpc-go v1.81.1</span>, cuyas notas de versión me citan por nombre.',
-      // Research
-      'research.eyebrow': '# Investigación de seguridad',
-      'research.title': 'Más hallazgos.',
-      'research.desc':
-        'Reportados de forma responsable a través del VRP / Bug Hunters de código abierto de Google y plataformas públicas de bug bounty.',
-      'research.addEyebrow': '+ Reportes adicionales',
-      'research.addTotal':
-        'Total: 12 reportes de vulnerabilidad enviados al VRP de código abierto de Google.',
-      'research.disclosure':
-        'Los writeups técnicos detallados solo se publican para hallazgos que ya son públicos. Los reportes no públicos se listan a alto nivel — proyecto, clase de vulnerabilidad y estado — sin detalles explotables, conforme a la divulgación responsable.',
-      'research.caseEyebrow': '# Caso de estudio',
-      'research.caseStatus': 'Divulgado y remediado',
-      'research.caseTitle':
-        'Compromiso de dominio vía ZeroLogon (CVE-2020-1472) — y la solución',
-      'research.caseDesc':
-        'Detecté que el controlador de dominio de mi centro educativo estaba expuesto a ZeroLogon, demostré el impacto de forma responsable, lo reporté de inmediato y colaboré con el centro para remediar y reforzar la infraestructura.',
-      'research.caseLink': 'Leer el caso de estudio &rarr;',
+        'Nadie me asignó esto. Lo aprendí leyendo el código de otros, y todo lo que encuentro pasa por el canal de divulgación del propio fabricante, nunca por otro sitio.',
+      // 02 · Education
+      'edu.eyebrow': 'Qué he estudiado',
+      'edu.title': 'Formación reglada,<br />más la parte que hice yo.',
+      'edu.school': 'Formación',
+      'edu.work': 'Experiencia',
+      'edu.certs': 'Certificaciones de autoformación',
+      // 03 · Work
+      'work.eyebrow': 'Con quién trabajo',
+      'work.title': 'Google, Microsoft<br />y NVIDIA.',
+      'work.google.status': 'Corregido · v1.81.1',
+      'work.google.desc':
+        'Un bypass de autenticación en el motor xDS RBAC de gRPC: el authenticatedMatcher caía desde el SAN URI/DNS hasta el Subject DN del certificado. Corregido por Google y citado por nombre en las notas de versión.',
+      'work.microsoft.status': 'En revisión',
+      'work.microsoft.desc':
+        'Reportado a través de MSRC y actualmente en revisión. Los detalles se mantienen reservados hasta que se resuelva.',
+      'work.nvidia.status': 'Reproducido · en revisión',
+      'work.nvidia.desc':
+        'El equipo de seguridad de NVIDIA confirmó y reprodujo el reporte, que ahora está en revisión activa. Los detalles se mantienen reservados hasta que se resuelva.',
+      'work.note':
+        'Los reportes abiertos se quedan en este nivel: fabricante, severidad y estado, nada explotable. Siguen así hasta que el fabricante los resuelva y los publique.',
+      'work.all': 'Todos los hallazgos &rarr;',
       // Skills
-      'skills.eyebrow': '# Habilidades',
+      'skills.eyebrow': 'Habilidades',
       'skills.title': 'Con lo que trabajo.',
       'skills.cat0': 'Seguridad',
       'skills.cat1': 'Programación',
       'skills.cat2': 'Sistemas y redes',
       'skills.cat3': 'Idiomas',
-      // Experience
-      'exp.eyebrow': '# Experiencia y formación',
-      'exp.title': 'La trayectoria.',
-      'exp.edu': 'Formación',
-      'exp.exp': 'Experiencia',
-      'exp.certs': 'Certificaciones — autoformación',
       // Projects
-      'projects.eyebrow': '# Proyectos',
+      'projects.eyebrow': 'Lo que construyo',
       'projects.title': 'Lo que construyo.',
-      // Certifications
-      'certs.view': 'Ver título ↗',
-      // At a glance
-      'glance.eyebrow': '# De un vistazo',
-      'glance.title': 'Todo, en 10 segundos.',
-      'glance.l0': 'Rol',
-      'glance.v0': 'Investigador de seguridad',
-      'glance.l1': 'Enfoque',
-      'glance.v1': 'Revisión de código y vuln research',
-      'glance.l2': 'Trayectoria',
-      'glance.v2': '12 reportes · 4 plataformas',
-      'glance.l3': 'Destacado',
-      'glance.v3': 'grpc-go CVSS 7.5 — corregido por Google',
-      'glance.l4': 'Formación',
-      'glance.v4': 'ASIR (grado superior), 2025–2027',
-      'glance.l5': 'Idiomas',
-      'glance.v5': 'Español · Inglés',
-      'glance.l6': 'Ubicación',
-      'glance.v6': 'Madrid → Países Bajos',
-      'glance.l7': 'Disponible para',
-      'glance.v7': 'Roles junior de appsec / vuln research · NL o remoto',
-      'glance.btnCV': 'Descargar CV',
-      'glance.btnList': 'Lista completa de investigación',
+      // Case study
+      'case.eyebrow': 'Caso de estudio',
+      'case.status': 'Divulgado y remediado',
+      'case.title': 'Compromiso de dominio vía ZeroLogon (CVE-2020-1472), y la solución',
+      'case.desc':
+        'Detecté que el controlador de dominio de mi centro estaba expuesto a ZeroLogon, demostré el impacto de forma responsable, lo reporté de inmediato y colaboré con el centro para remediar y reforzar la infraestructura.',
+      'case.link': 'Leer el caso de estudio &rarr;',
       // Contact
-      'contact.title': 'Encontremos el próximo bug<span class="text-emerald-400">.</span>',
+      'contact.title': 'Hablemos<span class="text-emerald-600">.</span>',
       'contact.desc':
-        'Disponible para roles junior en seguridad de aplicaciones, investigación de vulnerabilidades o ingeniería de seguridad — Países Bajos o remoto.',
+        'Disponible para roles junior en seguridad de aplicaciones, investigación de vulnerabilidades o ingeniería de seguridad, en Países Bajos o remoto.',
       // Footer
       'footer.built': 'hecho con Astro · cero JS innecesario',
       // Homepage <title> / meta description
-      'meta.title': 'Alan Ortega — Investigador de Seguridad',
+      'meta.title': 'Alan Ortega · Investigador de Seguridad',
       'meta.desc':
-        'Investigador de seguridad autodidacta que encuentra y divulga responsablemente vulnerabilidades en software ampliamente utilizado. 12 reportes a través del VRP de código abierto de Google, incluido un bypass de autenticación CVSS 7.5 en grpc-go corregido por Google.',
+        'Investigador de seguridad autodidacta que encuentra y divulga responsablemente vulnerabilidades en software ampliamente utilizado, incluido un bypass de autenticación CVSS 7.5 en grpc-go corregido por Google.',
     };
 
     const originals = new Map();

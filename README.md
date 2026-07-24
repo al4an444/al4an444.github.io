@@ -47,5 +47,12 @@ Set `draft: true` in the frontmatter to keep it unpublished.
 
 ## Updating findings
 
-Edit `src/data/findings.ts` — the cards on the landing page and `/research/` are
-generated from there.
+Edit `src/data/findings.ts` — the finding cards on `/research/` are generated
+from there (`findings[]`, plus `projects` and `certifications` for the landing
+page). Only three findings are surfaced: the public grpc-go writeup carries full
+detail; the NVIDIA and Microsoft reports are non-public and are kept high-level
+(vendor · severity · status · payout), with no exploitable details. The landing
+page's featured grpc-go section is hand-written in `src/pages/index.astro`.
+
+> **Responsible disclosure rule:** publish detailed writeups only for findings
+> that are already public. Active/confidential reports stay high-level.
