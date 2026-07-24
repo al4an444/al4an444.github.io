@@ -5,6 +5,7 @@ import '@fontsource-variable/space-grotesk';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 import LangScript from '../components/LangScript.astro';
+import FieldArt from '../components/FieldArt.astro';
 
 interface Props {
   title: string;
@@ -49,7 +50,7 @@ const personSchema = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="theme-color" content="#131a26" />
+    <meta name="theme-color" content="#f8fbf9" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -57,7 +58,7 @@ const personSchema = {
     <meta property="og:image" content={new URL('/og.png', Astro.site)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Alan Ortega — Security Researcher" />
+    <meta property="og:image:alt" content="Alan Ortega · Security Researcher" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -72,6 +73,7 @@ const personSchema = {
   </head>
   <body class="bg-zinc-950 font-sans text-zinc-300 antialiased">
     <div class="site-bg" aria-hidden="true"></div>
+    <FieldArt backdrop seed={0x9111} traces={240} accentIndex={137} />
     <slot />
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -93,58 +95,6 @@ const personSchema = {
           { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
         );
         targets.forEach((el) => observer.observe(el));
-      }
-
-      /* ------------- Count-up stats on scroll ------------ */
-      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
-      if (counters.length > 0 && !reduceMotion && 'IntersectionObserver' in window) {
-        const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-        const animate = (el: HTMLElement) => {
-          const raw = el.dataset.count ?? '0';
-          const target = parseFloat(raw);
-          const decimals = raw.includes('.') ? raw.split('.')[1].length : 0;
-          const duration = 1400;
-          const start = performance.now();
-          const tick = (now: number) => {
-            const t = Math.min((now - start) / duration, 1);
-            el.textContent = (target * easeOut(t)).toFixed(decimals);
-            if (t < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        };
-        const countObserver = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                animate(entry.target as HTMLElement);
-                countObserver.unobserve(entry.target);
-              }
-            }
-          },
-          { threshold: 0.4 }
-        );
-        counters.forEach((el) => {
-          const raw = el.dataset.count ?? '0';
-          const decimals = raw.includes('.') ? raw.split('.')[1].length : 0;
-          el.textContent = (0).toFixed(decimals);
-          countObserver.observe(el);
-        });
-      }
-
-      /* --------- Hero terminal typing effect -------------- */
-      const typer = document.querySelector<HTMLElement>('[data-typer]');
-      if (typer && !reduceMotion) {
-        const text = typer.textContent ?? '';
-        typer.textContent = '';
-        let i = 0;
-        const type = () => {
-          if (i <= text.length) {
-            typer.textContent = text.slice(0, i);
-            i++;
-            setTimeout(type, 75 + Math.random() * 70);
-          }
-        };
-        setTimeout(type, 450);
       }
 
       /* ----------------- Nav scrollspy -------------------- */

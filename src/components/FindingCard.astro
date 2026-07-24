@@ -8,21 +8,22 @@ interface Props {
 const { finding } = Astro.props;
 
 const statusStyles: Record<Finding['statusKind'], string> = {
-  fixed: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400',
-  accepted: 'border-sky-500/40 bg-sky-500/10 text-sky-400',
-  reported: 'border-zinc-600 bg-zinc-800/60 text-zinc-400',
-  duplicate: 'border-violet-500/40 bg-violet-500/10 text-violet-300',
+  fixed: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600',
+  accepted: 'border-sky-600/40 bg-sky-500/10 text-sky-700',
+  reported: 'border-zinc-600/60 bg-zinc-800/60 text-zinc-500',
+  duplicate: 'border-violet-600/40 bg-violet-500/10 text-violet-700',
 };
 
 // Critical severities get a red badge; everything else uses the accent colour.
 const isCritical = finding.severity?.toLowerCase().includes('critical');
 const severityStyle = isCritical
-  ? 'border-red-500/50 bg-red-500/10 text-red-400'
-  : 'border-emerald-400/40 bg-emerald-400/10 text-emerald-400';
+  ? 'border-red-600/40 bg-red-500/12 text-red-700'
+  : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600';
 ---
 
-<article class:list={['card reveal p-6', finding.featured && 'card-featured']}>
-  <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+<article class:list={['card reveal relative p-6', finding.featured && 'card-featured']}>
+  {finding.payout && <span class="payout-badge">{finding.payout}</span>}
+  <div class="flex flex-wrap items-center gap-2 pr-16 font-mono text-xs">
     <span class="font-medium text-zinc-100">{finding.project}</span>
     {
       finding.severity && (

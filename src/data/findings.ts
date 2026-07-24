@@ -15,10 +15,11 @@ export interface Finding {
   links?: FindingLink[];
 }
 
-// NOTE: earlier revisions of this file listed vulnerability reports that were
-// still open with their vendors, naming the affected component and the bypass
-// mechanism. That content was redacted from this repository's history in July
-// 2026 under responsible disclosure. Only the public grpc-go finding remains.
+// Only three findings are surfaced. grpc-go is public, so it carries full
+// detail and links. The NVIDIA and Microsoft reports are non-public and
+// unresolved — kept deliberately high-level (vendor · program · severity ·
+// status), with no titles, technique, CWE, CVSS vector or PoC, in line with
+// responsible disclosure.
 export const findings: Finding[] = [
   {
     project: 'grpc-go',
@@ -29,6 +30,7 @@ export const findings: Finding[] = [
     summary:
       'The authenticatedMatcher fell through from URI/DNS SAN to the Subject DN, allowing an authorization bypass in the xDS RBAC engine.',
     featured: true,
+    payout: '$3,133',
     links: [
       { href: 'https://github.com/grpc/grpc-go/pull/9111', label: 'Fix PR #9111' },
       {
@@ -37,18 +39,27 @@ export const findings: Finding[] = [
       },
     ],
   },
+  {
+    project: 'NVIDIA · Public Bug Bounty / PSIRT',
+    title: 'High-severity vulnerability',
+    severity: 'High severity',
+    status: 'Reproduced & under review',
+    statusKind: 'reported',
+    payout: '$4,000',
+    summary:
+      "Confirmed and reproduced by NVIDIA's security team and now under active review. Details are withheld pending resolution, in line with responsible disclosure.",
+  },
+  {
+    project: 'Microsoft · MSRC / Azure',
+    title: 'High-severity vulnerability',
+    severity: 'High severity',
+    status: 'Under review',
+    statusKind: 'reported',
+    payout: '$10,000',
+    summary:
+      'Reported to Microsoft (MSRC) and currently under review and reproduction. Details are withheld pending resolution, in line with responsible disclosure.',
+  },
 ];
-
-// Redacted: the project list and technique summary described reports that were
-// unresolved at the time of writing.
-export const additionalReports = {
-  projects: [] as string[],
-  topics: '[redacted]',
-  total: 0,
-};
-
-// Bug-bounty platforms / programs I report through.
-export const platforms = ['Google OSS VRP', 'YesWeHack', 'HackerOne', 'Bugcrowd'];
 
 export interface Project {
   name: string;

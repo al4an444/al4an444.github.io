@@ -2,25 +2,13 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import FindingCard from '../components/FindingCard.astro';
-import SectionPhoto from '../components/SectionPhoto.astro';
-import { findings, additionalReports, platforms, projects, certifications } from '../data/findings';
-
-const featured = findings.find((f) => f.featured)!;
-const rest = findings.filter((f) => !f.featured);
-
-const stats = [
-  { value: '12', label: 'vulnerability reports submitted' },
-  { value: '10.0', label: 'highest-severity finding (Critical)' },
-  { value: '7.5', label: 'grpc-go bug fixed upstream (CVSS, High)' },
-  { value: '4', label: 'bug-bounty platforms active on' },
-];
+import { projects, certifications } from '../data/findings';
 
 const skills = [
   {
     category: 'Security',
     items:
-      'Vulnerability research · source-code review (Go, C/C++, Python) · authentication/authorization bypass analysis · supply-chain & build integrity · denial-of-service analysis · Active Directory exploitation (ZeroLogon, DCSync, Pass-the-Hash) · responsible disclosure · CVSS v3.1 scoring · PoC development',
+      'Vulnerability research · source-code review (Go, C/C++, Python) · authentication/authorization bypass analysis · AI-assisted red teaming · supply-chain & build integrity · denial-of-service analysis · Active Directory exploitation (ZeroLogon, DCSync, Pass-the-Hash) · responsible disclosure · CVSS v3.1 scoring · PoC development',
   },
   {
     category: 'Programming',
@@ -39,96 +27,105 @@ const skills = [
 
 const education = [
   {
-    title: 'Higher Vocational Degree (HND) — Network Systems Administration (ASIR)',
+    title: 'Higher Vocational Degree (HND) in Network Systems Administration (ASIR)',
     place: 'IES Jovellanos / ILERNA Online',
-    period: '2025 – 2027 (in progress)',
+    period: '2025 to 2027 (in progress)',
   },
   {
-    title: 'Vocational Diploma — Microcomputer Systems & Networks (SMR)',
+    title: 'Vocational Diploma in Microcomputer Systems & Networks (SMR)',
     place: '',
-    period: '2023 – 2025',
+    period: '2023 to 2025',
   },
 ];
 
 const experience = [
   {
     title: 'Technical Support',
-    place: 'MOMPALAO — IT company, Malta',
-    period: 'Mar – May 2025',
+    place: 'MOMPALAO, IT company, Malta',
+    period: 'Mar to May 2025',
   },
   {
     title: 'Seasonal work while studying',
     place: 'Slagharen Theme Park (NL) · El Corte Inglés (ES)',
-    period: 'Nov 2024 – Aug 2025',
+    period: 'Nov 2024 to Aug 2025',
   },
 ];
 
-const glance = [
-  { label: 'Role', value: 'Security Researcher' },
-  { label: 'Focus', value: 'Source-code review & vuln research' },
-  { label: 'Track record', value: '12 reports · 4 platforms' },
-  { label: 'Highlight', value: 'grpc-go CVSS 7.5 — fixed by Google' },
-  { label: 'Education', value: 'ASIR (HND), 2025–2027' },
-  { label: 'Languages', value: 'Spanish · English' },
-  { label: 'Location', value: 'Madrid → Netherlands' },
-  { label: 'Open to', value: 'Junior appsec / vuln research · NL or remote' },
+// Vendors whose security teams have handled my reports. Google's finding is
+// public and fully documented; the NVIDIA and Microsoft reports are still open,
+// so they stay high-level — vendor, severity, status, nothing more.
+const vendors = [
+  {
+    key: 'google',
+    name: 'Google',
+    scope: 'grpc-go · Open Source VRP',
+    status: 'Fixed · v1.81.1',
+    statusKind: 'fixed',
+    severity: 'CVSS 7.5',
+    payout: '$3,133',
+    links: [
+      { href: 'https://github.com/grpc/grpc-go/pull/9111', label: 'Fix PR #9111' },
+      {
+        href: 'https://newreleases.io/project/github/grpc/grpc-go/release/v1.81.1',
+        label: 'Release notes',
+      },
+    ],
+  },
+  {
+    key: 'microsoft',
+    name: 'Microsoft',
+    scope: 'Azure · MSRC',
+    status: 'Under review',
+    statusKind: 'open',
+    severity: 'High',
+    payout: '$10,000',
+    links: [],
+  },
+  {
+    key: 'nvidia',
+    name: 'NVIDIA',
+    scope: 'PSIRT · Public Bug Bounty',
+    status: 'Reproduced · under review',
+    statusKind: 'open',
+    severity: 'High',
+    payout: '$4,000',
+    links: [],
+  },
 ];
-
-// Bento spans per glance cell on lg (6-column grid)
-const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
 ---
 
 <Base
-  title="Alan Ortega — Security Researcher"
-  description="Self-taught security researcher finding and responsibly disclosing vulnerabilities in widely-used software. 12 reports through Google's Open Source VRP, including a CVSS 7.5 authentication bypass in grpc-go fixed by Google."
+  title="Alan Ortega · Security Researcher"
+  description="Self-taught security researcher finding and responsibly disclosing vulnerabilities in widely-used software, including a CVSS 7.5 authentication bypass in grpc-go fixed by Google."
 >
   <Nav />
   <main id="top">
-    <!-- ============================== Hero ============================== -->
-    <section id="hero" class="glow relative isolate flex min-h-[100svh] flex-col justify-center">
-      <SectionPhoto src="/img/hero-circuit.webp" opacity={0.22} />
-      <div class="hero-in hero-exit mx-auto w-full max-w-5xl px-6 pt-24">
-        <p
-          class="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1.5 pr-4 pl-3 text-xs font-medium text-zinc-300"
-          style="--i: 0"
-        >
+    <!-- ============================== Intro ============================= -->
+    <section id="hero" class="relative isolate flex min-h-[100svh] flex-col justify-center">
+      <div class="hero-exit mx-auto w-full max-w-5xl px-6 pt-24">
+        <p class="hero-kicker" style="--i: 0">
           <span class="pulse-dot"></span>
-          <span data-i18n="hero.badge">Open to junior security roles — NL or remote</span>
+          <span data-i18n="hero.kicker">Junior security roles in the Netherlands or remote</span>
         </p>
-        <p class="mt-8 font-mono text-sm text-emerald-400" style="--i: 1">
-          $&nbsp;<span data-typer>whoami</span><span class="caret"></span>
-        </p>
-        <h1
-          class="text-glow-gradient font-display pb-2 text-6xl font-bold tracking-tighter sm:text-8xl lg:text-[8.5rem] lg:leading-[0.92]"
-          style="--i: 2"
-        >
-          Alan Ortega
+
+        <h1 class="name-draw" style="--i: 1">
+          <span class="name-ink">Alan Ortega</span>
+          <span class="name-pen" aria-hidden="true"></span>
         </h1>
-        <p
-          data-i18n="hero.tagline"
-          class="mt-6 max-w-3xl text-xl leading-snug font-medium text-zinc-200 sm:text-2xl"
-          style="--i: 3"
-        >
-          Finding and responsibly disclosing
-          <span class="text-emerald-400">critical security vulnerabilities</span>
-          in the software the world depends on.
+
+        <p data-i18n="hero.lead" class="hero-lead" style="--i: 2">
+          Self-taught security researcher.
         </p>
-        <p data-i18n="hero.intro" class="mt-5 max-w-2xl leading-relaxed text-zinc-400" style="--i: 4">
-          Self-taught security researcher reviewing source code across Go, C/C++, Python and web
-          stacks for authentication/authorization bypasses, supply-chain weaknesses and other flaws
-          — reported through Google's Open Source VRP and public bug-bounty platforms.
-        </p>
-        <div class="mt-10 flex flex-wrap gap-3" style="--i: 5">
-          <a href="#research" data-i18n="hero.btn.research" class="btn btn-primary">
-            View research
-          </a>
-          <a href="https://github.com/al4an444" class="btn btn-ghost">GitHub</a>
-          <a href="/cv.pdf" data-i18n="hero.btn.cv" class="btn btn-ghost">Download CV</a>
-          <a href="#contact" data-i18n="hero.btn.contact" class="btn btn-ghost">Contact</a>
+
+        <div class="mt-10 flex flex-wrap items-center gap-3" style="--i: 3">
+          <a href="#work" data-i18n="hero.btn.work" class="btn btn-primary">See the work</a>
+          <a href="#contact" data-i18n="hero.btn.contact" class="btn btn-ghost">Get in touch</a>
+          <a href="/cv.pdf" data-i18n="hero.btn.cv" class="hero-link">Download CV</a>
         </div>
       </div>
+
       <div class="absolute inset-x-0 bottom-8 flex justify-center">
-        <a href="#stats" aria-label="Scroll down" class="scroll-hint text-zinc-500">
+        <a href="#about" aria-label="Scroll down" class="scroll-hint text-zinc-500">
           <svg
             width="24"
             height="24"
@@ -145,308 +142,186 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
       </div>
     </section>
 
-    <!-- ============================ Numbers ============================= -->
-    <section id="stats" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/servers-blue.webp" opacity={0.16} />
-      <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="stats.eyebrow" class="eyebrow reveal"># In numbers</p>
-        <h2 data-i18n="stats.title" class="heading reveal mt-5 max-w-2xl text-3xl font-bold sm:text-5xl">
-          Real findings. Verifiable impact.
-        </h2>
-        <dl class="mt-16 grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-4">
-          {
-            stats.map((stat, i) => (
-              <div class="reveal border-t border-white/10 pt-6" style={`--reveal-delay: ${i * 90}ms`}>
-                <dd
-                  class="text-glow-gradient font-display text-5xl font-bold tracking-tight sm:text-7xl"
-                  data-count={stat.value}
-                >
-                  {stat.value}
-                </dd>
-                <dt class="mt-3 text-sm leading-snug text-zinc-400" data-i18n={`stats.l${i}`}>
-                  {stat.label}
-                </dt>
-              </div>
-            ))
-          }
-        </dl>
+    <!-- ===================== Cinema: three stations ===================== -->
+    <div class="cinema">
+      <!-- The one green thread, drawn as you pass through the three stations. -->
+      <div class="cinema-thread" aria-hidden="true">
+        <svg viewBox="0 0 60 900" preserveAspectRatio="xMidYMid meet" fill="none">
+          <path
+            class="thread-line"
+            pathLength="1"
+            d="M30 0 C 30 90, 8 130, 8 220 S 52 310, 52 450 S 8 590, 8 680 S 30 810, 30 900"
+            stroke="var(--color-accent)"
+            stroke-width="1.6"
+            stroke-linecap="round"
+          />
+          <circle class="thread-dot thread-dot-1" cx="8" cy="220" r="4" fill="var(--color-accent)" />
+          <circle class="thread-dot thread-dot-2" cx="52" cy="450" r="4" fill="var(--color-accent)" />
+          <circle class="thread-dot thread-dot-3" cx="8" cy="680" r="4" fill="var(--color-accent)" />
+        </svg>
       </div>
-    </section>
 
-    <!-- ========================== Latest finding ======================== -->
-    <section id="latest" class="glow section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/nvidia-logo.webp" opacity={0.2} />
-      <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="latest.eyebrow" class="eyebrow reveal"># Latest finding</p>
-        <h2
-          data-i18n="latest.title"
-          class="heading reveal mt-5 max-w-3xl text-3xl font-bold sm:text-5xl"
-        >
-          Currently working with NVIDIA.
-        </h2>
-        <div class="card card-featured reveal mt-10 p-7 sm:p-9" style="--reveal-delay: 120ms">
-          <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
-            <span class="font-medium text-zinc-100">NVIDIA — Public Bug Bounty / PSIRT</span>
-            <span class="rounded-md border border-amber-500/50 bg-amber-500/10 px-2 py-0.5 text-amber-400">
-              High severity
-            </span>
-            <span
-              data-i18n="latest.status"
-              class="rounded-md border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-400"
-            >
-              Reproduced &amp; under review
-            </span>
-          </div>
-          <p
-            data-i18n="latest.p1"
-            class="reveal mt-6 max-w-3xl text-xl leading-snug font-medium text-zinc-300 sm:text-2xl"
-          >
-            I'm currently working with <span class="text-zinc-100">NVIDIA</span> on a
-            high-severity vulnerability I reported through their bug-bounty program. NVIDIA's
-            security team has <span class="text-emerald-400">confirmed and reproduced</span> the
-            finding, which is now under active review.
-          </p>
-          <p data-i18n="latest.p2" class="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-400">
-            Details are withheld while the report is being handled — in line with responsible
-            disclosure, I'll only publish a technical writeup once the issue is resolved and public.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================= About ============================== -->
-    <section id="about" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/sunset-field.webp" opacity={0.18} />
-      <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="about.eyebrow" class="eyebrow reveal"># About</p>
-        <div class="mt-9 grid items-start gap-12 lg:grid-cols-[1fr_320px]">
-          <div>
-            <p
-              data-i18n="about.p1"
-              class="reveal max-w-3xl text-2xl leading-snug font-medium text-zinc-300 sm:text-3xl"
-            >
-              I'm a <span class="text-zinc-100">20-year-old, entirely self-taught security
-              researcher</span> based in Madrid, relocating to the Netherlands. I review widely-used
-              projects for <span class="text-zinc-100">authentication & authorization bypasses</span>,
-              <span class="text-zinc-100">supply-chain integrity issues</span> and
+      <!-- ---------------------- 01 · Who I am --------------------------- -->
+      <section id="about" class="stage">
+        <div class="stage-in">
+          <div class="stage-body">
+            <p class="station"><span class="station-no">01</span><span
+                data-i18n="about.eyebrow">Who I am</span></p>
+            <h2 data-i18n="about.title" class="heading stage-title">
+              Twenty years old.<br />Entirely self-taught.
+            </h2>
+            <p data-i18n="about.p1" class="stage-lead">
+              I'm based in Madrid and moving to the Netherlands. I review widely-used software for
+              <span class="text-zinc-100">authentication and authorization bypasses</span>,
+              <span class="text-zinc-100">supply-chain integrity problems</span> and
               <span class="text-zinc-100">denial-of-service bugs</span>.
             </p>
-            <p
-              data-i18n="about.p2"
-              class="reveal mt-8 max-w-3xl text-2xl leading-snug font-medium text-zinc-300 sm:text-3xl"
-              style="--reveal-delay: 120ms"
-            >
-              I learn fast and dig deep — turning curiosity about how systems break into
-              <span class="text-zinc-100">verifiable results</span>. My work goes through Google's Open
-              Source VRP — including a vulnerability in grpc-go that
-              <span class="text-emerald-400">Google fixed</span> — and public bug-bounty platforms.
+            <p data-i18n="about.p2" class="stage-note">
+              Nobody assigned me this. I learned it by reading other people's code, and everything
+              I find goes through the vendor's own disclosure process, never anywhere else.
             </p>
           </div>
-          <figure
-            class="reveal mx-auto mt-12 w-full max-w-[280px] lg:mx-0 lg:mt-0 lg:max-w-none"
-            style="--reveal-delay: 200ms"
-          >
-            <img
-              src="/img/alan-sunset.webp"
-              alt="Alan Ortega — sunset by the sea"
-              width="900"
-              height="1200"
-              loading="lazy"
-              decoding="async"
-              class="portrait-glass"
-            />
-          </figure>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ======================== Featured finding ======================== -->
-    <section class="glow section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/circuit-dark.webp" opacity={0.16} />
-      <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="featured.eyebrow" class="eyebrow reveal"># Featured finding</p>
-        <h2
-          data-i18n="featured.title"
-          class="heading reveal mt-5 max-w-3xl text-3xl font-bold sm:text-5xl"
-        >
-          Breaking authentication<br />in gRPC's RBAC engine.
-        </h2>
-        <div class="mt-16 grid items-start gap-12 lg:grid-cols-2">
-          <div class="space-y-5 lg:sticky lg:top-28">
-            <p data-i18n="featured.p1" class="reveal leading-relaxed text-zinc-400">
-              In <span class="font-mono text-zinc-200">grpc-go</span> — the Go implementation of
-              gRPC, used across cloud infrastructure worldwide — the xDS RBAC
-              <span class="font-mono text-zinc-200">authenticatedMatcher</span> fell through from
-              the URI/DNS SAN to the certificate's Subject DN.
-            </p>
-            <p
-              data-i18n="featured.p2"
-              class="reveal leading-relaxed text-zinc-400"
-              style="--reveal-delay: 100ms"
-            >
-              The result: an <span class="text-zinc-200">authentication bypass</span> in the
-              authorization layer, scored <span class="text-emerald-400">CVSS 7.5 (High)</span>.
-              Reported through Google's Open Source VRP —
-              <span class="text-emerald-400">and fixed by Google</span>.
-            </p>
-            <p
-              data-i18n="featured.p3"
-              class="reveal leading-relaxed text-zinc-400"
-              style="--reveal-delay: 200ms"
-            >
-              Now public: merged in <span class="font-mono text-zinc-200">PR #9111</span> and shipped
-              in <span class="font-mono text-zinc-200">grpc-go v1.81.1</span>, whose release notes
-              credit me by name.
-            </p>
-            <div class="reveal flex flex-wrap gap-3 pt-2" style="--reveal-delay: 280ms">
-              <a href="https://github.com/grpc/grpc-go/pull/9111" class="chip">
-                Fix PR #9111 &rarr;
-              </a>
-              <a
-                href="https://newreleases.io/project/github/grpc/grpc-go/release/v1.81.1"
-                class="chip"
-              >
-                Release notes &rarr;
-              </a>
-            </div>
-          </div>
-          <div class="reveal terminal-glow" style="--reveal-delay: 150ms">
-            <div class="terminal">
-              <div class="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
-                <span class="size-3 rounded-full bg-white/15"></span>
-                <span class="size-3 rounded-full bg-white/15"></span>
-                <span class="size-3 rounded-full bg-white/15"></span>
-                <span class="ml-3 font-mono text-xs text-zinc-500">report — grpc-go</span>
+      <!-- ---------------------- 02 · What I studied --------------------- -->
+      <section id="education" class="stage">
+        <div class="stage-in">
+          <div class="stage-body stage-body-wide">
+            <p class="station"><span class="station-no">02</span><span
+                data-i18n="edu.eyebrow">What I've studied</span></p>
+            <h2 data-i18n="edu.title" class="heading stage-title">
+              Formal training,<br />plus the part I did myself.
+            </h2>
+
+            <div class="edu-grid">
+              <div>
+                <h3 data-i18n="edu.school" class="col-label">Education</h3>
+                <ol class="timeline space-y-7">
+                  {
+                    education.map((item) => (
+                      <li>
+                        <p class="font-display text-sm font-semibold tracking-tight text-zinc-100">
+                          {item.title}
+                        </p>
+                        {item.place && <p class="mt-1 text-sm text-zinc-500">{item.place}</p>}
+                        <p class="mt-1 font-mono text-xs text-emerald-600">{item.period}</p>
+                      </li>
+                    ))
+                  }
+                </ol>
               </div>
-              <div class="space-y-2.5 p-5 font-mono text-sm">
-                <p class="text-zinc-500">$ cat report/grpc-go-xds-rbac</p>
-                <p>
-                  <span class="text-zinc-500">project&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-                    class="text-zinc-200">grpc-go (Google)</span
-                  >
-                </p>
-                <p>
-                  <span class="text-zinc-500">class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-                    class="text-zinc-200">authentication bypass</span
-                  >
-                </p>
-                <p>
-                  <span class="text-zinc-500">component&nbsp;&nbsp;</span><span
-                    class="text-zinc-200">xDS RBAC · authenticatedMatcher</span
-                  >
-                </p>
-                <p>
-                  <span class="text-zinc-500">severity&nbsp;&nbsp;&nbsp;</span><span
-                    class="text-emerald-400">CVSS 7.5 — HIGH</span
-                  >
-                </p>
-                <p>
-                  <span class="text-zinc-500">program&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-                    class="text-zinc-200">Google Open Source VRP</span
-                  >
-                </p>
-                <p>
-                  <span class="text-zinc-500">fix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-                    class="text-zinc-200">PR #9111 · v1.81.1</span
-                  >
-                </p>
-                <p>
-                  <span class="text-zinc-500">status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-                    class="text-emerald-400">FIXED BY GOOGLE ✓</span
-                  >
-                </p>
-                <p class="pt-1 text-zinc-500">$&nbsp;<span class="caret"></span></p>
+
+              <div>
+                <h3 data-i18n="edu.work" class="col-label">Experience</h3>
+                <ol class="timeline space-y-7">
+                  {
+                    experience.map((item) => (
+                      <li>
+                        <p class="font-display text-sm font-semibold tracking-tight text-zinc-100">
+                          {item.title}
+                        </p>
+                        <p class="mt-1 text-sm text-zinc-400">{item.place}</p>
+                        <p class="mt-1 font-mono text-xs text-emerald-600">{item.period}</p>
+                      </li>
+                    ))
+                  }
+                </ol>
+              </div>
+
+              <div class="edu-certs">
+                <h3 data-i18n="edu.certs" class="col-label">Self-directed certifications</h3>
+                <ul class="flex flex-wrap gap-3">
+                  {
+                    certifications.map((cert) => (
+                      <li>
+                        <button
+                          type="button"
+                          class="cert-chip"
+                          data-cert-image={cert.image}
+                          data-cert-alt={`${cert.name}, ${cert.issuer}`}
+                          aria-haspopup="dialog"
+                        >
+                          <span class="cert-chip-name">{cert.name}</span>
+                          <span class="cert-chip-meta">
+                            {cert.issuer} · {cert.date}
+                          </span>
+                        </button>
+                      </li>
+                    ))
+                  }
+                </ul>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- =========================== Research ============================= -->
-    <section id="research" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/code-review.webp" opacity={0.15} />
-      <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="research.eyebrow" class="eyebrow reveal"># Security research</p>
-        <h2
-          data-i18n="research.title"
-          class="heading reveal mt-5 max-w-2xl text-3xl font-bold sm:text-5xl"
-        >
-          More findings.
-        </h2>
-        <p data-i18n="research.desc" class="reveal mt-5 max-w-2xl text-zinc-400">
-          Reported responsibly through Google's Open Source VRP / Bug Hunters and public
-          bug-bounty platforms.
-        </p>
-        <ul class="reveal mt-7 flex flex-wrap gap-2.5">
-          {platforms.map((p) => <li class="chip">{p}</li>)}
-        </ul>
-        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {rest.map((finding) => <FindingCard finding={finding} />)}
-        </div>
-        <div class="card reveal mt-5 p-6">
-          <h3 data-i18n="research.addEyebrow" class="font-mono text-xs text-emerald-400/90">
-            + Additional reports
-          </h3>
-          <p class="mt-2.5 text-sm leading-relaxed text-zinc-400">
-            Across {additionalReports.projects.map((p, i) => (
-              <span><span class="font-mono text-zinc-300">{p}</span>{i < additionalReports.projects.length - 1 ? ', ' : ''}</span>
-            ))} — covering {additionalReports.topics}.
-          </p>
-          <p data-i18n="research.addTotal" class="mt-3 font-mono text-xs text-zinc-400">
-            Total: {additionalReports.total} vulnerability reports submitted to Google's Open
-            Source VRP.
-          </p>
-        </div>
-        <p data-i18n="research.disclosure" class="reveal mt-6 text-xs leading-relaxed text-zinc-400">
-          Detailed technical writeups are published only for findings that are already public.
-          Non-public reports are listed at a high level — project, vulnerability class and status —
-          with no exploitable details, in line with responsible disclosure.
-        </p>
+      <!-- ---------------------- 03 · Who I work with -------------------- -->
+      <section id="work" class="stage">
+        <div class="stage-in">
+          <div class="stage-body stage-body-wide">
+            <p class="station"><span class="station-no">03</span><span
+                data-i18n="work.eyebrow">Who I work with</span></p>
+            <h2 data-i18n="work.title" class="heading stage-title">
+              Google, Microsoft<br />and NVIDIA.
+            </h2>
 
-        <h3 data-i18n="research.caseEyebrow" class="eyebrow reveal mt-20"># Case study</h3>
-        <a
-          href="/research/ies-jovellanos-zerologon/"
-          class="card card-featured reveal group mt-6 block p-7"
-        >
-          <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
-            <span class="font-medium text-zinc-100">IES Jovellanos</span>
-            <span class="rounded-md border border-red-500/50 bg-red-500/10 px-2 py-0.5 text-red-400">
-              CVSS 10.0 (Critical)
-            </span>
-            <span
-              data-i18n="research.caseStatus"
-              class="rounded-md border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-400"
-            >
-              Disclosed & remediated
-            </span>
+            <ol class="vendor-list">
+              {
+                vendors.map((v) => (
+                  <li class="vendor">
+                    <div class="vendor-top">
+                      <span class="vendor-name">{v.name}</span>
+                      <span class="vendor-scope">{v.scope}</span>
+                      <span
+                        class:list={[
+                          'vendor-status',
+                          v.statusKind === 'fixed' ? 'is-fixed' : 'is-open',
+                        ]}
+                        data-i18n={`work.${v.key}.status`}
+                      >
+                        {v.status}
+                      </span>
+                      <span class="vendor-sev">{v.severity}</span>
+                      <span class="payout">{v.payout}</span>
+                    </div>
+                    <p class="vendor-desc" data-i18n={`work.${v.key}.desc`}>
+                      {v.key === 'google' &&
+                        "An authentication bypass in gRPC's xDS RBAC engine: the authenticatedMatcher fell through from the URI/DNS SAN to the certificate's Subject DN. Fixed by Google, and credited by name in the release notes."}
+                      {v.key === 'microsoft' &&
+                        'Reported through MSRC and currently under review. Details are withheld until it is resolved.'}
+                      {v.key === 'nvidia' &&
+                        "NVIDIA's security team confirmed and reproduced the report, which is now under active review. Details are withheld until it is resolved."}
+                    </p>
+                    {v.links.length > 0 && (
+                      <div class="vendor-links">
+                        {v.links.map((link) => (
+                          <a href={link.href}>{link.label} &rarr;</a>
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                ))
+              }
+            </ol>
+
+            <div class="work-foot">
+              <p data-i18n="work.note" class="stage-note mt-0 text-xs">
+                Open reports stay at this level: vendor, severity and status, nothing exploitable.
+                They stay that way until the vendor resolves and publishes them.
+              </p>
+              <a href="/research/" data-i18n="work.all" class="work-all">All findings &rarr;</a>
+            </div>
           </div>
-          <h4
-            data-i18n="research.caseTitle"
-            class="font-display mt-4 text-lg font-semibold tracking-tight text-zinc-100"
-          >
-            Domain compromise via ZeroLogon (CVE-2020-1472) — and the fix
-          </h4>
-          <p data-i18n="research.caseDesc" class="mt-2 text-sm leading-relaxed text-zinc-400">
-            I found my educational center's domain controller exposed to ZeroLogon, demonstrated
-            impact responsibly, reported it immediately, and worked with the center to remediate and
-            harden the infrastructure.
-          </p>
-          <span
-            data-i18n="research.caseLink"
-            class="mt-4 inline-block font-mono text-xs text-emerald-400 group-hover:text-emerald-300"
-          >
-            Read the case study &rarr;
-          </span>
-        </a>
-      </div>
-    </section>
+        </div>
+      </section>
+    </div>
 
     <!-- ============================ Skills ============================== -->
     <section id="skills" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/terminal-sudo.webp" opacity={0.15} />
       <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="skills.eyebrow" class="eyebrow reveal"># Skills</p>
+        <p data-i18n="skills.eyebrow" class="eyebrow reveal">Skills</p>
         <h2 data-i18n="skills.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
           What I work with.
         </h2>
@@ -455,7 +330,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
             skills.map((group, i) => (
               <div class="card reveal p-6" style={`--reveal-delay: ${i * 80}ms`}>
                 <dt
-                  class="font-mono text-xs font-medium tracking-wider text-emerald-400 uppercase"
+                  class="font-mono text-xs font-medium tracking-wider text-emerald-600 uppercase"
                   data-i18n={`skills.cat${i}`}
                 >
                   {group.category}
@@ -472,132 +347,12 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
       </div>
     </section>
 
-    <!-- ===================== Experience & Education ===================== -->
-    <section id="experience" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/network.webp" opacity={0.15} />
-      <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="exp.eyebrow" class="eyebrow reveal"># Experience &amp; education</p>
-        <h2 data-i18n="exp.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
-          The timeline.
-        </h2>
-        <div class="mt-14 grid gap-12 sm:grid-cols-2">
-          <div class="reveal">
-            <h3
-              data-i18n="exp.edu"
-              class="mb-6 font-mono text-xs tracking-widest text-zinc-400 uppercase"
-            >
-              Education
-            </h3>
-            <ol class="timeline space-y-8">
-              {
-                education.map((item) => (
-                  <li>
-                    <p class="font-display text-sm font-semibold tracking-tight text-zinc-100">
-                      {item.title}
-                    </p>
-                    {item.place && <p class="mt-1 text-sm text-zinc-500">{item.place}</p>}
-                    <p class="mt-1 font-mono text-xs text-emerald-400/80">{item.period}</p>
-                  </li>
-                ))
-              }
-            </ol>
-          </div>
-          <div class="reveal" style="--reveal-delay: 120ms">
-            <h3
-              data-i18n="exp.exp"
-              class="mb-6 font-mono text-xs tracking-widest text-zinc-400 uppercase"
-            >
-              Experience
-            </h3>
-            <ol class="timeline space-y-8">
-              {
-                experience.map((item) => (
-                  <li>
-                    <p class="font-display text-sm font-semibold tracking-tight text-zinc-100">
-                      {item.title}
-                    </p>
-                    <p class="mt-1 text-sm text-zinc-400">{item.place}</p>
-                    <p class="mt-1 font-mono text-xs text-emerald-400/80">{item.period}</p>
-                  </li>
-                ))
-              }
-            </ol>
-          </div>
-        </div>
-        <div class="reveal mt-14" style="--reveal-delay: 200ms">
-          <h3
-            data-i18n="exp.certs"
-            class="mb-6 font-mono text-xs tracking-widest text-zinc-400 uppercase"
-          >
-            Certifications — self-directed
-          </h3>
-          <ul class="grid gap-5 sm:grid-cols-2">
-            {
-              certifications.map((cert) => (
-                <li>
-                  <button
-                    type="button"
-                    class="card card-lift group flex h-full w-full cursor-pointer items-start gap-4 p-6 text-left"
-                    data-cert-image={cert.image}
-                    data-cert-alt={`${cert.name} — ${cert.issuer}`}
-                    aria-haspopup="dialog"
-                  >
-                    <span class="flex size-10 shrink-0 items-center justify-center rounded-xl border border-emerald-400/25 bg-emerald-400/10">
-                      <svg
-                        class="size-5 text-emerald-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
-                        <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12" />
-                      </svg>
-                    </span>
-                    <span class="min-w-0">
-                      <span class="font-display block font-semibold tracking-tight text-zinc-100">
-                        {cert.name}
-                      </span>
-                      <span class="mt-1.5 block font-mono text-xs text-zinc-400">
-                        {cert.issuer} · {cert.date}
-                      </span>
-                      <span
-                        data-i18n="certs.view"
-                        class="mt-3 block font-mono text-xs text-emerald-400/90 transition-colors group-hover:text-emerald-300"
-                      >
-                        View certificate ↗
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-      <dialog id="cert-lightbox" class="cert-lightbox" aria-label="Certificate">
-        <button
-          type="button"
-          id="cert-lightbox-close"
-          aria-label="Cerrar / Close"
-          class="glass-pill absolute top-3 right-3 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-zinc-950/80 text-lg text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
-        >
-          &times;
-        </button>
-        <img id="cert-lightbox-img" alt="" />
-      </dialog>
-    </section>
-
     <!-- =========================== Projects ============================= -->
     <section id="projects" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/dev-desk.webp" opacity={0.15} />
       <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="projects.eyebrow" class="eyebrow reveal"># Projects</p>
+        <p data-i18n="projects.eyebrow" class="eyebrow reveal">Things I build</p>
         <h2 data-i18n="projects.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
-          Things I build.
+          What I build.
         </h2>
         <div class="mt-14 grid gap-5 sm:grid-cols-2">
           {
@@ -610,7 +365,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
                 <div class="flex items-center justify-between">
                   <h3 class="font-mono font-medium text-zinc-100">{project.name}</h3>
                   <svg
-                    class="size-4 text-zinc-500 transition-colors group-hover:text-emerald-400"
+                    class="size-4 text-zinc-500 transition-colors group-hover:text-emerald-600"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     aria-hidden="true"
@@ -630,61 +385,61 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
             ))
           }
         </div>
-      </div>
-    </section>
 
-    <!-- ========================== At a glance =========================== -->
-    <section id="glance" class="section-line relative isolate py-28 sm:py-36">
-      <SectionPhoto src="/img/earth-night.webp" opacity={0.16} />
-      <div class="mx-auto max-w-5xl px-6">
-        <p data-i18n="glance.eyebrow" class="eyebrow reveal"># At a glance</p>
-        <h2 data-i18n="glance.title" class="heading reveal mt-5 text-3xl font-bold sm:text-5xl">
-          Everything, in 10 seconds.
-        </h2>
-        <dl class="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
-          {
-            glance.map((item, i) => (
-              <div
-                class:list={[
-                  'card reveal p-6',
-                  glanceSpans[i] === 3 ? 'lg:col-span-3' : 'lg:col-span-2',
-                ]}
-                style={`--reveal-delay: ${i * 60}ms`}
-              >
-                <dt
-                  class="font-mono text-[11px] tracking-widest text-zinc-400 uppercase"
-                  data-i18n={`glance.l${i}`}
-                >
-                  {item.label}
-                </dt>
-                <dd
-                  class="font-display mt-2.5 font-semibold tracking-tight text-zinc-100"
-                  data-i18n={`glance.v${i}`}
-                >
-                  {item.value}
-                </dd>
-              </div>
-            ))
-          }
-        </dl>
-        <div class="reveal mt-10 flex flex-wrap gap-3">
-          <a href="/cv.pdf" data-i18n="glance.btnCV" class="btn btn-primary">Download CV</a>
-          <a href="/research/" data-i18n="glance.btnList" class="btn btn-ghost">
-            Full research list
-          </a>
-        </div>
+        <p data-i18n="case.eyebrow" class="eyebrow reveal mt-20">Case study</p>
+        <a href="/research/ies-jovellanos-zerologon/" class="card card-featured reveal group mt-6 block p-7">
+          <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+            <span class="font-medium text-zinc-100">IES Jovellanos</span>
+            <span class="rounded-md border border-red-600/40 bg-red-500/12 px-2 py-0.5 text-red-700">
+              CVSS 10.0 (Critical)
+            </span>
+            <span
+              data-i18n="case.status"
+              class="rounded-md border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-600"
+            >
+              Disclosed &amp; remediated
+            </span>
+          </div>
+          <h3
+            data-i18n="case.title"
+            class="font-display mt-4 text-lg font-semibold tracking-tight text-zinc-100"
+          >
+            Domain compromise via ZeroLogon (CVE-2020-1472), and the fix
+          </h3>
+          <p data-i18n="case.desc" class="mt-2 text-sm leading-relaxed text-zinc-400">
+            I found my school's domain controller exposed to ZeroLogon, demonstrated the impact
+            responsibly, reported it immediately, and worked with the school to remediate and harden
+            the infrastructure.
+          </p>
+          <span
+            data-i18n="case.link"
+            class="mt-4 inline-block font-mono text-xs text-emerald-600 group-hover:text-emerald-500"
+          >
+            Read the case study &rarr;
+          </span>
+        </a>
       </div>
+      <dialog id="cert-lightbox" class="cert-lightbox" aria-label="Certificate">
+        <button
+          type="button"
+          id="cert-lightbox-close"
+          aria-label="Cerrar / Close"
+          class="glass-pill absolute top-3 right-3 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-zinc-700 bg-zinc-950/90 text-lg text-zinc-300 transition-colors hover:border-emerald-500 hover:text-emerald-600"
+        >
+          &times;
+        </button>
+        <img id="cert-lightbox-img" alt="" />
+      </dialog>
     </section>
 
     <!-- ============================ Contact ============================= -->
-    <section id="contact" class="glow section-line relative isolate py-32 sm:py-44">
-      <SectionPhoto src="/img/server-corridor.webp" opacity={0.18} />
+    <section id="contact" class="section-line relative isolate py-32 sm:py-44">
       <div class="mx-auto max-w-5xl px-6 text-center">
         <h2
           data-i18n="contact.title"
           class="heading reveal text-4xl font-bold tracking-tighter sm:text-7xl"
         >
-          Let's find the next bug<span class="text-emerald-400">.</span>
+          Let's talk<span class="text-emerald-600">.</span>
         </h2>
         <p
           data-i18n="contact.desc"
@@ -692,7 +447,7 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
           style="--reveal-delay: 100ms"
         >
           Open to junior roles in application security, vulnerability research or security
-          engineering — Netherlands or remote.
+          engineering, in the Netherlands or remote.
         </p>
         <div class="reveal mt-11" style="--reveal-delay: 200ms">
           <a href="mailto:alanortega7312@gmail.com" class="btn btn-primary px-8 py-3.5 !text-base">
@@ -703,15 +458,11 @@ const glanceSpans = [2, 2, 2, 3, 3, 2, 2, 2];
           class="reveal mt-11 flex flex-wrap justify-center gap-3 font-mono text-sm"
           style="--reveal-delay: 300ms"
         >
-          <li>
-            <a href="https://github.com/al4an444" class="chip !text-sm">github.com/al4an444</a>
-          </li>
+          <li><a href="https://github.com/al4an444" class="chip !text-sm">github.com/al4an444</a></li>
           <li>
             <a href="https://www.linkedin.com/in/alan-o-b70724290" class="chip !text-sm">linkedin</a>
           </li>
-          <li>
-            <a href="/cv.pdf" class="chip !text-sm">cv.pdf</a>
-          </li>
+          <li><a href="/cv.pdf" class="chip !text-sm">cv.pdf</a></li>
         </ul>
       </div>
     </section>
