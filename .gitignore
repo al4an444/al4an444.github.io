@@ -6,5 +6,8 @@ npm-debug.log*
 .env
 .env.*
 
-# Claude Code local files
+# Claude Code local files. CLAUDE.md stays on disk so future sessions still
+# read it, but it is never committed: it documents the disclosure policy and
+# which vendors have open reports, which is not public information.
 .claude/
+CLAUDE.md
