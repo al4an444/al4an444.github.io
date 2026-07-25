@@ -1,15 +1,15 @@
 ---
 title: 'Domain compromise via ZeroLogon, and helping fix it'
-project: 'IES Jovellanos'
+project: 'Vocational school'
 date: 2026-03-03
 severity: 'CVSS 10.0 (Critical)'
 status: 'Disclosed & remediated'
-summary: 'I found my educational center’s domain controller exposed to ZeroLogon (CVE-2020-1472), demonstrated impact responsibly, reported it immediately, and worked with the center to remediate and harden the infrastructure.'
+summary: 'I found the domain controller of the vocational school I attended exposed to ZeroLogon (CVE-2020-1472), demonstrated impact responsibly, reported it immediately, and worked with the school to remediate and harden the infrastructure.'
 ---
 
 ## TL;DR
 
-The Windows domain controller of my educational center, **IES Jovellanos**, was running
+The Windows domain controller of the vocational school I attended was running
 without the August 2020 security updates, leaving it exposed to **ZeroLogon
 (CVE-2020-1472)**, a cryptographic flaw in the Netlogon protocol that allows full Active
 Directory compromise. I demonstrated the impact, **stopped at the proof stage without

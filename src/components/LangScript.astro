@@ -93,7 +93,9 @@
       document.querySelectorAll('[data-i18n]').forEach((el) => {
         const key = el.getAttribute('data-i18n');
         if (!originals.has(el)) originals.set(el, el.innerHTML);
-        if (lang === 'es' && es[key] != null) el.innerHTML = es[key];
+        // hasOwn, not a bare lookup: a stray key like "constructor" must not
+        // resolve up the prototype chain and write a function body into the DOM.
+        if (lang === 'es' && Object.hasOwn(es, key)) el.innerHTML = es[key];
         else el.innerHTML = originals.get(el);
       });
       // Swap whole content blocks by language (e.g. bilingual writeups).
