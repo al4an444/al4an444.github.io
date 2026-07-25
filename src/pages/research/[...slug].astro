@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import EsZeroLogon from '../../i18n/ies-jovellanos-zerologon.es.mdx';
+import EsZeroLogon from '../../i18n/zerologon-domain-compromise.es.mdx';
 
 export async function getStaticPaths() {
   const posts = await getCollection('research', ({ data }) => !data.draft);
@@ -23,7 +23,7 @@ const translations: Record<
   string,
   { Content: any; title: string; summary: string; severity?: string; status: string }
 > = {
-  'ies-jovellanos-zerologon': {
+  'zerologon-domain-compromise': {
     Content: EsZeroLogon,
     title: 'Compromiso de dominio vía ZeroLogon, y ayudando a solucionarlo',
     summary:

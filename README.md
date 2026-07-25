@@ -1,6 +1,6 @@
 # al4an444.github.io
 
-Personal portfolio of **Alan Ortega Álamo** — security researcher.
+Personal portfolio of **Alan Ortega**, security researcher.
 
 Live at **https://al4an444.github.io**
 
@@ -43,7 +43,10 @@ It automatically appears at `/research/<filename>/` and in the list at `/researc
 Set `draft: true` in the frontmatter to keep it unpublished.
 
 > **Responsible disclosure rule:** publish detailed writeups only for findings that
-> are already public. Everything else stays high-level (project + class + status).
+> are already public. Everything else stays high-level: **vendor, severity and
+> status only**. Never the project, the affected component, the vulnerability
+> class, a CWE, a CVSS vector, a PoC or any identifier. This applies to commit
+> messages too, not just to what the pages render.
 
 ## Updating findings
 
@@ -54,5 +57,4 @@ detail; the NVIDIA and Microsoft reports are non-public and are kept high-level
 (vendor · severity · status · payout), with no exploitable details. The landing
 page's featured grpc-go section is hand-written in `src/pages/index.astro`.
 
-> **Responsible disclosure rule:** publish detailed writeups only for findings
-> that are already public. Active/confidential reports stay high-level.
+See the disclosure rule above: active reports stay at vendor, severity and status.

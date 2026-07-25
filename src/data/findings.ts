@@ -50,7 +50,7 @@ export const findings: Finding[] = [
       "Confirmed and reproduced by NVIDIA's security team and now under active review. Details are withheld pending resolution, in line with responsible disclosure.",
   },
   {
-    project: 'Microsoft · MSRC / Azure',
+    project: 'Microsoft · MSRC',
     title: 'High-severity vulnerability',
     severity: 'High severity',
     status: 'Under review',
