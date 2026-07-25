@@ -103,23 +103,46 @@ const vendors = [
     <!-- ============================== Intro ============================= -->
     <section id="hero" class="relative isolate flex min-h-[100svh] flex-col justify-center">
       <div class="hero-exit mx-auto w-full max-w-5xl px-6 pt-24">
-        <p class="hero-kicker" style="--i: 0">
-          <span class="pulse-dot"></span>
-          <span data-i18n="hero.kicker">Junior security roles in the Netherlands or remote</span>
-        </p>
-
-        <h1 class="name-draw" style="--i: 1">
+        <!-- Masthead: the plotter writes the name across the full measure. -->
+        <h1 class="name-draw intro-masthead" style="--i: 0">
           <span class="name-ink">Alan Ortega</span>
           <span class="name-pen" aria-hidden="true"></span>
         </h1>
 
-        <p data-i18n="hero.lead" class="hero-lead" style="--i: 2">
-          Self-taught security researcher.
-        </p>
+        <div class="intro-rule" style="--i: 1" aria-hidden="true"></div>
 
-        <div class="mt-10 flex flex-wrap items-center gap-3" style="--i: 3">
-          <a href="#work" data-i18n="hero.btn.work" class="btn btn-primary">See the work</a>
-          <a href="#contact" data-i18n="hero.btn.contact" class="btn btn-ghost">Get in touch</a>
+        <!-- Body: statement on the left, plate annotations in the margin. -->
+        <div class="intro-cols">
+          <div class="intro-main" style="--i: 2">
+            <p data-i18n="hero.lead" class="hero-lead">Self-taught security researcher.</p>
+
+            <div class="intro-actions">
+              <a href="#work" data-i18n="hero.btn.work" class="btn btn-primary">See the work</a>
+              <a href="#contact" data-i18n="hero.btn.contact" class="btn btn-ghost">Get in touch</a>
+            </div>
+          </div>
+
+          <aside class="intro-margin" style="--i: 3">
+            <p class="intro-status">
+              <span class="pulse-dot"></span>
+              <span data-i18n="hero.kicker">Open to junior security roles</span>
+            </p>
+
+            <dl class="intro-meta">
+              <div>
+                <dt data-i18n="hero.m1.l">Based</dt>
+                <dd data-i18n="hero.m1.v">Madrid, Spain</dd>
+              </div>
+              <div>
+                <dt data-i18n="hero.m2.l">Moving to</dt>
+                <dd data-i18n="hero.m2.v">the Netherlands</dd>
+              </div>
+              <div>
+                <dt data-i18n="hero.m3.l">Backdrop</dt>
+                <dd data-i18n="hero.m3.v">240 plotted traces, one thread</dd>
+              </div>
+            </dl>
+          </aside>
         </div>
       </div>
 

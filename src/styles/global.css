@@ -39,13 +39,30 @@
   --color-accent: #1f9d6b;
 }
 
+/* Semantic aliases over the @theme scale, so components reference a role
+   ("the hairline", "muted ink") instead of repeating raw values. */
+:root {
+  --rule-ink: rgb(16 36 29 / 0.12);
+  --ink-body: var(--color-zinc-300);
+  --ink-muted: var(--color-zinc-400);
+  --ink-faint: var(--color-zinc-500);
+}
+
 ::selection {
-  background-color: #1f9d6b;
+  background-color: var(--color-accent);
   color: #ffffff;
 }
 
 html {
   scrollbar-color: #c1cbc5 #f8fbf9;
+}
+
+/* Nothing may ever push the page sideways. `clip` rather than `hidden`, so the
+   sticky pinning in the cinema keeps working (hidden would make these scroll
+   containers and break it). */
+html,
+body {
+  overflow-x: clip;
 }
 
 ::-webkit-scrollbar {
@@ -228,12 +245,112 @@ html {
     animation: pen-travel 1.5s cubic-bezier(0.62, 0.04, 0.3, 1) 350ms forwards;
   }
 
-  #hero .hero-kicker,
-  #hero .hero-lead,
-  #hero .flex.flex-wrap {
+  #hero .intro-rule,
+  #hero .intro-main,
+  #hero .intro-margin {
     animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: calc(var(--i, 0) * 140ms + 120ms);
   }
+}
+
+/* ---------------------------------------------------------------------------
+ * INTRO LAYOUT — a plate, not a stack. The masthead runs the full measure, a
+ * hairline rules it off, and the statement sits against annotations in the
+ * margin the way a plotter print carries its plate note.
+ *
+ * Hallmark · pre-emit critique: P5 H4 E5 S5 R5 V4
+ * Enrichment tier 0 (typography only): the brief is editorial/portfolio, and
+ * the backdrop art already earns its place, so the intro adds no new imagery.
+ * ------------------------------------------------------------------------- */
+.intro-masthead {
+  margin-top: 0;
+}
+
+.intro-rule {
+  margin-top: 2.25rem;
+  border-top: 1px solid var(--rule-ink);
+}
+
+.intro-cols {
+  margin-top: 2.25rem;
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 760px) {
+  .intro-cols {
+    /* minmax(0, …) so long words can never force a horizontal scrollbar */
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 3.5rem;
+    align-items: start;
+  }
+}
+
+.intro-main .hero-lead {
+  margin-top: 0;
+}
+
+.intro-actions {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.intro-margin {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 760px) {
+  .intro-margin {
+    padding-top: 0.4rem;
+  }
+}
+
+.intro-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.intro-meta {
+  display: grid;
+  gap: 0.85rem;
+  border-top: 1px solid var(--rule-ink);
+  padding-top: 1.25rem;
+}
+
+.intro-meta > div {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+}
+
+.intro-meta dt {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.intro-meta dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ink-body);
+  /* long values wrap inside the word rather than overflowing the column */
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 @keyframes name-write {
