@@ -1,120 +1,30 @@
 ---
+// A hard bar ruled off from the page. No pill, no blur, no glass, no cursor
+// highlight, no fake shell prompt — all of that was the previous design and all
+// of it is on the blacklist. Just the name, the sections, and the language.
 const links = [
+  { href: '/#findings', label: 'Findings', key: 'nav.findings' },
+  { href: '/#zerologon', label: 'Case', key: 'nav.case' },
   { href: '/#about', label: 'About', key: 'nav.about' },
-  { href: '/#education', label: 'Studies', key: 'nav.education' },
-  { href: '/#work', label: 'Work', key: 'nav.work' },
-  { href: '/#skills', label: 'Skills', key: 'nav.skills' },
-  { href: '/#projects', label: 'Projects', key: 'nav.projects' },
+  { href: '/research/', label: 'Research', key: 'nav.research' },
   { href: '/#contact', label: 'Contact', key: 'nav.contact' },
 ];
 ---
 
-<div class="scroll-progress fixed inset-x-0 top-0 z-[60] h-[2px] w-full"></div>
-<header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex flex-col items-center px-4 pt-4">
-  <nav
-    class="nav-pill pointer-events-auto flex h-12 w-full max-w-4xl items-center justify-between rounded-full pr-2 pl-5"
-  >
-    <a
-      href="/"
-      class="font-mono text-sm font-medium text-zinc-100 transition-colors hover:text-emerald-400"
-    >
-      alan@ortega<span class="text-emerald-400">:~$</span>
-    </a>
-    <div class="flex items-center gap-1 text-sm sm:gap-2">
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a href="/" class="topbar-name">Alan Ortega</a>
+
+    <nav class="topbar-links" aria-label="Sections">
       {
         links.map((link) => (
-          <a
-            href={link.href}
-            data-i18n={link.key}
-            class="nav-link hidden rounded-full px-2.5 py-1.5 sm:block"
-          >
+          <a href={link.href} data-i18n={link.key} data-nav-link>
             {link.label}
           </a>
         ))
       }
-      <button
-        type="button"
-        data-lang-toggle
-        aria-label="Switch to Spanish"
-        class="glass-pill ml-1 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
-      >
-        Español
-      </button>
-      <button
-        type="button"
-        id="menu-btn"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        class="glass-pill flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-200 transition-colors hover:border-emerald-400/60 hover:text-emerald-300 sm:hidden"
-      >
-        <svg
-          class="menu-icon size-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Mobile dropdown: links are hidden from the pill on small screens -->
-  <div
-    id="mobile-menu"
-    hidden
-    class="nav-pill pointer-events-auto mt-2 flex w-full max-w-4xl flex-col gap-1 rounded-2xl p-2 sm:hidden"
-  >
-    {
-      links.map((link) => (
-        <a
-          href={link.href}
-          data-i18n={link.key}
-          data-menu-link
-          class="nav-link rounded-xl px-4 py-2.5 text-sm"
-        >
-          {link.label}
-        </a>
-      ))
-    }
+    <button type="button" data-lang-toggle aria-label="Switch to Spanish">Español</button>
   </div>
 </header>
-
-<script>
-  // Liquid-glass highlight tracking the cursor across the nav pill.
-  const pill = document.querySelector<HTMLElement>('.nav-pill');
-  if (pill && window.matchMedia('(hover: hover)').matches) {
-    pill.addEventListener('mousemove', (event) => {
-      const rect = pill.getBoundingClientRect();
-      pill.style.setProperty('--mx', `${event.clientX - rect.left}px`);
-      pill.style.setProperty('--my', `${event.clientY - rect.top}px`);
-    });
-  }
-
-  // Mobile dropdown menu.
-  const btn = document.getElementById('menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  if (btn && menu) {
-    const setOpen = (open: boolean) => {
-      menu.hidden = !open;
-      btn.setAttribute('aria-expanded', String(open));
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    };
-    btn.addEventListener('click', () => setOpen(menu.hidden));
-    menu.querySelectorAll('[data-menu-link]').forEach((link) =>
-      link.addEventListener('click', () => setOpen(false))
-    );
-    document.addEventListener('click', (event) => {
-      const target = event.target as Node;
-      if (!menu.hidden && !menu.contains(target) && !btn.contains(target)) setOpen(false);
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !menu.hidden) setOpen(false);
-    });
-  }
-</script>

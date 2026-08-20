@@ -2,89 +2,109 @@
 // Lightweight client-side EN→ES toggle. English is the DOM default and primary
 // language; this script swaps the innerHTML of [data-i18n] elements to Spanish
 // and back. Choice is persisted in localStorage. No build/routing changes.
+//
+// CONTRACT: every user-visible English string on the landing page needs a
+// matching key here AND a data-i18n attribute on its element. Adding copy
+// without a key silently leaves it English when ES is selected.
 ---
 
 <script is:inline>
   (() => {
     const es = {
       // Nav
-      'nav.about': 'Sobre mí',
-      'nav.education': 'Formación',
-      'nav.work': 'Trabajo',
-      'nav.skills': 'Habilidades',
-      'nav.projects': 'Proyectos',
+      'nav.findings': 'Hallazgos',
+      'nav.case': 'Caso',
+      'nav.about': 'Quién',
+      'nav.research': 'Investigación',
       'nav.contact': 'Contacto',
-      // Intro
-      'hero.kicker': 'Disponible para roles junior de seguridad',
-      'hero.lead': 'Investigador de seguridad autodidacta.',
-      'hero.m1.l': 'Ubicación',
-      'hero.m1.v': 'Países Bajos',
-      'hero.m2.l': 'También abierto a',
-      'hero.m2.v': 'Madrid, España',
-      'hero.btn.work': 'Ver el trabajo',
-      'hero.btn.contact': 'Hablemos',
-      // 01 · About
-      'about.eyebrow': 'Quién soy',
-      'about.title': 'Veinte años.<br />Totalmente autodidacta.',
+
+      // Hero. The name itself has no key — names don't translate.
+      'hero.role': 'Ciberseguridad',
+      'hero.kicker': 'Disponible para roles junior de seguridad · Países Bajos / Madrid / remoto',
+
+      // 00 · The diagram
+      'diagram.title': 'El fallthrough',
+      'diagram.body':
+        'Una comprobación de autorización debería denegar cuando no coincide. Esta seguía buscando. Probó el URI SAN, luego el DNS SAN, y luego el Subject DN del certificado — y el Subject DN la dejó pasar.',
+      'diagram.note': 'Esto es el hallazgo, dibujado. Nada más en esta web es rojo.',
+      'ft.miss1': 'Sin URI SAN — cae al siguiente',
+      'ft.miss2': 'Sin DNS SAN — cae al siguiente',
+      'ft.hit': 'Subject DN coincide — acceso concedido',
+
+      // 01 · Findings
+      'findings.title': 'Hallazgos',
+      'find.google.detail':
+        'Un bypass de autenticación en el motor RBAC de xDS de gRPC: el authenticatedMatcher caía desde el URI/DNS SAN al Subject DN del certificado. Corregido por Google y acreditado en las notas de versión.',
+      'find.google.status': 'Corregido · v1.81.1',
+      'find.google.sev': 'CVSS 7.5',
+      'find.microsoft.sev': 'Alta',
+      'find.nvidia.sev': 'Alta',
+      'find.protobuf.sev': 'Denegación de servicio',
+      'find.protobuf.detail':
+        'El RecursionLimit de prototext se saltaba silenciosamente en la ruta de descarte de campos desconocidos: skipValue y skipMessageValue se llamaban recursivamente sin decrementarlo, así que mensajes desconocidos muy anidados abortaban el proceso con un desbordamiento de pila del que Go no se puede recuperar. Reporté el fallo y escribí el parche, integrado tras la revisión de los mantenedores de protobuf-go.',
+      'find.protobuf.status': 'Integrado · master',
+      'find.microsoft.status': 'Bajo revisión',
+      'find.nvidia.status': 'Reproducido · bajo revisión',
+      'findings.withheld': 'Retenido hasta que el fabricante publique.',
+      'findings.foot':
+        'Los reportes abiertos se quedan en fabricante, severidad y estado. Sin componente, sin clase de vulnerabilidad, sin identificador, sin importe de recompensa.',
+
+      // 02 · The credit
+      // NOTE: `credit.quote` is a TRANSLATION of an English document Google
+      // published. `credit.caption` therefore says "traducción" so the reader
+      // never mistakes this for the maintainers' actual words; the Source link
+      // in the caption always points at the English original.
+      'credit.quote':
+        '<span class="credit-scope">xds/rbac:</span> Corrige un posible bypass de autorización causado por caer incorrectamente desde los SAN de URI/DNS al Subject Distinguished Name (DN) al comparar el nombre del principal autenticado. Con este arreglo solo se usará la primera fuente de identidad no vacía, según la gRFC A41. (#9111)',
+      'credit.caption': 'Notas de versión de grpc-go v1.81.1 · traducción',
+      'credit.title': 'La acreditación',
+      'credit.body':
+        'Cualquiera puede decir que encontró algo. Esta es la parte que no se puede reclamar: mi crédito, en las notas de versión del arreglo, publicadas por Google.',
+
+      // 03 · Case study
+      'zero.title': 'Caso de estudio',
+      'zero.body':
+        'Al controlador de dominio del centro de FP donde estudiaba le faltaban las actualizaciones de agosto de 2020. Demostré el impacto, paré en la prueba, no guardé datos, lo reporté de inmediato y trabajé con el centro para remediarlo y endurecer el entorno.',
+      'zero.read': 'Leer el writeup',
+
+      // 04 · Who
+      'about.title': 'Quién',
       'about.p1':
-        'Vivo en los Países Bajos, y puedo trabajar desde Madrid si os encaja mejor. Reviso software muy utilizado en busca de <span class="text-zinc-100">bypasses de autenticación y autorización</span>, <span class="text-zinc-100">problemas de integridad en la cadena de suministro</span> y <span class="text-zinc-100">bugs de denegación de servicio</span>.',
-      'about.p2':
-        'Nadie me asignó esto. Lo aprendí leyendo el código de otros, y todo lo que encuentro pasa por el canal de divulgación del propio fabricante, nunca por otro sitio.',
-      // 02 · Education
-      'edu.eyebrow': 'Qué he estudiado',
-      'edu.title': 'Formación reglada,<br />más la parte que hice yo.',
-      'edu.school': 'Formación',
-      'edu.work': 'Experiencia',
-      'edu.certs': 'Certificaciones de autoformación',
-      // 03 · Work
-      'work.eyebrow': 'Con quién trabajo',
-      'work.title': 'Google, Microsoft<br />y NVIDIA.',
-      'work.google.status': 'Corregido · v1.81.1',
-      'work.google.desc':
-        'Un bypass de autenticación en el motor xDS RBAC de gRPC: el authenticatedMatcher caía desde el SAN URI/DNS hasta el Subject DN del certificado. Corregido por Google y citado por nombre en las notas de versión.',
-      'work.microsoft.status': 'En revisión',
-      'work.microsoft.desc':
-        'Reportado a través de MSRC y actualmente en revisión. Los detalles se mantienen reservados hasta que se resuelva.',
-      'work.nvidia.status': 'Reproducido · en revisión',
-      'work.nvidia.desc':
-        'El equipo de seguridad de NVIDIA confirmó y reprodujo el reporte, que ahora está en revisión activa. Los detalles se mantienen reservados hasta que se resuelva.',
-      'work.note':
-        'Los reportes abiertos se quedan en este nivel: fabricante, severidad y estado, nada explotable. Siguen así hasta que el fabricante los resuelva y los publique.',
-      'work.all': 'Todos los hallazgos &rarr;',
-      // Skills
-      'skills.eyebrow': 'Habilidades',
-      'skills.title': 'Con lo que trabajo.',
-      'skills.cat0': 'Seguridad',
-      'skills.cat1': 'Programación',
-      'skills.cat2': 'Sistemas y redes',
-      'skills.cat3': 'Idiomas',
-      // Projects
-      'projects.eyebrow': 'Lo que construyo',
-      'projects.title': 'Lo que construyo.',
-      // Case study
-      'case.eyebrow': 'Caso de estudio',
-      'case.status': 'Divulgado y remediado',
-      'case.title': 'Compromiso de dominio vía ZeroLogon (CVE-2020-1472), y la solución',
-      'case.desc':
-        'Detecté que el controlador de dominio de mi centro estaba expuesto a ZeroLogon, demostré el impacto de forma responsable, lo reporté de inmediato y colaboré con el centro para remediar y reforzar la infraestructura.',
-      'case.link': 'Leer el caso de estudio &rarr;',
-      // Contact
-      'contact.title': 'Hablemos<span class="text-emerald-600">.</span>',
-      'contact.desc':
-        'Disponible para roles junior en seguridad de aplicaciones, investigación de vulnerabilidades o ingeniería de seguridad, en Países Bajos, España o remoto.',
+        'Veinte años, autodidacta, en Países Bajos y con posibilidad de trabajar desde Madrid.',
+      'about.p2': 'Nadie me encargó nada de esto. Simplemente es lo que me gusta.',
+      'about.edu': 'Formación',
+      'about.exp': 'Experiencia',
+      'about.certs': 'Certificaciones',
+
+      // 05 · Built. Keys are derived from the project name in findings.ts —
+      // renaming a project there means renaming these keys too.
+      'projects.title': 'Construido',
+      'proj.shutdown-restore.tech': 'C++ · Servicio de Windows',
+      'proj.shutdown-restore.desc':
+        'Servicio de Windows en C++ que crea un punto de restauración del sistema al apagar, saltándose el límite de 24 h y rotando las copias antiguas.',
+      'proj.ghosttalk.tech': 'TypeScript · React · Supabase · Web Crypto API',
+      'proj.ghosttalk.desc':
+        'Aplicación de chat cifrada de extremo a extremo (E2EE) y de conocimiento cero, construida con React, Supabase y la Web Crypto API.',
+
+      // 06 · Contact
+      'contact.title': 'Contrátame',
+      'contact.lead':
+        'Busco un puesto junior en seguridad de aplicaciones, investigación de vulnerabilidades o ingeniería de seguridad.',
+
       // 404
-      'nf.kicker': 'Callejón sin salida',
-      'nf.title': 'Este camino no lleva a ninguna parte.',
+      'nf.kicker': 'Sin salida',
       'nf.lead':
-        'Fuiste a buscar algo que no está aquí. Curiosear direcciones es buena parte del trabajo, así que no te lo tendré en cuenta. Esta es solo un callejón sin salida.',
-      'nf.btn.home': 'Volver al principio',
+        'Buscabas algo que no está aquí. Hurgar en direcciones es la mayor parte del trabajo, así que no te lo voy a reprochar. Esta simplemente no lleva a ningún sitio.',
+      'nf.btn.home': 'Volver al inicio',
       'nf.btn.research': 'Ver la investigación',
+
       // Footer
-      'footer.built': 'hecho con Astro · cero JS innecesario',
+      'footer.built': 'Astro · sin JS de cliente',
+
       // Homepage <title> / meta description
       'meta.title': 'Alan Ortega · Investigador de Seguridad',
       'meta.desc':
-        'Investigador de seguridad autodidacta que encuentra y divulga responsablemente vulnerabilidades en software ampliamente utilizado, incluido un bypass de autenticación CVSS 7.5 en grpc-go corregido por Google.',
+        'Investigador de seguridad autodidacta que encuentra y divulga responsablemente vulnerabilidades en software de uso masivo, incluido un bypass de autenticación CVSS 7.5 en grpc-go corregido por Google.',
     };
 
     const originals = new Map();

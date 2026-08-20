@@ -1,4 +1,4 @@
-const VERSION = 'v8';
+const VERSION = 'v10';
 const CACHE = `alan-portfolio-${VERSION}`;
 const PRECACHE = ['/', '/research/', '/manifest.webmanifest', '/favicon.svg'];
 

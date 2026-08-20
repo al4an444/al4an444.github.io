@@ -2,40 +2,33 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="section-line">
-  <div
-    class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-zinc-400 sm:flex-row"
-  >
-    <p class="font-mono text-xs">
-      © {year} Alan Ortega <span class="mx-1 text-zinc-700">·</span>
-      <span class="text-emerald-400/80">root@al4an444</span>
-    </p>
-    <div class="flex items-center gap-5 font-mono text-xs">
-      <a href="/.well-known/security.txt" class="transition-colors hover:text-emerald-400"
-        >security.txt</a
-      >
-      <a href="https://github.com/al4an444" class="transition-colors hover:text-emerald-400"
-        >GitHub</a
-      >
-      <span class="text-zinc-500" data-i18n="footer.built">built with Astro · zero unnecessary JS</span>
-      <a
-        href="#top"
-        aria-label="Back to top"
-        class="flex size-8 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all hover:border-emerald-400/60 hover:text-emerald-300"
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M12 19V5M5 12l7-7 7 7" />
-        </svg>
-      </a>
+<footer class="band-tight">
+  <div class="wrap">
+    <div class="footer-in">
+      <p class="t-data-sm">© {year} Alan Ortega</p>
+      <div class="footer-links">
+        <a href="mailto:alanortega7312@gmail.com" class="link">Email</a>
+        <a href="https://github.com/al4an444" class="link">GitHub</a>
+        <a href="https://linkedin.com/in/alan-o-b70724290" class="link">LinkedIn</a>
+        <a href="/.well-known/security.txt" class="link">security.txt</a>
+      </div>
+      <p class="t-data-sm" data-i18n="footer.built">Astro · no client JS</p>
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-in {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+</style>
