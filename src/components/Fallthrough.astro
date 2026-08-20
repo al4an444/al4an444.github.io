@@ -1,0 +1,207 @@
+---
+// THE FALLTHROUGH — the one diagram, and the ONLY place the alert red appears
+// in the entire site. If you are adding red somewhere else, don't.
+//
+// This is the shape of the grpc-go finding: the xDS RBAC `authenticatedMatcher`
+// tried the URI SAN, then the DNS SAN, then the certificate's Subject DN. Each
+// miss fell through to the next check instead of denying, so a principal
+// configured to match on a SAN could be satisfied by the Subject DN — an
+// authorization bypass. Fixed in v1.81.1.
+//
+// Three lanes, two empty slots where a match should have exited and did not,
+// one descent, one terminus that should never have been reachable.
+//
+// Generated in frontmatter → zero client JS. Labels are HTML, not <text>, so
+// they keep a true CSS size instead of scaling with the viewBox down to ~6px on
+// a phone — and stay real text for screen readers.
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const W = 560;
+const H = 300;
+const EXIT = 540;
+const lanes = [
+  { y: 40, label: 'URI SAN', junction: 150 },
+  { y: 150, label: 'DNS SAN', junction: 300 },
+  { y: 260, label: 'Subject DN', junction: null }, // the one that matched
+];
+const pct = (y: number) => `${((y / H) * 100).toFixed(3)}%`;
+
+const thread = [
+  `M 0 ${lanes[0].y}`,
+  `H ${lanes[0].junction}`,
+  `V ${lanes[1].y}`,
+  `H ${lanes[1].junction}`,
+  `V ${lanes[2].y}`,
+  `H ${EXIT}`,
+].join(' ');
+---
+
+<figure class:list={['ft', className]}>
+  <div class="ft-plot">
+    {
+      lanes.map((lane) => (
+        <span class="ft-label" style={`--y: ${pct(lane.y)}`}>
+          {lane.label}
+        </span>
+      ))
+    }
+
+    <svg viewBox={`0 0 ${W} ${H}`} fill="none" role="img" aria-labelledby="ft-t ft-d">
+      <title id="ft-t">The authenticatedMatcher fallthrough</title>
+      <desc id="ft-d">
+        A request checks for a URI SAN and finds none, falls through to the DNS SAN and finds
+        none, and falls through again to the certificate Subject DN, which matches — granting
+        access that should have been denied.
+      </desc>
+
+      {lanes.map((lane) => <line x1="0" y1={lane.y} x2={EXIT} y2={lane.y} class="ft-lane" />)}
+
+      {/* The path not taken: where a match should have exited, and nothing was. */}
+      {
+        lanes
+          .filter((l) => l.junction !== null)
+          .map((lane) => (
+            <>
+              <line x1={lane.junction!} y1={lane.y} x2={EXIT - 26} y2={lane.y} class="ft-void" />
+              <rect x={EXIT - 18} y={lane.y - 9} width="18" height="18" class="ft-slot" />
+            </>
+          ))
+      }
+
+      <path d={thread} class="ft-thread" pathLength="1" />
+
+      {/* The terminus. The one red. */}
+      <rect x={EXIT - 18} y={lanes[2].y - 11} width="22" height="22" class="ft-hit" />
+    </svg>
+  </div>
+
+  <figcaption class="ft-cap">
+    <span data-i18n="ft.miss1">No URI SAN — fall through</span>
+    <span data-i18n="ft.miss2">No DNS SAN — fall through</span>
+    <span class="ft-cap-hit" data-i18n="ft.hit">Subject DN matched — allowed</span>
+  </figcaption>
+</figure>
+
+<style>
+  .ft {
+    margin: 0;
+  }
+
+  /* The gutter holds the labels, the plot holds the drawing. One positioned box
+     is what lets the labels track their lanes at any width. */
+  .ft-plot {
+    position: relative;
+    padding-left: 9rem;
+  }
+
+  .ft-plot svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .ft-label {
+    position: absolute;
+    left: 0;
+    top: var(--y);
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-data);
+    white-space: nowrap;
+  }
+
+  .ft-lane {
+    stroke: #333333;
+    stroke-width: 2;
+  }
+
+  .ft-void {
+    stroke: #555555;
+    stroke-width: 2;
+    stroke-dasharray: 2 10;
+  }
+
+  .ft-slot {
+    fill: none;
+    stroke: #555555;
+    stroke-width: 2;
+  }
+
+  .ft-thread {
+    stroke: var(--color-fg);
+    stroke-width: 6;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+
+  .ft-hit {
+    fill: var(--color-alert);
+  }
+
+  .ft-cap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 2rem;
+    margin-top: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  .ft-cap-hit {
+    color: var(--color-alert);
+  }
+
+  @media (max-width: 620px) {
+    .ft-plot {
+      padding-left: 6rem;
+    }
+
+    .ft-label {
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  /* --- Motion -------------------------------------------------------------
+     The finished diagram is the DEFAULT. The animation is enhancement only, so
+     reduced motion, old browsers and print all land on the readable end state.
+     The thread draws for 2s from 0.4s, reaching the terminus at 2.4s; the
+     landing is keyed to that arrival rather than to an arbitrary delay. */
+  @media (prefers-reduced-motion: no-preference) {
+    .ft-thread {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: ft-draw 2s var(--ease) 0.4s forwards;
+    }
+
+    .ft-hit {
+      opacity: 0;
+      animation: ft-land 0.35s steps(2, end) 2.4s forwards;
+    }
+  }
+
+  @keyframes ft-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Stepped, not eased: brutalist motion snaps, it does not glide. */
+  @keyframes ft-land {
+    to {
+      opacity: 1;
+    }
+  }
+</style>

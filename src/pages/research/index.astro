@@ -3,8 +3,6 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import FindingCard from '../../components/FindingCard.astro';
-import { findings } from '../../data/findings';
 
 const writeups = (await getCollection('research', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -12,67 +10,72 @@ const writeups = (await getCollection('research', ({ data }) => !data.draft)).so
 ---
 
 <Base
-  title="Security Research · Alan Ortega"
-  description="Vulnerability findings and technical writeups by Alan Ortega: authentication/authorization bypasses, supply-chain integrity and denial-of-service issues in widely-used open-source software."
+  title="Research · Alan Ortega"
+  description="Technical writeups by Alan Ortega. Detailed writeups are published only once a finding is public; active reports stay at vendor, severity and status."
 >
   <Nav />
-  <main id="top" class="mx-auto max-w-4xl px-6 pt-36 pb-20">
-    <p class="eyebrow"># Research index</p>
-    <h1 class="heading mt-4 text-4xl font-bold sm:text-5xl">Security Research</h1>
-    <p class="mt-4 max-w-2xl text-zinc-400">
-      Findings reported responsibly through Google's Open Source VRP / Bug Hunters and vendor
-      bug-bounty programs. Detailed writeups are published only once a finding is public; active
-      reports are listed at a high level: vendor, severity and status, with no exploitable
-      details.
-    </p>
 
-    <h2 class="eyebrow mt-14 mb-6"># Findings</h2>
-    <div class="grid gap-5 sm:grid-cols-2">
-      {findings.map((finding) => <FindingCard finding={finding} />)}
+  <main id="top" class="research-main">
+    <div class="wrap">
+      <p class="t-data">Archive</p>
+      <h1 class="t-huge research-title">Research</h1>
+
+      <p class="t-body research-lead">
+        Writeups are published only once a finding is public. Active reports stay at vendor,
+        severity and status, with no exploitable detail.
+      </p>
+
+      <div class="ledger research-list">
+        {
+          writeups.map((post, i) => (
+            <a href={`/research/${post.id}/`} class="ledger-row project-row">
+              <span class="ledger-no">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h2 class="ledger-vendor">{post.data.project}</h2>
+                <p class="t-data-sm ledger-scope">{post.data.date.toISOString().slice(0, 10)}</p>
+              </div>
+              <div>
+                <p class="research-item-title">{post.data.title}</p>
+                <p class="ledger-detail">{post.data.summary}</p>
+              </div>
+              <div class="ledger-meta">
+                <p class="ledger-status is-fixed">{post.data.status}</p>
+                {post.data.severity && <p class="t-data-sm">{post.data.severity}</p>}
+              </div>
+            </a>
+          ))
+        }
+      </div>
     </div>
-
-    <h2 class="eyebrow mt-16 mb-6"># Writeups</h2>
-    {
-      writeups.length === 0 ? (
-        <p class="text-sm text-zinc-500">
-          First writeup in progress: the grpc-go xDS RBAC authentication bypass, now public in
-          <a href="https://github.com/grpc/grpc-go/pull/9111" class="text-emerald-400 hover:text-emerald-300">
-            {' '}PR #9111
-          </a>{' '}and shipped in v1.81.1.
-        </p>
-      ) : (
-        <ul class="space-y-5">
-          {writeups.map((post) => (
-            <li>
-              <a href={`/research/${post.id}/`} class="card block p-6">
-                <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
-                  <span class="font-medium text-zinc-100">{post.data.project}</span>
-                  {post.data.severity && (
-                    <span
-                      class:list={[
-                        'rounded-md border px-2 py-0.5',
-                        post.data.severity.toLowerCase().includes('critical')
-                          ? 'border-red-600/40 bg-red-500/12 text-red-700'
-                          : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600',
-                      ]}
-                    >
-                      {post.data.severity}
-                    </span>
-                  )}
-                  <span class="text-zinc-500">
-                    {post.data.date.toISOString().slice(0, 10)}
-                  </span>
-                </div>
-                <h3 class="font-display mt-3 font-semibold tracking-tight text-zinc-100">
-                  {post.data.title}
-                </h3>
-                <p class="mt-1.5 text-sm text-zinc-400">{post.data.summary}</p>
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
   </main>
+
   <Footer />
 </Base>
+
+<style>
+  .research-main {
+    padding-top: 8rem;
+    padding-bottom: clamp(4rem, 10vw, 8rem);
+  }
+
+  .research-title {
+    margin-top: 0.75rem;
+  }
+
+  .research-lead {
+    margin-top: 2rem;
+    margin-bottom: clamp(3rem, 7vw, 5rem);
+    max-width: 48ch;
+  }
+
+  .research-list {
+    border-top: 2px solid var(--rule);
+  }
+
+  .research-item-title {
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+</style>

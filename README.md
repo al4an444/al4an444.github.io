@@ -47,6 +47,12 @@ Set `draft: true` in the frontmatter to keep it unpublished.
 > status only**. Never the project, the affected component, the vulnerability
 > class, a CWE, a CVSS vector, a PoC or any identifier. This applies to commit
 > messages too, not just to what the pages render.
+>
+> **No bounty figure on an unresolved report.** The award is still undecided, so
+> any number is a claim about money that has not been received — and the amount
+> itself narrows the vendor's published bounty table down towards the impact
+> class the rest of this rule is withholding. `payout` belongs only to a
+> resolved, public finding that was actually paid.
 
 ## Updating findings
 
@@ -54,7 +60,9 @@ Edit `src/data/findings.ts` — the finding cards on `/research/` are generated
 from there (`findings[]`, plus `projects` and `certifications` for the landing
 page). Only three findings are surfaced: the public grpc-go writeup carries full
 detail; the NVIDIA and Microsoft reports are non-public and are kept high-level
-(vendor · severity · status · payout), with no exploitable details. The landing
-page's featured grpc-go section is hand-written in `src/pages/index.astro`.
+(vendor · severity · status), with no exploitable details and **no `payout`**.
+The landing page's featured grpc-go section is hand-written in
+`src/pages/index.astro` — note the vendor list there is a second, hand-maintained
+copy of the same facts, so any change here has to be mirrored in that file.
 
 See the disclosure rule above: active reports stay at vendor, severity and status.

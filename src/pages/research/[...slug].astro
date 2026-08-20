@@ -39,63 +39,88 @@ const EsContent = t?.Content;
 
 <Base title={`${post.data.title} · Alan Ortega`} description={post.data.summary}>
   <Nav />
-  <main id="top" class="mx-auto max-w-3xl px-6 pt-36 pb-20">
-    <a
-      href="/research/"
-      class="font-mono text-xs text-zinc-500 transition-colors hover:text-emerald-400"
-    >
-      <span data-lang-content="en">&larr; back to research</span>
-      {t && <span data-lang-content="es" hidden>&larr; volver a investigación</span>}
-    </a>
-    <header class="mt-6 mb-10 border-b border-white/[0.06] pb-9">
-      <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
-        <span class="font-medium text-zinc-100">{post.data.project}</span>
+  <main id="top" class="writeup">
+    <div class="wrap">
+      <a href="/research/" class="link">
+        <span data-lang-content="en">&larr; Research</span>
+        {t && <span data-lang-content="es" hidden>&larr; Investigación</span>}
+      </a>
+
+      <header class="writeup-head">
+        <p class="t-data writeup-meta">
+          <span>{post.data.project}</span>
+          {
+            post.data.severity && (
+              <span>
+                <span data-lang-content="en">{post.data.severity}</span>
+                {t?.severity && (
+                  <span data-lang-content="es" hidden>
+                    {t.severity}
+                  </span>
+                )}
+              </span>
+            )
+          }
+          <span>
+            <span data-lang-content="en">{post.data.status}</span>
+            {t && <span data-lang-content="es" hidden>{t.status}</span>}
+          </span>
+          <span>{post.data.date.toISOString().slice(0, 10)}</span>
+        </p>
+
+        <h1 class="t-huge writeup-title">
+          <span data-lang-content="en">{post.data.title}</span>
+          {t && <span data-lang-content="es" hidden>{t.title}</span>}
+        </h1>
+
+        <p class="t-body writeup-summary">
+          <span data-lang-content="en">{post.data.summary}</span>
+          {t && <span data-lang-content="es" hidden>{t.summary}</span>}
+        </p>
+      </header>
+
+      <article class="prose-brut">
+        <div data-lang-content="en"><Content /></div>
         {
-          post.data.severity && (
-            <span
-              class:list={[
-                'rounded-md border px-2 py-0.5',
-                post.data.severity.toLowerCase().includes('critical')
-                  ? 'border-red-600/40 bg-red-500/12 text-red-700'
-                  : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600',
-              ]}
-            >
-              <span data-lang-content="en">{post.data.severity}</span>
-              {t?.severity && (
-                <span data-lang-content="es" hidden>
-                  {t.severity}
-                </span>
-              )}
-            </span>
+          EsContent && (
+            <div data-lang-content="es" hidden>
+              <EsContent />
+            </div>
           )
         }
-        <span class="rounded-md border border-zinc-600 bg-zinc-800/60 px-2 py-0.5 text-zinc-400">
-          <span data-lang-content="en">{post.data.status}</span>
-          {t && <span data-lang-content="es" hidden>{t.status}</span>}
-        </span>
-        <span class="text-zinc-500">{post.data.date.toISOString().slice(0, 10)}</span>
-      </div>
-      <h1 class="heading mt-5 text-3xl font-bold sm:text-4xl">
-        <span data-lang-content="en">{post.data.title}</span>
-        {t && <span data-lang-content="es" hidden>{t.title}</span>}
-      </h1>
-      <p class="mt-4 text-zinc-400">
-        <span data-lang-content="en">{post.data.summary}</span>
-        {t && <span data-lang-content="es" hidden>{t.summary}</span>}
-      </p>
-    </header>
-    <article
-      class="prose max-w-none prose-headings:font-display prose-headings:tracking-tight prose-headings:text-zinc-100 prose-p:text-zinc-300 prose-li:text-zinc-300 prose-strong:text-zinc-100 prose-a:text-emerald-600 prose-code:text-emerald-600"
-    >
-      <div data-lang-content="en"><Content /></div>
-      {
-        EsContent && (
-          <div data-lang-content="es" hidden>
-            <EsContent />
-          </div>
-        )
-      }
-    </article>
+      </article>
+    </div>
   </main>
   <Footer />
 </Base>
+
+<style>
+  .writeup {
+    padding-top: 8rem;
+    padding-bottom: clamp(4rem, 10vw, 8rem);
+  }
+
+  .writeup-head {
+    margin-top: 2rem;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .writeup-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .writeup-title {
+    max-width: 20ch;
+  }
+
+  .writeup-summary {
+    margin-top: 1.75rem;
+    max-width: 60ch;
+    color: var(--color-data);
+  }
+</style>

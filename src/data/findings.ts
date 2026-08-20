@@ -20,6 +20,12 @@ export interface Finding {
 // unresolved — kept deliberately high-level (vendor · program · severity ·
 // status), with no titles, technique, CWE, CVSS vector or PoC, in line with
 // responsible disclosure.
+//
+// `payout` is only ever set on a RESOLVED, PUBLIC finding where the award was
+// actually paid. Never on an open report: the award is undecided (so a figure
+// would be a claim about money not received), and the amount itself narrows the
+// vendor's published bounty table down towards the impact class we are
+// withholding. Vendor · severity · status is the whole budget.
 export const findings: Finding[] = [
   {
     project: 'grpc-go',
@@ -45,7 +51,6 @@ export const findings: Finding[] = [
     severity: 'High severity',
     status: 'Reproduced & under review',
     statusKind: 'reported',
-    payout: '$4,000',
     summary:
       "Confirmed and reproduced by NVIDIA's security team and now under active review. Details are withheld pending resolution, in line with responsible disclosure.",
   },
@@ -55,7 +60,6 @@ export const findings: Finding[] = [
     severity: 'High severity',
     status: 'Under review',
     statusKind: 'reported',
-    payout: '$10,000',
     summary:
       'Reported to Microsoft (MSRC) and currently under review and reproduction. Details are withheld pending resolution, in line with responsible disclosure.',
   },

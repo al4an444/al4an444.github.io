@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import FieldArt from '../components/FieldArt.astro';
 ---
 
 <Base
@@ -10,38 +9,50 @@ import FieldArt from '../components/FieldArt.astro';
   description="This address does not exist on al4an444.github.io."
 >
   <Nav />
+
   <main id="top" class="notfound">
-    <section class="notfound-in">
-      <p class="notfound-kicker">
-        <span data-i18n="nf.kicker">Dead end</span>
-      </p>
+    <div class="wrap">
+      <p class="t-data" data-i18n="nf.kicker">Dead end</p>
 
-      <h1 class="name-draw notfound-code">
-        <span class="name-ink">404</span>
-        <span class="name-pen" aria-hidden="true"></span>
-      </h1>
+      <h1 class="t-mega notfound-code">404</h1>
 
-      <p data-i18n="nf.title" class="notfound-title">This path leads nowhere.</p>
-
-      <p data-i18n="nf.lead" class="notfound-lead">
+      <p class="t-body notfound-lead" data-i18n="nf.lead">
         You went looking for something that isn't here. Poking at addresses is most of the job, so
         I won't hold it against you. This one is just a dead end.
       </p>
 
       <div class="notfound-actions">
-        <a href="/" data-i18n="nf.btn.home" class="btn btn-primary">Back to the start</a>
-        <a href="/research/" data-i18n="nf.btn.research" class="btn btn-ghost">See the research</a>
+        <a href="/" class="link" data-i18n="nf.btn.home">Back to the start</a>
+        <a href="/research/" class="link" data-i18n="nf.btn.research">See the research</a>
       </div>
-
-      <FieldArt
-        seed={0x404}
-        traces={70}
-        width={150}
-        height={150}
-        accentIndex={23}
-        class="notfound-mark"
-      />
-    </section>
+    </div>
   </main>
+
   <Footer />
 </Base>
+
+<style>
+  .notfound {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+  }
+
+  .notfound-code {
+    margin-top: 0.75rem;
+  }
+
+  .notfound-lead {
+    margin-top: 2.5rem;
+  }
+
+  .notfound-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+</style>
