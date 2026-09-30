@@ -1,18 +1,20 @@
 ---
+import T from './T.astro';
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="band-tight">
   <div class="wrap">
     <div class="footer-in">
-      <p class="t-data-sm">© {year} Alan Ortega</p>
+      <p class="t-data-sm">© {year} Alan Ortega Álamo</p>
       <div class="footer-links">
         <a href="mailto:alanortega7312@gmail.com" class="link">Email</a>
-        <a href="https://github.com/al4an444" class="link">GitHub</a>
-        <a href="https://linkedin.com/in/alan-o-b70724290" class="link">LinkedIn</a>
+        <a href="https://github.com/al4an444" class="link" rel="me">GitHub</a>
+        <a href="https://linkedin.com/in/alan-o-b70724290" class="link" rel="me">LinkedIn</a>
         <a href="/.well-known/security.txt" class="link">security.txt</a>
       </div>
-      <p class="t-data-sm" data-i18n="footer.built">Astro · no client JS</p>
+      <p class="t-data-sm"><T k="footer.built">Astro · no client JS</T></p>
     </div>
   </div>
 </footer>

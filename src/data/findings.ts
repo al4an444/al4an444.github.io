@@ -75,6 +75,13 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    name: 'phishguard',
+    description:
+      'Explainable phishing detection for URLs and e-mails: heuristic rules plus an ML model, with a CLI, REST API and web UI. Everything runs locally.',
+    tech: ['Python', 'FastAPI', 'scikit-learn'],
+    href: 'https://github.com/al4an444/phishguard',
+  },
+  {
     name: 'shutdown-restore',
     description:
       'Automated C++ Windows service that creates a system restore point on shutdown, bypassing the 24h limit and rotating old backups.',

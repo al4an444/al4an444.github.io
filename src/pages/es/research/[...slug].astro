@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import Writeup from '../../../views/Writeup.astro';
+import { translations } from '../../../i18n/writeups';
+
+// Only writeups with a Spanish translation get a Spanish URL.
+export async function getStaticPaths() {
+  const posts = await getCollection('research', ({ data }) => !data.draft);
+  return posts
+    .filter((post) => post.id in translations)
+    .map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+---
+
+<Writeup post={post} />

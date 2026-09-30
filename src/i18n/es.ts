@@ -1,0 +1,126 @@
+// Spanish UI strings. English is the source text, written inline in the
+// templates; each translatable element wraps it in <T k="key">, which renders
+// the entry below on /es/ pages and the English children everywhere else.
+//
+// CONTRACT: every user-visible English string needs a <T k> wrapper AND a key
+// here. Copy without a key renders English on the Spanish pages.
+export const es: Record<string, string> = {
+  // Nav
+  'nav.findings': 'Hallazgos',
+  'nav.case': 'Caso',
+  'nav.about': 'Quién',
+  'nav.research': 'Investigación',
+  'nav.contact': 'Contacto',
+
+  // Hero. The name itself has no key — names don't translate.
+  'hero.role': 'Ciberseguridad',
+  'hero.fixed': 'Corregido en v1.81.1',
+  'hero.kicker': 'Disponible para roles junior de seguridad · Madrid / remoto',
+
+  // 00 · The diagram
+  'diagram.title': 'El fallthrough',
+  'diagram.body':
+    'Una comprobación de autorización debería denegar cuando no coincide. Esta seguía buscando. Probó el URI SAN, luego el DNS SAN, y luego el Subject DN del certificado — y el Subject DN la dejó pasar.',
+  'diagram.note': 'Esto es el hallazgo, dibujado. Nada más en esta web es rojo.',
+  'ft.miss1': 'Sin URI SAN — cae al siguiente',
+  'ft.miss2': 'Sin DNS SAN — cae al siguiente',
+  'ft.hit': 'Subject DN coincide — acceso concedido',
+
+  // 01 · Findings
+  'findings.title': 'Hallazgos',
+  'find.google.detail':
+    'Un bypass de autenticación en el motor RBAC de xDS de gRPC: el authenticatedMatcher caía desde el URI/DNS SAN al Subject DN del certificado. Corregido por Google y acreditado en las notas de versión.',
+  'find.google.status': 'Corregido · v1.81.1',
+  'find.google.sev': 'CVSS 7.5',
+  'find.microsoft.sev': 'Importante',
+  'find.microsoft.detail':
+    'El campo del servidor ACR de un AcrPullBinding no se limitaba a dominios de registro de confianza, así que el controlador podía enviar su token de Azure (ARM) a un endpoint controlado por un atacante. Confirmado por MSRC y corregido validando el servidor contra los sufijos de ACR permitidos.',
+  'find.nvidia.sev': 'Alta',
+  'find.protobuf.sev': 'Denegación de servicio',
+  'find.protobuf.detail':
+    'El RecursionLimit de prototext se saltaba silenciosamente en la ruta de descarte de campos desconocidos: skipValue y skipMessageValue se llamaban recursivamente sin decrementarlo, así que mensajes desconocidos muy anidados abortaban el proceso con un desbordamiento de pila del que Go no se puede recuperar. Reporté el fallo y escribí el parche, integrado tras la revisión de los mantenedores de protobuf-go.',
+  'find.protobuf.status': 'Integrado · master',
+  'find.microsoft.status': 'Corregido',
+  'find.nvidia.status': 'Reproducido · bajo revisión',
+  'findings.withheld': 'Retenido hasta que el fabricante publique.',
+  'findings.foot':
+    'Los reportes abiertos se quedan en fabricante, severidad y estado. Sin componente, sin clase de vulnerabilidad, sin identificador, sin importe de recompensa.',
+
+  // 02 · The credit
+  // NOTE: `credit.quote` is a TRANSLATION of an English document Google
+  // published. `credit.caption` therefore says "traducción" so the reader
+  // never mistakes this for the maintainers' actual words; the Source link
+  // in the caption always points at the English original.
+  'credit.quote':
+    '<span class="credit-scope">xds/rbac:</span> Corrige un posible bypass de autorización causado por caer incorrectamente desde los SAN de URI/DNS al Subject Distinguished Name (DN) al comparar el nombre del principal autenticado. Con este arreglo solo se usará la primera fuente de identidad no vacía, según la gRFC A41. (#9111)',
+  'credit.caption': 'Notas de versión de grpc-go v1.81.1 · traducción',
+  'credit.title': 'La acreditación',
+  'credit.body':
+    'Cualquiera puede decir que encontró algo. Esta es la parte que no se puede reclamar: mi crédito, en las notas de versión del arreglo, publicadas por Google.',
+
+  // 03 · Case study
+  'zero.title': 'Caso de estudio',
+  'zero.body':
+    'Al controlador de dominio del centro de FP donde estudiaba le faltaban las actualizaciones de agosto de 2020. Demostré el impacto, paré en la prueba, no guardé datos, lo reporté de inmediato y trabajé con el centro para remediarlo y endurecer el entorno.',
+  'zero.read': 'Leer el writeup',
+
+  // 04 · Who
+  'about.title': 'Quién',
+  'about.p1':
+    'Veintiún años, autodidacta, disponible para trabajar desde Madrid o en remoto.',
+  'about.p2': 'Nadie me encargó nada de esto. Simplemente es lo que me gusta.',
+  'about.edu': 'Formación',
+  'about.exp': 'Experiencia',
+  'about.certs': 'Certificaciones',
+  'about.edu.asir': 'CFGS Administración de Sistemas Informáticos en Red (ASIR)',
+  'about.edu.asir.meta': 'ILERNA Online · 2025 — 2027, en curso',
+  'about.edu.smr': 'CFGM Sistemas Microinformáticos y Redes (SMR)',
+  'about.edu.smr.meta': 'Completado · 2023 — 2025',
+  'about.exp.support': 'Soporte técnico',
+  'about.exp.support.meta': 'MOMPALAO, Malta · mar — may 2025',
+  'about.exp.seasonal': 'Trabajo de temporada mientras estudiaba',
+  'about.exp.seasonal.meta': 'Slagharen Theme Park (NL) · El Corte Inglés (ES) · nov 2024 — ago 2025',
+
+  // 05 · Built. Keys are derived from the project name in findings.ts —
+  // renaming a project there means renaming these keys too.
+  'projects.title': 'Construido',
+  'proj.phishguard.tech': 'Python · FastAPI · scikit-learn',
+  'proj.phishguard.desc':
+    'Detector de phishing explicable para URLs y correos: reglas heurísticas más un modelo de ML, con CLI, API REST e interfaz web. Todo se ejecuta en local.',
+  'proj.shutdown-restore.tech': 'C++ · Servicio de Windows',
+  'proj.shutdown-restore.desc':
+    'Servicio de Windows en C++ que crea un punto de restauración del sistema al apagar, saltándose el límite de 24 h y rotando las copias antiguas.',
+  'proj.ghosttalk.tech': 'TypeScript · React · Supabase · Web Crypto API',
+  'proj.ghosttalk.desc':
+    'Aplicación de chat cifrada de extremo a extremo (E2EE) y de conocimiento cero, construida con React, Supabase y la Web Crypto API.',
+
+  // 06 · Contact
+  'contact.title': 'Contrátame',
+  'contact.lead':
+    'Busco un puesto junior en seguridad de aplicaciones, investigación de vulnerabilidades o ingeniería de seguridad.',
+
+  // 404
+  'nf.kicker': 'Sin salida',
+  'nf.lead':
+    'Buscabas algo que no está aquí. Hurgar en direcciones es la mayor parte del trabajo, así que no te lo voy a reprochar. Esta simplemente no lleva a ningún sitio.',
+  'nf.btn.home': 'Volver al inicio',
+  'nf.btn.research': 'Ver la investigación',
+
+  // Footer
+  'footer.built': 'Astro · sin JS de cliente',
+
+  // Homepage <title> / meta description
+  'meta.title': 'Alan Ortega Álamo · Investigador de Seguridad',
+  'meta.desc':
+    'Alan Ortega Álamo, investigador de seguridad autodidacta en Madrid. Encuentra y divulga responsablemente vulnerabilidades en software de uso masivo, incluido un bypass de autenticación CVSS 7.5 en grpc-go corregido por Google.',
+
+  // Research archive
+  'research.meta.title': 'Investigación · Alan Ortega Álamo',
+  'research.meta.desc':
+    'Writeups técnicos de Alan Ortega Álamo. Solo se publican cuando el hallazgo es público; los reportes abiertos se quedan en fabricante, severidad y estado.',
+  'research.kicker': 'Archivo',
+  'research.title': 'Investigación',
+  'research.lead':
+    'Los writeups se publican solo cuando el hallazgo es público. Los reportes activos se quedan en fabricante, severidad y estado, sin detalle explotable.',
+  'research.back': '&larr; Investigación',
+};

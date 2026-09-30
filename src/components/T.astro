@@ -1,0 +1,17 @@
+---
+// Translatable text. Renders the Spanish entry for `k` on /es/ pages and the
+// English children everywhere else. Spanish values may carry inline markup.
+import { es } from '../i18n/es';
+import { langFromUrl } from '../i18n/lang';
+
+interface Props {
+  k: string;
+}
+
+const { k } = Astro.props;
+// hasOwn, not a bare lookup: a stray key like "constructor" must not resolve
+// up the prototype chain.
+const html = langFromUrl(Astro.url) === 'es' && Object.hasOwn(es, k) ? es[k] : null;
+---
+
+{html !== null ? <Fragment set:html={html} /> : <slot />}

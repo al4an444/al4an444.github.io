@@ -1,0 +1,109 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { langFromUrl, localize } from '../i18n/lang';
+import { translations } from '../i18n/writeups';
+
+interface Props {
+  post: CollectionEntry<'research'>;
+}
+
+const { post } = Astro.props;
+const lang = langFromUrl(Astro.url);
+const t = translations[post.id];
+const { Content: EnContent } = await render(post);
+
+// Only translated writeups are routed under /es/, so `t` is always set there.
+const es = lang === 'es' && t;
+const d = es ? { ...post.data, ...t } : post.data;
+const Content = es ? t.Content : EnContent;
+const url = new URL(Astro.url.pathname, Astro.site).href;
+
+const article = {
+  '@type': 'BlogPosting',
+  '@id': `${url}#article`,
+  headline: d.title,
+  description: d.summary,
+  datePublished: post.data.date.toISOString().slice(0, 10),
+  inLanguage: lang,
+  url,
+  image: new URL('/og.png', Astro.site).href,
+  author: { '@id': new URL('/#person', Astro.site).href },
+  publisher: { '@id': new URL('/#person', Astro.site).href },
+  isPartOf: { '@id': new URL('/#website', Astro.site).href },
+};
+---
+
+<Base
+  title={`${d.title} · Alan Ortega Álamo`}
+  description={d.summary}
+  alternate={Boolean(t)}
+  schema={[article]}
+>
+  <Nav alternate={Boolean(t)} />
+  <main id="top" class="writeup">
+    <div class="wrap">
+      <a href={localize('/research/', lang)} class="link">
+        {es ? '← Investigación' : '← Research'}
+      </a>
+
+      <header class="writeup-head">
+        <p class="t-data writeup-meta">
+          <span>{post.data.project}</span>
+          {d.severity && <span>{d.severity}</span>}
+          <span>{d.status}</span>
+          <span>{post.data.date.toISOString().slice(0, 10)}</span>
+        </p>
+
+        <h1 class="t-huge writeup-title">{d.title}</h1>
+
+        <p class="t-body writeup-summary">{d.summary}</p>
+        <p class="t-data-sm writeup-byline">
+          {es ? 'Por' : 'By'} <a href={localize('/', lang)} class="link" rel="author">Alan Ortega Álamo</a>
+        </p>
+      </header>
+
+      <article class="prose-brut">
+        <Content />
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .writeup {
+    padding-top: 8rem;
+    padding-bottom: clamp(4rem, 10vw, 8rem);
+  }
+
+  .writeup-head {
+    margin-top: 2rem;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .writeup-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .writeup-title {
+    max-width: 20ch;
+  }
+
+  .writeup-summary {
+    margin-top: 1.75rem;
+    max-width: 60ch;
+    color: var(--color-data);
+  }
+
+  .writeup-byline {
+    margin-top: 1.25rem;
+  }
+</style>

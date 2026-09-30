@@ -1,6 +1,6 @@
-const VERSION = 'v10';
+const VERSION = 'v11';
 const CACHE = `alan-portfolio-${VERSION}`;
-const PRECACHE = ['/', '/research/', '/manifest.webmanifest', '/favicon.svg'];
+const PRECACHE = ['/', '/research/', '/es/', '/es/research/', '/manifest.webmanifest', '/favicon.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

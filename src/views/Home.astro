@@ -1,0 +1,575 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Fallthrough from '../components/Fallthrough.astro';
+import { projects, certifications } from '../data/findings';
+import T from '../components/T.astro';
+import { es } from '../i18n/es';
+import { langFromUrl, localize } from '../i18n/lang';
+
+// DISCLOSURE RULE — the whole reason this file is shaped the way it is.
+// Fixed findings whose fix is public (Google x2, Microsoft) carry full detail.
+// The NVIDIA report is open, so it carries vendor · severity · status and NOTHING ELSE:
+// no project, component, vulnerability class, CWE, CVSS vector, PoC, identifier
+// — and no bounty figure, because the award is undecided and the amount itself
+// narrows the vendor's published table toward the impact class being withheld.
+// The redaction bars below are EMPTY ELEMENTS. The withheld text is not in this
+// file, not in the DOM and not in the bundle. Keep it that way.
+const findings = [
+  {
+    no: '01',
+    vendor: 'Google',
+    scope: 'grpc-go · Open Source VRP',
+    severity: 'CVSS 7.5',
+    status: 'Fixed · v1.81.1',
+    fixed: true,
+    key: 'google',
+    detail:
+      // "credited in the release notes", not "by name": the published credit is
+      // the GitHub handle @al4an444. See the verbatim quote in the credit band.
+      "An authentication bypass in gRPC's xDS RBAC engine: the authenticatedMatcher fell through from the URI/DNS SAN to the certificate's Subject DN. Fixed by Google and credited in the release notes.",
+    links: [
+      { href: 'https://github.com/grpc/grpc-go/pull/9111', label: 'PR #9111' },
+      {
+        href: 'https://newreleases.io/project/github/grpc/grpc-go/release/v1.81.1',
+        label: 'Release notes',
+      },
+    ],
+  },
+  {
+    // Fully public: the CL, the commit and the upstream issue are all open, so
+    // this carries full detail like grpc-go. Deliberately NOT labelled as a VRP
+    // finding — the VRP report was closed "Won't Fix (Intended Behavior)" and
+    // the request to reopen is pending, so no reward is claimed or implied.
+    no: '02',
+    vendor: 'Google',
+    scope: 'protobuf-go · merged upstream',
+    severity: 'Denial of service',
+    status: 'Merged · master',
+    fixed: true,
+    key: 'protobuf',
+    detail:
+      "prototext's RecursionLimit was silently bypassed on the unknown-field skip path: skipValue and skipMessageValue recursed into each other without decrementing it, so deeply nested unknown messages aborted the process with a stack overflow that Go cannot recover from. I reported it and authored the fix, merged after review by the protobuf-go maintainers.",
+    links: [
+      { href: 'https://go-review.googlesource.com/c/protobuf/+/774741', label: 'CL 774741' },
+    ],
+  },
+  {
+    // Fixed and confirmed by MSRC; the fix (PR #129) is public, so this carries
+    // detail at the level of that PR. No bounty: MSRC closed it out of scope.
+    no: '03',
+    vendor: 'Microsoft',
+    scope: 'Azure msi-acrpull · MSRC',
+    severity: 'Important',
+    status: 'Fixed',
+    fixed: true,
+    key: 'microsoft',
+    detail:
+      "The ACR server field of an AcrPullBinding was not restricted to trusted registry domains, so the controller could send its Azure (ARM) bearer token to an attacker-controlled endpoint. Confirmed by MSRC and fixed by validating the server against allowed ACR suffixes.",
+    links: [{ href: 'https://github.com/Azure/msi-acrpull/pull/129', label: 'PR #129' }],
+  },
+  {
+    no: '04',
+    vendor: 'NVIDIA',
+    scope: 'PSIRT · Public Bug Bounty',
+    severity: 'High',
+    status: 'Reproduced · under review',
+    fixed: false,
+    key: 'nvidia',
+    redacted: ['10ch', '15ch', '11ch'],
+    links: [],
+  },
+];
+
+const education = [
+  {
+    key: 'about.edu.asir',
+    title: 'HND in Network & Systems Administration (ASIR)',
+    place: 'ILERNA Online',
+    period: '2025 — 2027, in progress',
+  },
+  {
+    key: 'about.edu.smr',
+    title: 'Vocational degree in Microcomputer Systems & Networks (SMR)',
+    place: 'Completed',
+    period: '2023 — 2025',
+  },
+];
+
+const experience = [
+  {
+    key: 'about.exp.support',
+    title: 'Technical Support',
+    place: 'MOMPALAO, Malta',
+    period: 'Mar — May 2025',
+  },
+  {
+    key: 'about.exp.seasonal',
+    title: 'Seasonal work while studying',
+    place: 'Slagharen Theme Park (NL) · El Corte Inglés (ES)',
+    period: 'Nov 2024 — Aug 2025',
+  },
+];
+
+const lang = langFromUrl(Astro.url);
+const title = lang === 'es' ? es['meta.title'] : 'Alan Ortega Álamo · Security Researcher';
+const description =
+  lang === 'es'
+    ? es['meta.desc']
+    : 'Alan Ortega Álamo, a self-taught security researcher in Madrid, finding and responsibly disclosing vulnerabilities in widely-used software, including a CVSS 7.5 authentication bypass in grpc-go fixed by Google.';
+
+const profilePage = {
+  '@type': 'ProfilePage',
+  '@id': new URL(`${localize('/', lang)}#profile`, Astro.site).href,
+  url: new URL(localize('/', lang), Astro.site).href,
+  name: title,
+  inLanguage: lang,
+  isPartOf: { '@id': new URL('/#website', Astro.site).href },
+  mainEntity: { '@id': new URL('/#person', Astro.site).href },
+};
+---
+
+<Base title={title} description={description} schema={[profilePage]}>
+  <Nav />
+
+  <main id="top">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <div class="wrap">
+        {/* No <T> on the name — a name is the same in both languages. */}
+        <h1 class="t-mega hero-line">Alan<br />Ortega<br />Álamo</h1>
+        <p class="t-data hero-role"><T k="hero.role">Cybersecurity</T></p>
+
+        <div class="hero-foot">
+          <p class="t-data hero-readout">
+            <span>grpc-go</span>
+            <span>CVSS 7.5</span>
+            <span class="is-fg"><T k="hero.fixed">Fixed in v1.81.1</T></span>
+          </p>
+          <p class="t-data-sm hero-avail"><T k="hero.kicker">
+            Open to junior security roles · Madrid / remote
+          </T></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= THE DIAGRAM ========================= -->
+    <section class="band" id="diagram">
+      <div class="wrap">
+        <div class="band-head">
+          <span class="band-no">00</span>
+          <h2 class="t-big"><T k="diagram.title">The fallthrough</T></h2>
+        </div>
+
+        <div class="cols cols-side">
+          <div>
+            <p class="t-body reveal"><T k="diagram.body">
+              An authorization check is supposed to deny when it does not match. This one kept
+              looking. It tried the URI SAN, then the DNS SAN, then the certificate's Subject DN —
+              and the Subject DN let it in.
+            </T></p>
+            <p class="t-data-sm diagram-note reveal"><T k="diagram.note">
+              This is the finding, drawn. Nothing else on this site is red.
+            </T></p>
+          </div>
+          <div class="reveal">
+            <Fallthrough />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== FINDINGS =========================== -->
+    <section class="band" id="findings">
+      <div class="wrap">
+        <div class="band-head">
+          <span class="band-no">01</span>
+          <h2 class="t-big"><T k="findings.title">Findings</T></h2>
+        </div>
+
+        <div class="ledger">
+          {
+            findings.map((f) => (
+              <article class="ledger-row reveal">
+                <span class="ledger-no">{f.no}</span>
+
+                <div>
+                  <h3 class="ledger-vendor">{f.vendor}</h3>
+                  <p class="t-data-sm ledger-scope">{f.scope}</p>
+                </div>
+
+                <div>
+                  {f.detail ? (
+                    <p class="ledger-detail"><T k={`find.${f.key}.detail`}>
+                      {f.detail}
+                    </T></p>
+                  ) : (
+                    <>
+                      {/* EMPTY bars. No text underneath — see the note at the
+                          top of this file. Widths are arbitrary and fixed so
+                          they leak nothing about what they stand for. */}
+                      <p class="redact-lines" aria-hidden="true">
+                        {f.redacted!.map((w) => (
+                          <span class="redact" style={`--w: ${w}`} />
+                        ))}
+                      </p>
+                      <p class="redact-note"><T k="findings.withheld">
+                        Withheld until the vendor publishes.
+                      </T></p>
+                    </>
+                  )}
+
+                  {f.links.length > 0 && (
+                    <div class="ledger-links">
+                      {f.links.map((l) => (
+                        <a href={l.href}>{l.label}</a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div class="ledger-meta">
+                  <p class={`ledger-status ${f.fixed ? 'is-fixed' : ''}`}><T k={`find.${f.key}.status`}>
+                    {f.status}
+                  </T></p>
+                  <p class="t-data-sm"><T k={`find.${f.key}.sev`}>{f.severity}</T></p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+
+        <p class="t-data-sm findings-foot"><T k="findings.foot">
+          Open reports stay at vendor, severity and status. No component, no vulnerability class,
+          no identifier, no bounty figure.
+        </T></p>
+      </div>
+    </section>
+
+    <!-- ========================== THE CREDIT ========================= -->
+    <section class="band" id="credit">
+      <div class="wrap">
+        <div class="band-head">
+          <span class="band-no">02</span>
+          <h2 class="t-big"><T k="credit.title">The credit</T></h2>
+        </div>
+
+        <div class="cols cols-2">
+          <div>
+            <p class="t-body reveal"><T k="credit.body">
+              Anyone can claim they found something. This is the part that cannot be claimed: my
+              name, in the release notes of the fix, published by Google.
+            </T></p>
+          </div>
+
+          {/* VERBATIM from the grpc-go v1.81.1 release notes, fetched from the
+              GitHub releases API. Do not paraphrase, tighten or "improve" this
+              text — it is quoted as a published record, and the credit line is
+              a GitHub handle, not a real name. Re-fetch before editing.
+
+              The ES value of `credit.quote` is a TRANSLATION of a document
+              Google published in English. That is why `credit.caption` says
+              "traducción" in Spanish: the reader must never mistake the
+              rendered Spanish for the words the maintainers actually wrote.
+              The Source link always points at the English original. */}
+          <figure class="credit-plate reveal">
+            <blockquote class="credit-quote"><T k="credit.quote">
+              <span class="credit-scope">xds/rbac:</span> Fix a potential authorization bypass caused
+              by incorrectly falling through URI/DNS SANs to Subject Distinguished Name (DN) when
+              matching the authenticated principal name. With this fix, only the first non-empty
+              identity source will be used, as per gRFC A41. (#9111)
+            </T></blockquote>
+            <p class="credit-name">Special Thanks: @al4an444</p>
+            <figcaption class="t-data-sm">
+              <span><T k="credit.caption">grpc-go v1.81.1 release notes</T></span>
+              <a href="https://github.com/grpc/grpc-go/releases/tag/v1.81.1" class="link credit-src"
+                >Source</a
+              >
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== ZEROLOGON ========================== -->
+    <section class="band" id="zerologon">
+      <div class="wrap">
+        <div class="band-head">
+          <span class="band-no">03</span>
+          <h2 class="t-big"><T k="zero.title">Case study</T></h2>
+        </div>
+
+        <div class="cols cols-side">
+          <div>
+            <p class="t-data-sm zero-meta">
+              <span>ZeroLogon</span>
+              <span>CVE-2020-1472</span>
+              <span>CVSS 10.0</span>
+            </p>
+          </div>
+
+          <div>
+            <p class="t-body reveal"><T k="zero.body">
+              The domain controller of the vocational school I attended was missing the August 2020
+              updates. I demonstrated the impact, stopped at proof, kept no data, reported it
+              immediately, and worked with the school to remediate and harden the environment.
+            </T></p>
+            <div class="ledger-links reveal">
+              <a href={localize('/research/zerologon-domain-compromise/', lang)}
+                ><T k="zero.read">Read the writeup</T></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ ABOUT ============================ -->
+    <section class="band" id="about">
+      <div class="wrap">
+        <div class="band-head">
+          <span class="band-no">04</span>
+          <h2 class="t-big"><T k="about.title">Who</T></h2>
+        </div>
+
+        <div class="cols cols-2">
+          <div>
+            <p class="t-body reveal"><T k="about.p1">
+              Twenty-one years old, self-taught, available to work from Madrid or remotely.
+            </T></p>
+            <p class="t-body about-p2 reveal"><T k="about.p2">
+              Nobody assigned me any of this. It's simply what I like doing.
+            </T></p>
+          </div>
+
+          <div class="cols">
+            <dl class="deflist reveal">
+              {
+                education.map((e) => (
+                  <div>
+                    <dt><T k="about.edu">Education</T></dt>
+                    <dd>
+                      <T k={e.key}>{e.title}</T>
+                      <span class="t-data-sm">
+                        <T k={`${e.key}.meta`}>
+                          {e.place} · {e.period}
+                        </T>
+                      </span>
+                    </dd>
+                  </div>
+                ))
+              }
+              {
+                experience.map((x) => (
+                  <div>
+                    <dt><T k="about.exp">Experience</T></dt>
+                    <dd>
+                      <T k={x.key}>{x.title}</T>
+                      <span class="t-data-sm">
+                        <T k={`${x.key}.meta`}>
+                          {x.place} · {x.period}
+                        </T>
+                      </span>
+                    </dd>
+                  </div>
+                ))
+              }
+              <div>
+                <dt><T k="about.certs">Certifications</T></dt>
+                <dd>
+                  {certifications.map((c) => (
+                    <span class="cert-line">
+                      {c.name}
+                      <span class="t-data-sm">
+                        {c.issuer} · {c.date}
+                      </span>
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== PROJECTS ========================== -->
+    <section class="band" id="projects">
+      <div class="wrap">
+        <div class="band-head">
+          <span class="band-no">05</span>
+          <h2 class="t-big"><T k="projects.title">Built</T></h2>
+        </div>
+
+        <div class="ledger">
+          {
+            projects.map((p, i) => (
+              <a href={p.href} class="ledger-row project-row reveal">
+                <span class="ledger-no">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3 class="ledger-vendor">{p.name}</h3>
+                  <p class="t-data-sm ledger-scope"><T k={`proj.${p.name}.tech`}>
+                    {p.tech.join(' · ')}
+                  </T></p>
+                </div>
+                <p class="ledger-detail"><T k={`proj.${p.name}.desc`}>{p.description}</T></p>
+                <p class="ledger-status">GitHub</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== CONTACT =========================== -->
+    <section class="band" id="contact">
+      <div class="wrap">
+        <div class="band-head">
+          <span class="band-no">06</span>
+          <h2 class="t-big"><T k="contact.title">Hire me</T></h2>
+        </div>
+
+        <p class="t-body contact-lead reveal"><T k="contact.lead">
+          Looking for a junior role in application security, vulnerability research or security
+          engineering.
+        </T></p>
+
+        <div class="contact-list">
+          <a href="mailto:alanortega7312@gmail.com" class="contact-link"
+            >alanortega7312@gmail.com</a
+          >
+          <a href="https://linkedin.com/in/alan-o-b70724290" class="contact-link" rel="me">LinkedIn</a>
+          <a href="https://github.com/al4an444" class="contact-link" rel="me">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 6rem;
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+
+  .hero-role {
+    margin-top: 1.25rem;
+    color: var(--color-fg);
+  }
+
+  .hero-foot {
+    margin-top: clamp(2rem, 5vw, 4rem);
+    border-top: 2px solid var(--rule);
+    padding-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+  }
+
+  .hero-readout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.75rem;
+  }
+
+  .hero-readout .is-fg {
+    color: var(--color-fg);
+  }
+
+  .diagram-note {
+    margin-top: 2rem;
+  }
+
+  .ledger-scope {
+    margin-top: 0.5rem;
+  }
+
+  .ledger-meta {
+    display: grid;
+    gap: 0.35rem;
+    align-content: start;
+  }
+
+  .redact-lines {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .findings-foot {
+    margin-top: 2rem;
+    max-width: 60ch;
+  }
+
+  /* The credit, set as an exhibit rather than a quote block. */
+  .credit-plate {
+    margin: 0;
+    border: 2px solid var(--rule);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .credit-quote {
+    margin: 0 0 1.25rem;
+    font-size: clamp(1rem, 1.6vw, 1.1875rem);
+    line-height: 1.5;
+    color: var(--color-data);
+  }
+
+  .credit-quote code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--color-fg);
+  }
+
+  .credit-name {
+    display: block;
+    margin-top: 0.9rem;
+    color: var(--color-fg);
+    font-weight: 700;
+  }
+
+  .credit-src {
+    margin-left: 0.75rem;
+  }
+
+  .zero-meta {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .about-p2 {
+    margin-top: 1.5rem;
+  }
+
+  .cert-line {
+    display: block;
+    margin-bottom: 0.9rem;
+  }
+
+  .project-row {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.15s var(--ease);
+  }
+
+  .project-row:hover {
+    opacity: 0.6;
+  }
+
+  .contact-lead {
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .contact-list {
+    border-top: 1px solid var(--rule-dim);
+  }
+</style>

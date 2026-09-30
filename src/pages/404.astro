@@ -2,28 +2,30 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import T from '../components/T.astro';
 ---
 
 <Base
-  title="Nothing here · Alan Ortega"
+  title="Nothing here · Alan Ortega Álamo"
   description="This address does not exist on al4an444.github.io."
+  alternate={false}
 >
-  <Nav />
+  <Nav alternate={false} />
 
   <main id="top" class="notfound">
     <div class="wrap">
-      <p class="t-data" data-i18n="nf.kicker">Dead end</p>
+      <p class="t-data"><T k="nf.kicker">Dead end</T></p>
 
       <h1 class="t-mega notfound-code">404</h1>
 
-      <p class="t-body notfound-lead" data-i18n="nf.lead">
+      <p class="t-body notfound-lead"><T k="nf.lead">
         You went looking for something that isn't here. Poking at addresses is most of the job, so
         I won't hold it against you. This one is just a dead end.
-      </p>
+      </T></p>
 
       <div class="notfound-actions">
-        <a href="/" class="link" data-i18n="nf.btn.home">Back to the start</a>
-        <a href="/research/" class="link" data-i18n="nf.btn.research">See the research</a>
+        <a href="/" class="link"><T k="nf.btn.home">Back to the start</T></a>
+        <a href="/research/" class="link"><T k="nf.btn.research">See the research</T></a>
       </div>
     </div>
   </main>

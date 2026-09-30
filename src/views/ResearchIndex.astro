@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import T from '../components/T.astro';
+import { es } from '../i18n/es';
+import { langFromUrl, localize } from '../i18n/lang';
+import { translations } from '../i18n/writeups';
+
+const writeups = (await getCollection('research', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const lang = langFromUrl(Astro.url);
+const title = lang === 'es' ? es['research.meta.title'] : 'Research · Alan Ortega Álamo';
+const description =
+  lang === 'es'
+    ? es['research.meta.desc']
+    : 'Technical writeups by Alan Ortega Álamo. Detailed writeups are published only once a finding is public; active reports stay at vendor, severity and status.';
+// On /es/, a writeup without a Spanish translation keeps its English text.
+const text = (id: string, en: { title: string; summary: string; status: string; severity?: string }) =>
+  lang === 'es' && translations[id] ? { ...en, ...translations[id] } : en;
+---
+
+<Base title={title} description={description}>
+  <Nav />
+
+  <main id="top" class="research-main">
+    <div class="wrap">
+      <p class="t-data"><T k="research.kicker">Archive</T></p>
+      <h1 class="t-huge research-title"><T k="research.title">Research</T></h1>
+
+      <p class="t-body research-lead">
+        <T k="research.lead">Writeups are published only once a finding is public. Active reports stay at vendor,
+        severity and status, with no exploitable detail.</T>
+      </p>
+
+      <div class="ledger research-list">
+        {
+          writeups.map((post, i) => {
+            const d = text(post.id, post.data);
+            return (
+            <a href={localize(`/research/${post.id}/`, lang)} class="ledger-row project-row">
+              <span class="ledger-no">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h2 class="ledger-vendor">{post.data.project}</h2>
+                <p class="t-data-sm ledger-scope">{post.data.date.toISOString().slice(0, 10)}</p>
+              </div>
+              <div>
+                <p class="research-item-title">{d.title}</p>
+                <p class="ledger-detail">{d.summary}</p>
+              </div>
+              <div class="ledger-meta">
+                <p class="ledger-status is-fixed">{d.status}</p>
+                {d.severity && <p class="t-data-sm">{d.severity}</p>}
+              </div>
+            </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .research-main {
+    padding-top: 8rem;
+    padding-bottom: clamp(4rem, 10vw, 8rem);
+  }
+
+  .research-title {
+    margin-top: 0.75rem;
+  }
+
+  .research-lead {
+    margin-top: 2rem;
+    margin-bottom: clamp(3rem, 7vw, 5rem);
+    max-width: 48ch;
+  }
+
+  .research-list {
+    border-top: 2px solid var(--rule);
+  }
+
+  .research-item-title {
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+</style>

@@ -1,4 +1,6 @@
 ---
+import T from './T.astro';
+
 // THE FALLTHROUGH — the one diagram, and the ONLY place the alert red appears
 // in the entire site. If you are adding red somewhere else, don't.
 //
@@ -80,9 +82,9 @@ const thread = [
   </div>
 
   <figcaption class="ft-cap">
-    <span data-i18n="ft.miss1">No URI SAN — fall through</span>
-    <span data-i18n="ft.miss2">No DNS SAN — fall through</span>
-    <span class="ft-cap-hit" data-i18n="ft.hit">Subject DN matched — allowed</span>
+    <span><T k="ft.miss1">No URI SAN — fall through</T></span>
+    <span><T k="ft.miss2">No DNS SAN — fall through</T></span>
+    <span class="ft-cap-hit"><T k="ft.hit">Subject DN matched — allowed</T></span>
   </figcaption>
 </figure>
 

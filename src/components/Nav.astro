@@ -2,29 +2,46 @@
 // A hard bar ruled off from the page. No pill, no blur, no glass, no cursor
 // highlight, no fake shell prompt — all of that was the previous design and all
 // of it is on the blacklist. Just the name, the sections, and the language.
+import T from './T.astro';
+import { langFromUrl, localize, alternatePath } from '../i18n/lang';
+
+interface Props {
+  // false on pages that exist in only one language (404): the switch goes home.
+  alternate?: boolean;
+}
+
+const { alternate = true } = Astro.props;
+const lang = langFromUrl(Astro.url);
+const home = localize('/', lang);
 const links = [
-  { href: '/#findings', label: 'Findings', key: 'nav.findings' },
-  { href: '/#zerologon', label: 'Case', key: 'nav.case' },
-  { href: '/#about', label: 'About', key: 'nav.about' },
-  { href: '/research/', label: 'Research', key: 'nav.research' },
-  { href: '/#contact', label: 'Contact', key: 'nav.contact' },
+  { href: `${home}#findings`, label: 'Findings', key: 'nav.findings' },
+  { href: `${home}#zerologon`, label: 'Case', key: 'nav.case' },
+  { href: `${home}#about`, label: 'About', key: 'nav.about' },
+  { href: localize('/research/', lang), label: 'Research', key: 'nav.research' },
+  { href: `${home}#contact`, label: 'Contact', key: 'nav.contact' },
 ];
+// A real link to the other language's URL, not a client-side swap: crawlers
+// follow it, and each language has its own indexable page.
+const other = lang === 'es' ? 'en' : 'es';
+const switchHref = alternate ? alternatePath(Astro.url, lang) : localize('/', other);
 ---
 
 <header class="topbar">
   <div class="wrap topbar-in">
-    <a href="/" class="topbar-name">Alan Ortega</a>
+    <a href={home} class="topbar-name">Alan Ortega Álamo</a>
 
-    <nav class="topbar-links" aria-label="Sections">
+    <nav class="topbar-links" aria-label={lang === 'es' ? 'Secciones' : 'Sections'}>
       {
         links.map((link) => (
-          <a href={link.href} data-i18n={link.key} data-nav-link>
-            {link.label}
+          <a href={link.href} data-nav-link>
+            <T k={link.key}>{link.label}</T>
           </a>
         ))
       }
     </nav>
 
-    <button type="button" data-lang-toggle aria-label="Switch to Spanish">Español</button>
+    <a href={switchHref} hreflang={other} lang={other}>
+      {other === 'es' ? 'Español' : 'English'}
+    </a>
   </div>
 </header>
