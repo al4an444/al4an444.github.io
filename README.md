@@ -58,9 +58,10 @@ Set `draft: true` in the frontmatter to keep it unpublished.
 
 Edit `src/data/findings.ts` — the finding cards on `/research/` are generated
 from there (`findings[]`, plus `projects` and `certifications` for the landing
-page). Only three findings are surfaced: the public grpc-go writeup carries full
-detail; the NVIDIA and Microsoft reports are non-public and are kept high-level
-(vendor · severity · status), with no exploitable details and **no `payout`**.
+page). Fixed findings with a public fix (grpc-go, protobuf-go, Microsoft
+msi-acrpull) carry detail at the level of that public fix; the NVIDIA report is
+non-public and is kept high-level (vendor · severity · status), with no
+exploitable details and **no `payout`**.
 The landing page's featured grpc-go section is hand-written in
 `src/pages/index.astro` — note the vendor list there is a second, hand-maintained
 copy of the same facts, so any change here has to be mirrored in that file.
