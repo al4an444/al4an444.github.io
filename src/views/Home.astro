@@ -138,7 +138,12 @@ const profilePage = {
     <section class="hero">
       <div class="wrap">
         {/* No <T> on the name — a name is the same in both languages. */}
-        <h1 class="t-mega hero-line">Alan<br />Ortega<br />Álamo</h1>
+        {/* Three lines. The mega line-height is tight enough that the acute on
+            the Á would collide with the tail of the Q above it, so the last
+            line alone gets clearance for the accent. */}
+        <h1 class="t-mega hero-line">
+          Alan<br />Ortega<br /><span class="hero-accent-line">Álamo</span>
+        </h1>
         <p class="t-data hero-role"><T k="hero.role">Cybersecurity</T></p>
 
         <div class="hero-foot">
@@ -457,6 +462,11 @@ const profilePage = {
     justify-content: flex-end;
     padding-top: 6rem;
     padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+
+  .hero-accent-line {
+    display: inline-block;
+    margin-top: 0.16em;
   }
 
   .hero-role {
