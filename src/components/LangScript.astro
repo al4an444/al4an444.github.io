@@ -20,7 +20,7 @@
 
       // Hero. The name itself has no key — names don't translate.
       'hero.role': 'Ciberseguridad',
-      'hero.kicker': 'Disponible para roles junior de seguridad · Países Bajos / Madrid / remoto',
+      'hero.kicker': 'Disponible para roles junior de seguridad · Madrid / remoto',
 
       // 00 · The diagram
       'diagram.title': 'El fallthrough',
@@ -37,13 +37,15 @@
         'Un bypass de autenticación en el motor RBAC de xDS de gRPC: el authenticatedMatcher caía desde el URI/DNS SAN al Subject DN del certificado. Corregido por Google y acreditado en las notas de versión.',
       'find.google.status': 'Corregido · v1.81.1',
       'find.google.sev': 'CVSS 7.5',
-      'find.microsoft.sev': 'Alta',
+      'find.microsoft.sev': 'Importante',
+      'find.microsoft.detail':
+        'El campo del servidor ACR de un AcrPullBinding no se limitaba a dominios de registro de confianza, así que el controlador podía enviar su token de Azure (ARM) a un endpoint controlado por un atacante. Confirmado por MSRC y corregido validando el servidor contra los sufijos de ACR permitidos.',
       'find.nvidia.sev': 'Alta',
       'find.protobuf.sev': 'Denegación de servicio',
       'find.protobuf.detail':
         'El RecursionLimit de prototext se saltaba silenciosamente en la ruta de descarte de campos desconocidos: skipValue y skipMessageValue se llamaban recursivamente sin decrementarlo, así que mensajes desconocidos muy anidados abortaban el proceso con un desbordamiento de pila del que Go no se puede recuperar. Reporté el fallo y escribí el parche, integrado tras la revisión de los mantenedores de protobuf-go.',
       'find.protobuf.status': 'Integrado · master',
-      'find.microsoft.status': 'Bajo revisión',
+      'find.microsoft.status': 'Corregido',
       'find.nvidia.status': 'Reproducido · bajo revisión',
       'findings.withheld': 'Retenido hasta que el fabricante publique.',
       'findings.foot':
@@ -70,7 +72,7 @@
       // 04 · Who
       'about.title': 'Quién',
       'about.p1':
-        'Veinte años, autodidacta, en Países Bajos y con posibilidad de trabajar desde Madrid.',
+        'Veintiún años, autodidacta, disponible para trabajar desde Madrid o en remoto.',
       'about.p2': 'Nadie me encargó nada de esto. Simplemente es lo que me gusta.',
       'about.edu': 'Formación',
       'about.exp': 'Experiencia',

@@ -6,8 +6,8 @@ import Fallthrough from '../components/Fallthrough.astro';
 import { projects, certifications } from '../data/findings';
 
 // DISCLOSURE RULE — the whole reason this file is shaped the way it is.
-// Google's finding is public and carries full detail. The Microsoft and NVIDIA
-// reports are open, so they carry vendor · severity · status and NOTHING ELSE:
+// Fixed findings whose fix is public (Google x2, Microsoft) carry full detail.
+// The NVIDIA report is open, so it carries vendor · severity · status and NOTHING ELSE:
 // no project, component, vulnerability class, CWE, CVSS vector, PoC, identifier
 // — and no bounty figure, because the award is undecided and the amount itself
 // narrows the vendor's published table toward the impact class being withheld.
@@ -50,22 +50,21 @@ const findings = [
       "prototext's RecursionLimit was silently bypassed on the unknown-field skip path: skipValue and skipMessageValue recursed into each other without decrementing it, so deeply nested unknown messages aborted the process with a stack overflow that Go cannot recover from. I reported it and authored the fix, merged after review by the protobuf-go maintainers.",
     links: [
       { href: 'https://go-review.googlesource.com/c/protobuf/+/774741', label: 'CL 774741' },
-      {
-        href: 'https://github.com/protocolbuffers/protobuf-go/issues/1715',
-        label: 'Issue #1715',
-      },
     ],
   },
   {
+    // Fixed and confirmed by MSRC; the fix (PR #129) is public, so this carries
+    // detail at the level of that PR. No bounty: MSRC closed it out of scope.
     no: '03',
     vendor: 'Microsoft',
-    scope: 'MSRC',
-    severity: 'High',
-    status: 'Under review',
-    fixed: false,
+    scope: 'Azure msi-acrpull · MSRC',
+    severity: 'Important',
+    status: 'Fixed',
+    fixed: true,
     key: 'microsoft',
-    redacted: ['13ch', '8ch', '17ch'],
-    links: [],
+    detail:
+      "The ACR server field of an AcrPullBinding was not restricted to trusted registry domains, so the controller could send its Azure (ARM) bearer token to an attacker-controlled endpoint. Confirmed by MSRC and fixed by validating the server against allowed ACR suffixes.",
+    links: [{ href: 'https://github.com/Azure/msi-acrpull/pull/129', label: 'PR #129' }],
   },
   {
     no: '04',
@@ -124,7 +123,7 @@ const experience = [
             <span class="is-fg">Fixed in v1.81.1</span>
           </p>
           <p class="t-data-sm hero-avail" data-i18n="hero.kicker">
-            Open to junior security roles · Netherlands / Madrid / remote
+            Open to junior security roles · Madrid / remote
           </p>
         </div>
       </div>
@@ -312,7 +311,7 @@ const experience = [
         <div class="cols cols-2">
           <div>
             <p class="t-body reveal" data-i18n="about.p1">
-              Twenty years old, self-taught, based in the Netherlands and able to work from Madrid.
+              Twenty-one years old, self-taught, available to work from Madrid or remotely.
             </p>
             <p class="t-body about-p2 reveal" data-i18n="about.p2">
               Nobody assigned me any of this. It's simply what I like doing.

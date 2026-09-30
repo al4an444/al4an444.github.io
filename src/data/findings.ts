@@ -55,13 +55,14 @@ export const findings: Finding[] = [
       "Confirmed and reproduced by NVIDIA's security team and now under active review. Details are withheld pending resolution, in line with responsible disclosure.",
   },
   {
-    project: 'Microsoft · MSRC',
-    title: 'High-severity vulnerability',
-    severity: 'High severity',
-    status: 'Under review',
-    statusKind: 'reported',
+    project: 'Microsoft · Azure msi-acrpull',
+    title: 'ARM bearer token sent to attacker-controlled ACR endpoint',
+    severity: 'Important',
+    status: 'Fixed · confirmed by MSRC',
+    statusKind: 'fixed',
     summary:
-      'Reported to Microsoft (MSRC) and currently under review and reproduction. Details are withheld pending resolution, in line with responsible disclosure.',
+      'The ACR server field of an AcrPullBinding was not restricted to trusted registry domains, so the controller could send its Azure (ARM) bearer token to an attacker-controlled endpoint.',
+    links: [{ href: 'https://github.com/Azure/msi-acrpull/pull/129', label: 'Fix PR #129' }],
   },
 ];
 
